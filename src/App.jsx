@@ -1,23 +1,30 @@
 import { Routes, Route } from "react-router";
 
 import Accueil from "./pages/Accueil";
-import Auth from "./pages/Auth";
+import Register from "./pages/auth/Register";
+import Login from "./pages/auth/Login"; 
 import Profil from "./pages/Profil";
 import Immersive from "./pages/Immersive";
 import Jeu from "./pages/Jeu";
 import Reservation from "./pages/Reservation";
+import Navbar from "./components/Navbar";
 
 export default function App() {
   return (
-    <Routes>
-      <Route index element={<Accueil />} />
+    <>
+      <Navbar />
 
-      <Route path="auth" element={<Auth />} />
-      <Route path="profil" element={<Profil />} />
-      <Route path="immersive" element={<Immersive />} />
-      <Route path="jeu" element={<Jeu />} />
-      <Route path="reservation" element={<Reservation />} />
+      <Routes>
+        <Route index element={<Accueil />} />
 
-    </Routes>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="profil" element={<Profil />} />
+        <Route path="immersive" element={<Immersive />} />
+        <Route path="jeu" element={<Jeu />} />
+        <Route path="reservation" element={<Reservation />} />
+
+      </Routes>
+    </>
   );
 }
