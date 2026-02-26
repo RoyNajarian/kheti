@@ -1,3 +1,4 @@
+import React, { useEffect, useRef } from "react";
 import { Routes, Route } from "react-router";
 
 import Accueil from "./pages/Accueil";
@@ -9,7 +10,7 @@ import Jeu from "./pages/Jeu";
 import Reservation from "./pages/Reservation";
 import Navbar from "./components/Navbar";
 
-export default function App() {
+const App = () => {
   return (
     <>
       <Navbar />
@@ -28,3 +29,5 @@ export default function App() {
     </>
   );
 }
+
+export default App;
