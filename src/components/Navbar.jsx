@@ -16,6 +16,7 @@ const Navbar = () => {
 
         document.addEventListener("click", clickDetector);
     }, [])
+    
 
     let menuDeroulant = null;
 
