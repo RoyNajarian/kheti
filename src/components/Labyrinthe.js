@@ -19,11 +19,18 @@ export const mapLevel1 = [
 ];
 
 export const construction = (scene) => {
+    const textureLoader = new THREE.TextureLoader();
+
+    const wallTexture = textureLoader.load('/images/wall.jpg');
+    wallTexture.colorSpace = THREE.SRGBColorSpace;
+    const groundTexture = textureLoader.load('/images/ground.jpg');
+    groundTexture.colorSpace = THREE.SRGBColorSpace;
+
     const wall = new THREE.BoxGeometry(1, 1, 1);
-    const wallMaterial = new THREE.MeshLambertMaterial({ color: 0x888888 });
+    const wallMaterial = new THREE.MeshLambertMaterial({ map: wallTexture });
 
     const ground = new THREE.BoxGeometry(1, 0.1, 1);
-    const groundMaterial = new THREE.MeshLambertMaterial({ color: 0x333333 });
+    const groundMaterial = new THREE.MeshLambertMaterial({ map: groundTexture });
 
     const startMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
     const endMaterial = new THREE.MeshLambertMaterial({ color: 0xff0000 });
@@ -39,16 +46,7 @@ export const construction = (scene) => {
                 scene.add(wallMesh);
             }
 
-            let specialColor = groundMaterial;
-
-            if (numCase === 2) {
-                specialColor = startMaterial;
-            }
-            else if (numCase === 3) {
-                specialColor = endMaterial;
-            }
-
-            const groundMesh = new THREE.Mesh(ground, specialColor);
+            const groundMesh = new THREE.Mesh(ground, groundMaterial);
             groundMesh.position.set(j, 0, i);
 
             scene.add(groundMesh);
