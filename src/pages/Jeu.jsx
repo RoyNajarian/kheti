@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { useEffect, useRef } from 'react';
 import '../styles/Jeu.css';
 import { construction } from '../components/Labyrinthe';
+import { createPersonnage } from '../components/Personnage';
 
 export const Jeu = () => {
     const containerRef = useRef(null);
@@ -12,6 +13,7 @@ export const Jeu = () => {
         // Scène
         const scene = new THREE.Scene();
         construction(scene);
+        createPersonnage(scene);
 
         // Lumière
         const light = new THREE.DirectionalLight(0xffffff, 2);

@@ -32,9 +32,6 @@ export const construction = (scene) => {
     const ground = new THREE.BoxGeometry(1, 0.1, 1);
     const groundMaterial = new THREE.MeshLambertMaterial({ map: groundTexture });
 
-    const startMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
-    const endMaterial = new THREE.MeshLambertMaterial({ color: 0xff0000 });
-
     for (let i = 0; i < mapLevel1.length; i++) {
         for (let j = 0; j < mapLevel1[i].length; j++) {
             const numCase = mapLevel1[i][j];
