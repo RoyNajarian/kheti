@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { useEffect, useRef } from 'react';
 import '../styles/Jeu.css';
 import { construction } from '../components/Labyrinthe';
-import { createPersonnage } from '../components/Personnage';
+import { createPersonnage, movePersonnage } from '../components/Personnage';
 
 export const Jeu = () => {
     const containerRef = useRef(null);
@@ -14,6 +14,34 @@ export const Jeu = () => {
         const scene = new THREE.Scene();
         construction(scene);
         createPersonnage(scene);
+
+        // Suivi de la direction
+        const cameraMouvement = { x: 0, z: 0 };
+
+        const keyboardArrow = (e) => {
+            const touche = e.key.toLowerCase();
+
+            cameraMouvement.x = 0;
+            cameraMouvement.z = 0;
+
+            if (touche === 'arrowup' || touche === 'z') {
+                movePersonnage('haut');
+                cameraMouvement.z = 1;
+            }
+            if (touche === 'arrowdown' || touche === 's') {
+                movePersonnage('bas');
+                cameraMouvement.z = -1;
+            }
+            if (touche === 'arrowleft' || touche === 'q') {
+                movePersonnage('gauche');
+                cameraMouvement.x = 1;
+            }
+            if (touche === 'arrowright' || touche === 'd') {
+                movePersonnage('droite');
+                cameraMouvement.x = -1;
+            }
+        }
+        window.addEventListener('keydown', keyboardArrow);
 
         // Lumière
         const light = new THREE.DirectionalLight(0xffffff, 2);
@@ -49,8 +77,8 @@ export const Jeu = () => {
         let animId;
         const animate = () => {
             animId = requestAnimationFrame(animate);
-            camera.position.x += (13 + mouse.x * 1.5 - camera.position.x) * 0.15;
-            camera.position.z += (7 + mouse.y * 1.5 - camera.position.z) * 0.15;
+            camera.position.x += (13 + cameraMouvement.x * 1.5 - camera.position.x) * 0.08;
+            camera.position.z += (7 + cameraMouvement.z * 1.5 - camera.position.z) * 0.08;
             camera.lookAt(13, 0, 6.4);
             renderer.render(scene, camera);
         };
@@ -60,6 +88,7 @@ export const Jeu = () => {
         return () => {
             cancelAnimationFrame(animId);
             window.removeEventListener('mousemove', mouseMove);
+            window.removeEventListener('keydown', keyboardArrow);
             renderer.dispose();
             container.removeChild(renderer.domElement);
         };
