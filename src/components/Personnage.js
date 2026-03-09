@@ -7,6 +7,8 @@ let isMoving = false;
 
 let positionX = 0;
 let positionZ = 0;
+let rotationX = 0;
+let rotationZ = 0;
 
 export const start = () => {
     for (let i = 0; i < mapLevel1.length; i++) {
@@ -19,8 +21,13 @@ export const start = () => {
 }
 
 export const createPersonnage = (scene) => {
+    const textureLoader = new THREE.TextureLoader();
+
+    const ballTexture = textureLoader.load('/images/ball.jpg');
+    ballTexture.colorSpace = THREE.SRGBColorSpace;
+
     const geometry = new THREE.SphereGeometry(0.4, 16, 16);
-    const material = new THREE.MeshLambertMaterial({ color: 0xff0000 });
+    const material = new THREE.MeshLambertMaterial({ map: ballTexture });
     personnageMesh = new THREE.Mesh(geometry, material);
 
     const depart = start();
@@ -62,6 +69,10 @@ export const movePersonnage = (direction) => {
 
     if (destinationX !== positionX || destinationZ !== positionZ) {
         isMoving = true;
+
+        const distanceX = destinationX - positionX;
+        const distanceZ = destinationZ - positionZ;
+
         positionX = destinationX;
         positionZ = destinationZ;
         
@@ -72,6 +83,12 @@ export const movePersonnage = (direction) => {
             onComplete: () => {
                 isMoving = false;
             }
+        });
+
+        gsap.to(personnageMesh.rotation, {
+            x: rotationX -= distanceZ * 1.5708,
+            z: rotationZ += distanceX * 1.5708,
+            duration: 0.3,
         });
     }
 }
