@@ -3,12 +3,14 @@ import { Routes, Route } from "react-router";
 
 import Accueil from "./pages/Accueil";
 import Register from "./pages/auth/Register";
-import Login from "./pages/auth/Login"; 
+import Login from "./pages/auth/Login";
 import Profil from "./pages/Profil";
 import Immersive from "./pages/Immersive";
 import Jeu from "./pages/Jeu";
 import Reservation from "./pages/Reservation";
 import Navbar from "./components/Navbar";
+
+import "/src/styles/Accueil.css";
 
 const App = () => {
   return (
