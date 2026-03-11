@@ -1,0 +1,74 @@
+.accueil {
+    background-image: url('/public/images/lobby_hero_bg.png');
+    background-size: cover;
+    background-position: center;
+    height: 90vh;
+
+    .accueil-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        height: 100%;
+        text-align: center;
+
+        .accueil-main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+
+            img {
+                width: 600px;
+                height: auto;
+            }
+
+            button {
+
+                /* Dimensions */
+                padding: 20px 48px;
+                border-radius: 28px;
+
+                /* Glass effect */
+                background: rgba(217, 217, 217, 0.15);
+                backdrop-filter: blur(2px);
+                -webkit-backdrop-filter: blur(2px);
+
+                /* Border */
+                border: 1px solid rgba(255, 255, 255, 0.25);
+
+                /* Texte */
+                color: #ffffff;
+                font-size: 28px;
+                font-weight: 600;
+                letter-spacing: 0.3px;
+
+                /* Reset bouton */
+                cursor: pointer;
+                outline: none;
+                display: inline-block;
+
+                /* Noise grain via pseudo-élément */
+                position: relative;
+                overflow: hidden;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    inset: 0;
+                    border-radius: inherit;
+                    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.1' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)'/%3E%3C/svg%3E");
+                    opacity: 0.06;
+                    mix-blend-mode: overlay;
+                    pointer-events: none;
+                }
+
+                &::hover {
+                    background: rgba(217, 217, 217, 0.22);
+                    border-color: rgba(255, 255, 255, 0.4);
+                    transition: all 0.2s ease;
+                }
+            }
+        }
+    }
+}
