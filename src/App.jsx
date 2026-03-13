@@ -15,7 +15,7 @@ import "/src/styles/Accueil.css";
 const App = () => {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
 
       <Routes>
         <Route index element={<Accueil />} />
