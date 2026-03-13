@@ -1,3 +1,15 @@
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
 .accueil {
     background-image: url('/public/images/lobby_hero_bg.png');
     background-size: cover;
@@ -141,6 +153,36 @@
             transform: translateX(50%);
             width: auto;
             height: 87.5%;
+        }
+
+        .accueil-bd {
+            position: absolute;
+            left: 4%;
+            bottom: 0;
+            display: flex;
+            gap: 60px;
+
+            img {
+                width: auto;
+                height: 200px;
+                transform: rotate(6deg);
+            }
+
+        }
+
+        .accueil-scroll-action {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+
+            /* Add a floating animation */
+            animation: float 2s ease-in-out infinite;
         }
     }
 }
