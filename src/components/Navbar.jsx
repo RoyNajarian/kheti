@@ -16,7 +16,7 @@ const Navbar = () => {
 
         document.addEventListener("click", clickDetector);
     }, [])
-    
+
 
     let menuDeroulant = null;
 
@@ -31,7 +31,7 @@ const Navbar = () => {
 
     return (
         <nav className="navbar">
-            <Link to="/"><img src="/images/logo.png" alt="Accueil" className="navbar-logo"/></Link>
+            <Link to="/"><img src="/public/images/kheti-logo.png" alt="Accueil" className="navbar-logo" /></Link>
             <ul className="navbar-right">
                 <li><Link to="/">Accueil</Link></li>
                 <li><Link to="/reservation">Réservation</Link></li>
@@ -39,7 +39,7 @@ const Navbar = () => {
                 <li><Link to="/jeu">Labyrinthe</Link></li>
 
                 <li className="profil-menu" ref={menuRef}>
-                    <button className="profil-btn" onClick={() => setmenuOpen(!menuOpen)}><img src="/icons/default.png" alt="Menu Profil"/></button>
+                    <button className="profil-btn" onClick={() => setmenuOpen(!menuOpen)}><img src="/icons/default.png" alt="Menu Profil" /></button>
                     {menuDeroulant}
                 </li>
             </ul>

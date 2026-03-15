@@ -12,6 +12,7 @@ import BackOfficeLayout from "./back-office/BackOfficeLayout";
 import Dashboard from "./back-office/Dashboard";
 import BackOfficeReservations from "./back-office/Reservations";
 import BackOfficeUsers from "./back-office/Users";
+import "/src/styles/Accueil.css";
 
 const PublicLayout = () => (
   <>
