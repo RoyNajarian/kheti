@@ -35,7 +35,7 @@ const Navbar = () => {
             <ul className="navbar-right">
                 <li><Link to="/">Accueil</Link></li>
                 <li><Link to="/reservation">Réservation</Link></li>
-                <li><Link to="/immersive">Immersion</Link></li>
+                {/* <li><Link to="/immersive">Immersion</Link></li> */}
                 <li><Link to="/jeu">Labyrinthe</Link></li>
 
                 <li className="profil-menu" ref={menuRef}>
