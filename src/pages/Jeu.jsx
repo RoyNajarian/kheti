@@ -1,22 +1,38 @@
 import * as THREE from 'three';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import '../styles/Jeu.css';
-import { construction } from '../components/Labyrinthe';
+import { mapLevel1, mapLevel2, construction } from '../components/Labyrinthe';
 import { createPersonnage, movePersonnage } from '../components/Personnage';
+import { Popup } from '../components/Popup';
+
+const maps = [mapLevel1, mapLevel2]; 
 
 export const Jeu = () => {
     const containerRef = useRef(null);
 
+    const [currentLevel, setCurrentLevel] = useState(0);
+    const [showPopup, setShowPopup] = useState(false);
+
+    const nextLevel = () => {
+        setShowPopup(false);
+        setCurrentLevel(currentLevel + 1);
+    };
+
     useEffect(() => {
         const container = containerRef.current;
+        const currentMap = maps[currentLevel];
 
         // Scène
         const scene = new THREE.Scene();
-        construction(scene);
-        createPersonnage(scene);
+        construction(scene, currentMap);
+        createPersonnage(scene, currentMap);
 
         // Suivi de la direction
         const cameraMouvement = { x: 0, z: 0 };
+
+        const win = () => {
+            setShowPopup(true);
+        };
 
         const keyboardArrow = (e) => {
             const touche = e.key.toLowerCase();
@@ -25,19 +41,19 @@ export const Jeu = () => {
             cameraMouvement.z = 0;
 
             if (touche === 'arrowup' || touche === 'z') {
-                movePersonnage('haut');
+                movePersonnage('haut', currentMap, win);
                 cameraMouvement.z = 1;
             }
             if (touche === 'arrowdown' || touche === 's') {
-                movePersonnage('bas');
+                movePersonnage('bas', currentMap, win);
                 cameraMouvement.z = -1;
             }
             if (touche === 'arrowleft' || touche === 'q') {
-                movePersonnage('gauche');
+                movePersonnage('gauche', currentMap, win);
                 cameraMouvement.x = 1;
             }
             if (touche === 'arrowright' || touche === 'd') {
-                movePersonnage('droite');
+                movePersonnage('droite', currentMap, win);
                 cameraMouvement.x = -1;
             }
         }
@@ -92,10 +108,29 @@ export const Jeu = () => {
             renderer.dispose();
             container.removeChild(renderer.domElement);
         };
-    }, []);
+    }, [currentLevel]);
 
+    // Contenu du popup de fin de niveau en fonction du niveau actuel
+    let popupContenu;
+    if (currentLevel < maps.length - 1) {
+        popupContenu = <button onClick={nextLevel}>Niveau suivant</button>;
+    } 
+    else {
+        popupContenu = <p>Félicitations, tu as terminé tous les niveaux !</p>;
+    }
+
+    // Si le popup doit être affiché, on le crée avec le contenu approprié
+    let popup;
+    if (showPopup === true) {
+        popup = <Popup titre={'Niveau ' + (currentLevel + 1) + ' terminé !'} contenu={popupContenu} />;
+    }
+
+    // Rendu du composant
     return (
-        <div className='container-3d' ref={containerRef}></div>
+        <div className='jeu-wrapper'>
+            <div className='container-3d' ref={containerRef}></div>
+            {popup}
+        </div>
     );
 }
 

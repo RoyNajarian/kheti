@@ -1,26 +1,30 @@
 import * as THREE from 'three';
-import { mapLevel1 } from './Labyrinthe';
 import gsap from 'gsap';
 
 let personnageMesh = null;
 let isMoving = false;
 
+// positionX = depart.j;
+// positionZ = depart.i;
 let positionX = 0;
 let positionZ = 0;
+
 let rotationX = 0;
 let rotationZ = 0;
+// isMoving = false;
 
-export const start = () => {
-    for (let i = 0; i < mapLevel1.length; i++) {
-        for (let j = 0; j < mapLevel1[i].length; j++) {
-            if (mapLevel1[i][j] === 2) {
+export const start = (currentLevel) => {
+    for (let i = 0; i < currentLevel.length; i++) {
+        for (let j = 0; j < currentLevel[i].length; j++) {
+            if (currentLevel[i][j] === 2) {
                 return { i, j };
             }
         }
     }
 }
 
-export const createPersonnage = (scene) => {
+
+export const createPersonnage = (scene, currentLevel) => {
     const textureLoader = new THREE.TextureLoader();
 
     const ballTexture = textureLoader.load('/images/ball.jpg');
@@ -30,7 +34,7 @@ export const createPersonnage = (scene) => {
     const material = new THREE.MeshLambertMaterial({ map: ballTexture });
     personnageMesh = new THREE.Mesh(geometry, material);
 
-    const depart = start();
+    const depart = start(currentLevel);
     personnageMesh.position.set(depart.j, 0.6, depart.i);
     positionX = depart.j;
     positionZ = depart.i;
@@ -38,7 +42,7 @@ export const createPersonnage = (scene) => {
     scene.add(personnageMesh);
 };
 
-export const movePersonnage = (direction) => {
+export const movePersonnage = (direction, currentLevel, whenFinish) => {
     if (isMoving || !personnageMesh) {
         return null;
     }
@@ -62,7 +66,7 @@ export const movePersonnage = (direction) => {
     let destinationX = positionX;
     let destinationZ = positionZ;
 
-    while (destinationX + stepX >= 0 && destinationX + stepX < mapLevel1[0].length && mapLevel1[destinationZ + stepZ][destinationX + stepX] !== 1) {
+    while (destinationX + stepX >= 0 && destinationX + stepX < currentLevel[0].length && currentLevel[destinationZ + stepZ][destinationX + stepX] !== 1) {
         destinationX += stepX;
         destinationZ += stepZ;
     }
@@ -82,6 +86,9 @@ export const movePersonnage = (direction) => {
             duration: 0.3,
             onComplete: () => {
                 isMoving = false;
+                if (currentLevel[destinationZ][destinationX] === 3) {
+                    whenFinish();
+                }
             }
         });
 
