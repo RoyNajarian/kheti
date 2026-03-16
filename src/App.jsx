@@ -8,16 +8,19 @@ import Immersive from "./pages/Immersive";
 import Jeu from "./pages/Jeu";
 import Reservation from "./pages/Reservation";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import BackOfficeLayout from "./back-office/BackOfficeLayout";
 import Dashboard from "./back-office/Dashboard";
 import BackOfficeReservations from "./back-office/Reservations";
 import BackOfficeUsers from "./back-office/Users";
 import "/src/styles/Accueil.css";
+import "/src/styles/Footer.css";
 
 const PublicLayout = () => (
   <>
-    <Navbar />
+    {/* <Navbar /> */}
     <Outlet />
+    <Footer />
   </>
 );
 

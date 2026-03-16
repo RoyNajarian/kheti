@@ -8,4 +8,5 @@ body {
     font-family: sans-serif;
     background-color: #B69F5E;
     color: white;
+    overflow-x: hidden;
 }
