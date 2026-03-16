@@ -1,7 +1,70 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body
+{
+    overflow: hidden;
+}
+
+.jeu-wrapper {
+    width: 100vw;
+    height: 100vh;
+}
+
 .container-3d {
     width: 100vw;
     height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.popup-content {
+    background: rgba(255, 244, 210, 0.95);
+    border: 3px solid #c8a04a;
+    padding: 60px 80px;
+    border-radius: 16px;
+    text-align: center;
+    color: #3b1f00;
+    min-width: 400px;
+    box-shadow: 0 0 40px rgba(200, 160, 74, 0.5);
+}
+
+.popup-content h2 {
+    font-size: 2rem;
+    margin-bottom: 24px;
+    color: #7a4500;
+}
+
+.popup-content button {
+    margin-top: 10px;
+    padding: 14px 36px;
+    font-size: 1.1rem;
+    background: #c8a04a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.popup-content button:hover {
+    background: #a07830;
 }
