@@ -4,12 +4,6 @@
     padding: 0;
 }
 
-html,
-body
-{
-    overflow: hidden;
-}
-
 .jeu-wrapper {
     width: 100vw;
     height: 100vh;
