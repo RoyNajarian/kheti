@@ -4,7 +4,6 @@ import '../styles/Jeu.css';
 import { mapLevel1, mapLevel2, construction } from '../components/Labyrinthe';
 import { createPersonnage, movePersonnage } from '../components/Personnage';
 import { Popup } from '../components/Popup';
-/* TEST */
 
 const maps = [mapLevel1, mapLevel2]; 
 
