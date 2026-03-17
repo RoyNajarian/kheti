@@ -12,17 +12,17 @@ const BackOfficeLayout = () => {
         <ul className="bo-nav">
           <li>
             <NavLink to="/back-office" end>
-              <span className="bo-icon">📊</span> Dashboard
+              Dashboard
             </NavLink>
           </li>
           <li>
             <NavLink to="/back-office/reservations">
-              <span className="bo-icon">📅</span> Réservations
+              Réservations
             </NavLink>
           </li>
           <li>
             <NavLink to="/back-office/users">
-              <span className="bo-icon">👥</span> Utilisateurs
+              Utilisateurs
             </NavLink>
           </li>
         </ul>
