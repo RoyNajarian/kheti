@@ -68,7 +68,7 @@ const Dashboard = () => {
                       <td>{r.day || <span style={{ color: "#555770" }}>—</span>}</td>
                       <td>{r.hour}</td>
                       <td>{r.number_of_people}</td>
-                      <td>{r.price}</td>
+                      <td>{r.price}<span> €</span></td>
                     </tr>
                   ))}
                 </tbody>
