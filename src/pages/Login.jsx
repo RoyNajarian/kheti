@@ -7,6 +7,8 @@ const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [isRegisterMode, setIsRegisterMode] = useState(false);
+    const [lastName, setLastName] = useState("");
+    const [firstName, setFirstName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -26,13 +28,18 @@ const Login = () => {
             return;
         }
 
+        if (isRegisterMode && (!lastName.trim() || !firstName.trim())) {
+            setFeedback({ type: "error", message: "Veuillez renseigner votre nom et votre prenom." });
+            return;
+        }
+
         try {
             setIsSubmitting(true);
 
             if (isRegisterMode) {
                 const payload = {
-                    name: email.split("@")[0] || "Utilisateur",
-                    first_name: "",
+                    name: lastName.trim(),
+                    first_name: firstName.trim(),
                     email: email.trim(),
                     password,
                     admin_state: 0,
@@ -66,6 +73,8 @@ const Login = () => {
 
     const switchMode = (nextIsRegisterMode) => {
         setIsRegisterMode(nextIsRegisterMode);
+        setLastName("");
+        setFirstName("");
         setPassword("");
         setConfirmPassword("");
         setFeedback({ type: "", message: "" });
@@ -100,6 +109,36 @@ const Login = () => {
                     onChange={(event) => setEmail(event.target.value)}
                     required
                 />
+
+                {isRegisterMode && (
+                    <>
+                        <label className="profil__label" htmlFor="profil-last-name">
+                            Nom
+                        </label>
+                        <input
+                            id="profil-last-name"
+                            type="text"
+                            className="profil__input"
+                            placeholder="Entrez votre nom"
+                            value={lastName}
+                            onChange={(event) => setLastName(event.target.value)}
+                            required
+                        />
+
+                        <label className="profil__label" htmlFor="profil-first-name">
+                            Prenom
+                        </label>
+                        <input
+                            id="profil-first-name"
+                            type="text"
+                            className="profil__input"
+                            placeholder="Entrez votre prenom"
+                            value={firstName}
+                            onChange={(event) => setFirstName(event.target.value)}
+                            required
+                        />
+                    </>
+                )}
 
                 <label className="profil__label" htmlFor="profil-password">
                     Mot de passe
