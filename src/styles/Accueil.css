@@ -1,5 +1,6 @@
 /* =============================================
-   ACCUEIL — Kheti | Accessibilité & Design
+   ACCUEIL — Kheti | Mobile First
+   Breakpoint tablette/desktop : 768px
    ============================================= */
 
 /* Focus visible global */
@@ -14,15 +15,27 @@
 
     0%,
     100% {
-        transform: translateY(0);
+        transform: translateX(-50%) translateY(0);
     }
 
     50% {
-        transform: translateY(-7px);
+        transform: translateX(-50%) translateY(-7px);
     }
 }
 
 @keyframes float-pharaon {
+
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    50% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+
+@keyframes float-pharaon-desktop {
 
     0%,
     100% {
@@ -70,6 +83,73 @@
     }
 }
 
+@keyframes sun-pulse {
+
+    0%,
+    100% {
+        transform: translateX(-50%) scale(1);
+        opacity: 0.85;
+    }
+
+    50% {
+        transform: translateX(-50%) scale(1.04);
+        opacity: 1;
+    }
+}
+
+@keyframes banner-shimmer {
+    0% {
+        background-position: -200% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
+
+/* =============================================
+   BANDEAU DATES — mobile uniquement
+   ============================================= */
+.accueil-dates-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 14px 20px;
+    background: linear-gradient(90deg,
+            #8B6914 0%,
+            #D5B77B 30%,
+            #F0D49A 50%,
+            #D5B77B 70%,
+            #8B6914 100%);
+    background-size: 200% auto;
+    animation: banner-shimmer 4s linear infinite;
+
+    color: #1a0e00;
+    font-family: 'Cormorant Garamond', 'Palatino Linotype', serif;
+    font-size: clamp(0.95rem, 4vw, 1.15rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    /* Bords décoratifs */
+    border-top: 2px solid #8B6914;
+    border-bottom: 2px solid #8B6914;
+
+    /* Position sous la navbar */
+    position: relative;
+    top: 56px;
+    z-index: 2;
+    width: 100%;
+}
+
+/* Caché sur tablette/desktop */
+@media (min-width: 768px) {
+    .accueil-dates-banner {
+        display: none;
+    }
+}
+
 /* =============================================
    SECTION PRINCIPALE
    ============================================= */
@@ -77,110 +157,35 @@
     background-image: url('/public/images/lobby_hero_bg.png');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
-    min-height: 90vh;
+    min-height: 100svh;
     position: relative;
     overflow: hidden;
+    width: 100%;
 
-    /* Voile pour contraste suffisant (WCAG AA) */
+    /* Voile mobile : moins sombre pour laisser voir le fond hiéroglyphes */
     &::before {
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(160deg,
-                rgba(8, 4, 0, 0.55) 0%,
-                rgba(14, 8, 2, 0.40) 50%,
-                rgba(8, 4, 0, 0.65) 100%);
+        background: linear-gradient(180deg,
+                rgba(8, 4, 0, 0.35) 0%,
+                rgba(14, 8, 2, 0.20) 40%,
+                rgba(8, 4, 0, 0.55) 100%);
         pointer-events: none;
         z-index: 0;
     }
-}
 
-/* =============================================
-   NAVIGATION — boutons haut
-   ============================================= */
-.accueil__top-nav {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    padding: 32px clamp(24px, 4vw, 64px);
-}
+    /* Tablette/desktop : parallax + voile standard */
+    @media (min-width: 768px) {
+        background-attachment: fixed;
+        min-height: 90vh;
 
-.accueil__top-buttons {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: clamp(16px, 2vw, 32px);
-    flex-wrap: wrap;
-}
-
-/* Bouton verre partagé */
-.accueil__top-button {
-    /* Layout */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: clamp(12px, 1.5vh, 20px) clamp(20px, 2.5vw, 32px);
-    border-radius: 14px;
-    text-decoration: none;
-
-    /* Glass */
-    background: rgba(217, 217, 217, 0.12);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.20);
-
-    /* Texte */
-    color: #ffffff;
-    font-size: clamp(1rem, 1.4vw, 1.5rem);
-    font-family: 'Cormorant Garamond', 'Palatino Linotype', serif;
-    font-weight: 400;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-
-    /* Transition */
-    transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
-    position: relative;
-    overflow: hidden;
-
-    /* Grain */
-    &::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.1' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)'/%3E%3C/svg%3E");
-        opacity: 0.05;
-        mix-blend-mode: overlay;
-        pointer-events: none;
-    }
-
-    &:hover {
-        background: rgba(213, 183, 123, 0.20);
-        border-color: rgba(213, 183, 123, 0.55);
-        color: #D5B77B;
-        transform: translateY(-2px);
-    }
-
-    &:active {
-        transform: translateY(0);
-    }
-}
-
-/* Variante Labyrinth — accent doré */
-.accueil__top-button--labyrinth {
-    background: rgba(213, 183, 123, 0.15);
-    border-color: rgba(213, 183, 123, 0.45);
-    color: #D5B77B;
-    font-style: italic;
-
-    &:hover {
-        background: rgba(213, 183, 123, 0.28);
-        border-color: #D5B77B;
-        color: #f0d49a;
+        &::before {
+            background: linear-gradient(160deg,
+                    rgba(8, 4, 0, 0.55) 0%,
+                    rgba(14, 8, 2, 0.40) 50%,
+                    rgba(8, 4, 0, 0.65) 100%);
+        }
     }
 }
 
@@ -189,53 +194,85 @@
    ============================================= */
 .accueil-content {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    height: 90vh;
-    min-height: 90vh;
+    justify-content: flex-start;
     position: relative;
     z-index: 1;
+    /* Mobile : hauteur plein écran moins le bandeau */
+    min-height: calc(100svh - 52px);
+    padding-top: 80px;
+    /* espace sous navbar */
+    padding-bottom: 0;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        align-items: center;
+        height: 90vh;
+        min-height: 90vh;
+        padding-top: 0;
+    }
 }
 
-/* ---- Logo + trailer ---- */
+/* ---- Soleil décoratif (mobile uniquement) ---- */
 .accueil-main {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 28px;
-    margin-left: clamp(48px, 18vw, 300px);
+    position: relative;
+    width: 100%;
+    padding: 0 24px;
     animation: hero-fade 0.9s ease both;
+
+    @media (min-width: 768px) {
+        align-items: center;
+        margin-left: clamp(48px, 18vw, 300px);
+        width: auto;
+        padding: 0;
+
+        &::before {
+            display: none;
+            /* Soleil masqué sur desktop si le logo l'intègre */
+        }
+    }
 }
 
 .accueil-logo {
-    width: clamp(280px, 40vw, 600px);
+    width: clamp(220px, 70vw, 380px);
     height: auto;
     filter: drop-shadow(0 8px 40px rgba(213, 183, 123, 0.25));
     transition: filter 0.3s ease, transform 0.3s ease;
+    position: relative;
+    z-index: 1;
 
     &:hover {
         filter: drop-shadow(0 12px 52px rgba(213, 183, 123, 0.45));
         transform: scale(1.015);
     }
+
+    @media (min-width: 768px) {
+        width: clamp(280px, 40vw, 600px);
+    }
 }
 
-/* Bouton trailer */
+/* ---- Bouton trailer ---- */
 .accueil-trailer-btn {
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    padding: clamp(14px, 1.8vh, 20px) clamp(28px, 3.5vw, 48px);
+    padding: clamp(14px, 1.8vh, 20px) clamp(36px, 10vw, 64px);
     border-radius: 30px;
 
-    /* Glass doré */
-    background: rgba(213, 183, 123, 0.12);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border: 1.5px solid rgba(213, 183, 123, 0.45);
+    /* Glass sombre (mobile : plus opaque pour contraste sur fond texturé) */
+    background: rgba(30, 20, 5, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(213, 183, 123, 0.35);
 
-    /* Texte */
     color: #fff;
-    font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+    font-size: clamp(1rem, 4vw, 1.3rem);
     font-family: 'Cormorant Garamond', serif;
     font-weight: 600;
     letter-spacing: 0.06em;
@@ -266,6 +303,12 @@
     &:active {
         transform: translateY(0);
     }
+
+    @media (min-width: 768px) {
+        background: rgba(213, 183, 123, 0.12);
+        padding: clamp(14px, 1.8vh, 20px) clamp(28px, 3.5vw, 48px);
+        font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+    }
 }
 
 .accueil-trailer-btn__icon {
@@ -275,25 +318,64 @@
 
 /* ---- Pharaon décoratif ---- */
 .accueil-pharaon {
+    /* Mobile : centré en bas, émerge du bas de l'écran */
     position: absolute;
-    right: 0;
     bottom: 0;
-    transform: translateX(30%);
-    width: auto;
-    height: 87.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(280px, 85vw, 420px);
+    width: 400px;
     pointer-events: none;
     animation: float-pharaon 5s ease-in-out infinite;
-    filter: drop-shadow(-20px 0 60px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0 -10px 40px rgba(0, 0, 0, 0.5));
+    transform-origin: bottom center;
+    opacity: 50%;
+
+    @media (min-width: 768px) {
+        right: 0;
+        left: auto;
+        bottom: 0;
+        transform: translateX(30%);
+        width: auto;
+        height: 87.5%;
+        animation: float-pharaon-desktop 5s ease-in-out infinite;
+        filter: drop-shadow(-20px 0 60px rgba(0, 0, 0, 0.5));
+    }
 }
 
-/* ---- BD ---- */
-.accueil-bd {
+/* Dégradé sable sous le pharaon (mobile) */
+.accueil::after {
+    content: "";
     position: absolute;
-    left: 4%;
-    bottom: -50px;
-    display: flex;
-    gap: clamp(24px, 4vw, 60px);
-    align-items: flex-end;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    background: linear-gradient(to top,
+            rgba(180, 130, 50, 0.45) 0%,
+            rgba(160, 110, 30, 0.20) 50%,
+            transparent 100%);
+    pointer-events: none;
+    z-index: 2;
+
+
+    @media (min-width: 768px) {
+        display: none;
+    }
+}
+
+/* ---- BD — cachées sur mobile ---- */
+.accueil-bd {
+    display: none;
+
+    @media (min-width: 768px) {
+        display: flex;
+        position: absolute;
+        left: 4%;
+        bottom: -50px;
+        gap: clamp(24px, 4vw, 60px);
+        align-items: flex-end;
+    }
 }
 
 .accueil-bd__item {
@@ -316,7 +398,6 @@
     border-radius: 3px;
 }
 
-/* Rotations individuelles */
 .accueil-bd__item--left {
     transform: rotate(6deg);
     animation: bd-enter 0.7s 0.3s ease both;
@@ -344,24 +425,28 @@
     }
 }
 
-/* ---- Scroll CTA ---- */
+/* ---- Scroll CTA — caché sur mobile ---- */
 .accueil-scroll-action {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.75);
-    animation: float 2.5s ease-in-out infinite;
-    transition: color 0.2s ease;
+    display: none;
 
-    &:hover,
-    &:focus-visible {
-        color: #D5B77B;
+    @media (min-width: 768px) {
+        display: flex;
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.75);
+        animation: float 2.5s ease-in-out infinite;
+        transition: color 0.2s ease;
+
+        &:hover,
+        &:focus-visible {
+            color: #D5B77B;
+        }
     }
 }
 
@@ -372,10 +457,72 @@
     text-transform: uppercase;
 }
 
-/* =============================================
-   RESPONSIVE
+.hr-separator-1 {
+    position: absolute;
+    bottom: -80px;
+    z-index: 10;
+}
+
+/* =============================================   
+   SECTIONS — expo-desc
    ============================================= */
-@media (max-width: 900px) {
+
+.expo-desc {
+    position: relative;
+    z-index: 1;
+    padding: 80px 24px;
+    background: #111111;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.expo-desc__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+}
+
+.expo-desc__title {
+    font-family: 'Heroes Legend', sans-serif;
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+.expo-desc__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 80px;
+
+}
+
+.expo-desc__bird {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: auto;
+    opacity: 30%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.hr-separator-2 {
+    position: absolute;
+    bottom: -550px;
+    z-index: 10;
+}
+
+/* =============================================
+   RESPONSIVE — ajustements tablette (768–900px)
+   ============================================= */
+@media (min-width: 768px) and (max-width: 900px) {
     .accueil-main {
         margin-left: 0;
         margin-top: 120px;
@@ -386,6 +533,7 @@
     .accueil-pharaon {
         opacity: 0.3;
         transform: translateX(20%);
+        animation: none;
     }
 
     .accueil-content {
@@ -401,16 +549,6 @@
     }
 }
 
-@media (max-width: 480px) {
-    .accueil__top-buttons {
-        gap: 10px;
-    }
-
-    .accueil-bd {
-        left: 2%;
-    }
-}
-
 /* =============================================
    MOTION RÉDUIT — accessibilité
    ============================================= */
@@ -419,6 +557,8 @@
     .accueil-pharaon,
     .accueil-scroll-action,
     .accueil-main,
+    .accueil-main::before,
+    .accueil-dates-banner,
     .accueil-bd__item,
     .accueil-bd__item--left,
     .accueil-bd__item--center,

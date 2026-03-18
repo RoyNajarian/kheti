@@ -1,4 +1,6 @@
-import { Routes, Route, Outlet } from "react-router";
+import { Routes, Route, Outlet, useLocation } from "react-router";
+
+import MenuNavbar from "./components/menu_navbar";
 
 import Accueil from "./pages/Accueil";
 import Register from "./pages/auth/Register";
@@ -16,13 +18,20 @@ import BackOfficeUsers from "./back-office/Users";
 import "/src/styles/Accueil.css";
 import "/src/styles/Footer.css";
 
-const PublicLayout = () => (
-  <>
-    {/* <Navbar /> */}
-    <Outlet />
-    <Footer />
-  </>
-);
+const PublicLayout = () => {
+  const location = useLocation();
+  console.log(location.pathname); // ← ajoutez cette ligne
+
+  const ifGamePage = location.pathname === "/jeu";
+
+  return (
+    <>
+      {!ifGamePage && <MenuNavbar />}
+      <Outlet />
+      {!ifGamePage && <Footer />}
+    </>
+  );
+};
 
 const App = () => {
   return (
