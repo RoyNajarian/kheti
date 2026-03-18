@@ -65,7 +65,7 @@ const Dashboard = () => {
                     <tr key={r.id}>
                       <td>{r.id}</td>
                       <td>{r.user?.name} {r.user?.first_name}</td>
-                      <td>{r.day || <span style={{ color: "#555770" }}>—</span>}</td>
+                      <td>{r.day || <span className="bo-muted">—</span>}</td>
                       <td>{r.hour}</td>
                       <td>{r.number_of_people}</td>
                       <td>{r.price}<span> €</span></td>
@@ -74,7 +74,7 @@ const Dashboard = () => {
                 </tbody>
               </table>
             </div>
-            <Link to="/back-office/reservations" style={{ color: "#c89b3c", fontSize: "0.88rem" }}>
+            <Link to="/back-office/reservations" className="bo-link-inline">
               Voir toutes les réservations →
             </Link>
           </>

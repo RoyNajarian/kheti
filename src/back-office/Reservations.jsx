@@ -32,23 +32,13 @@ const Reservations = () => {
         <span className="bo-topbar-meta">{reservations.length} réservation(s) au total</span>
       </div>
       <div className="bo-content">
-        <div style={{ marginBottom: "20px" }}>
+        <div className="bo-toolbar">
           <input
             type="text"
             placeholder="Rechercher par nom, email, date…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="bo-search-input"
-            style={{
-              background: "#161925",
-              border: "1px solid #2a2d3e",
-              borderRadius: "6px",
-              padding: "9px 14px",
-              color: "#e0e0e0",
-              fontSize: "0.88rem",
-              width: "300px",
-              outline: "none",
-            }}
           />
         </div>
 
@@ -73,7 +63,7 @@ const Reservations = () => {
               <tbody>
                 {filtered.length === 0 ? (
                   <tr>
-                    <td colSpan={8} style={{ textAlign: "center", color: "#555770" }}>
+                    <td colSpan={8} className="bo-empty-cell">
                       Aucune réservation trouvée
                     </td>
                   </tr>
@@ -85,7 +75,7 @@ const Reservations = () => {
                         {r.user?.name} {r.user?.first_name}
                       </td>
                       <td>{r.user?.email}</td>
-                      <td>{r.day || <span style={{ color: "#555770" }}>Non définie</span>}</td>
+                      <td>{r.day || <span className="bo-muted">Non définie</span>}</td>
                       <td>{r.hour}</td>
                       <td>{r.number_of_people}</td>
                       <td>{r.price}</td>

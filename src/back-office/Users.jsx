@@ -30,22 +30,13 @@ const Users = () => {
         <span className="bo-topbar-meta">{users.length} utilisateur(s) au total</span>
       </div>
       <div className="bo-content">
-        <div style={{ marginBottom: "20px" }}>
+        <div className="bo-toolbar">
           <input
             type="text"
             placeholder="Rechercher par nom ou email…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            style={{
-              background: "#161925",
-              border: "1px solid #2a2d3e",
-              borderRadius: "6px",
-              padding: "9px 14px",
-              color: "#e0e0e0",
-              fontSize: "0.88rem",
-              width: "300px",
-              outline: "none",
-            }}
+            className="bo-search-input"
           />
         </div>
 
@@ -67,7 +58,7 @@ const Users = () => {
               <tbody>
                 {filtered.length === 0 ? (
                   <tr>
-                    <td colSpan={5} style={{ textAlign: "center", color: "#555770" }}>
+                    <td colSpan={5} className="bo-empty-cell">
                       Aucun utilisateur trouvé
                     </td>
                   </tr>
