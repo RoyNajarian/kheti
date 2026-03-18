@@ -21,6 +21,7 @@ export const Jeu = () => {
     useEffect(() => {
         const container = containerRef.current;
         const currentMap = maps[currentLevel];
+        document.body.style.overflow = 'hidden';
 
         // Scène
         const scene = new THREE.Scene();
@@ -107,6 +108,7 @@ export const Jeu = () => {
             window.removeEventListener('keydown', keyboardArrow);
             renderer.dispose();
             container.removeChild(renderer.domElement);
+            document.body.style.overflow = 'visible';
         };
     }, [currentLevel]);
 
