@@ -8,5 +8,10 @@ body {
     font-family: sans-serif;
     background-color: #B69F5E;
     color: white;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
+}
+
+@font-face {
+    font-family: Heroes Legend;
+    src: url('/public/fonts/Heroes Legend.woff2') format('woff2');
 }

@@ -1,8 +1,9 @@
-import { Routes, Route, Outlet } from "react-router";
+import { Routes, Route, Outlet, useLocation } from "react-router";
+
+import MenuNavbar from "./components/menu_navbar";
 
 import Accueil from "./pages/Accueil";
-import Register from "./pages/auth/Register";
-import Login from "./pages/auth/Login";
+import Login from "./pages/Login";
 import Profil from "./pages/Profil";
 import Immersive from "./pages/Immersive";
 import Jeu from "./pages/Jeu";
@@ -16,13 +17,20 @@ import BackOfficeUsers from "./back-office/Users";
 import "/src/styles/Accueil.css";
 import "/src/styles/Footer.css";
 
-const PublicLayout = () => (
-  <>
-    {/* <Navbar /> */}
-    <Outlet />
-    <Footer />
-  </>
-);
+const PublicLayout = () => {
+  const location = useLocation();
+  console.log(location.pathname); // ← ajoutez cette ligne
+
+  const ifGamePage = location.pathname === "/jeu";
+
+  return (
+    <>
+      {!ifGamePage && <MenuNavbar />}
+      <Outlet />
+      {!ifGamePage && <Footer />}
+    </>
+  );
+};
 
 const App = () => {
   return (
@@ -31,7 +39,7 @@ const App = () => {
       <Route element={<PublicLayout />}>
         <Route index element={<Accueil />} />
         <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        <Route path="register" element={<Login />} />
         <Route path="profil" element={<Profil />} />
         <Route path="immersive" element={<Immersive />} />
         <Route path="jeu" element={<Jeu />} />
