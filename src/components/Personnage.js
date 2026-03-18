@@ -4,14 +4,11 @@ import gsap from 'gsap';
 let personnageMesh = null;
 let isMoving = false;
 
-// positionX = depart.j;
-// positionZ = depart.i;
 let positionX = 0;
 let positionZ = 0;
 
 let rotationX = 0;
 let rotationZ = 0;
-// isMoving = false;
 
 export const start = (currentLevel) => {
     for (let i = 0; i < currentLevel.length; i++) {
@@ -22,7 +19,6 @@ export const start = (currentLevel) => {
         }
     }
 }
-
 
 export const createPersonnage = (scene, currentLevel) => {
     const textureLoader = new THREE.TextureLoader();
