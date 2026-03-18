@@ -1,8 +1,7 @@
 import { Routes, Route, Outlet } from "react-router";
 
 import Accueil from "./pages/Accueil";
-import Register from "./pages/auth/Register";
-import Login from "./pages/auth/Login";
+import Login from "./pages/Login";
 import Profil from "./pages/Profil";
 import Immersive from "./pages/Immersive";
 import Jeu from "./pages/Jeu";
@@ -31,7 +30,7 @@ const App = () => {
       <Route element={<PublicLayout />}>
         <Route index element={<Accueil />} />
         <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        <Route path="register" element={<Login />} />
         <Route path="profil" element={<Profil />} />
         <Route path="immersive" element={<Immersive />} />
         <Route path="jeu" element={<Jeu />} />

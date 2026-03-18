@@ -6,13 +6,16 @@ const BackOfficeLayout = () => {
     <div className="bo-wrapper">
       <aside className="bo-sidebar">
         <div className="bo-sidebar-logo">
-          <h2>Kheti</h2>
-          <span>Administration</span>
+          <Link to="/" className="bo-brand" aria-label="Retour a l'accueil Kheti">
+            <img src="/images/kheti-logo.png" alt="Kheti" className="bo-brand-logo" />
+          </Link>
+          <h2>Back Office</h2>
+          <span>Administration du temple</span>
         </div>
         <ul className="bo-nav">
           <li>
             <NavLink to="/back-office" end>
-              Dashboard
+              Tableau de bord
             </NavLink>
           </li>
           <li>
@@ -27,7 +30,7 @@ const BackOfficeLayout = () => {
           </li>
         </ul>
         <div className="bo-sidebar-footer">
-          <Link to="/">← Retour au site</Link>
+          <Link to="/">Retour au site</Link>
         </div>
       </aside>
 
