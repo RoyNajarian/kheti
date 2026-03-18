@@ -19,9 +19,8 @@ import "/src/styles/Footer.css";
 
 const PublicLayout = () => {
   const location = useLocation();
-  console.log(location.pathname); // ← ajoutez cette ligne
 
-  const ifGamePage = location.pathname === "/jeu";
+  const ifGamePage = location.pathname === "/jeu" || location.pathname === "/login";
 
   return (
     <>
