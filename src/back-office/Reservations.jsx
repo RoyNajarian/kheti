@@ -78,7 +78,7 @@ const Reservations = () => {
                       <td>{r.day || <span className="bo-muted">Non définie</span>}</td>
                       <td>{r.hour}</td>
                       <td>{r.number_of_people}</td>
-                      <td>{r.price}</td>
+                      <td>{r.price}<span> €</span></td>
                       <td>
                         <span className={r.user?.admin_state ? "bo-badge bo-badge-admin" : "bo-badge bo-badge-user"}>
                           {r.user?.admin_state ? "Admin" : "User"}
