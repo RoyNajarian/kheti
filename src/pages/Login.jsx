@@ -98,7 +98,7 @@ const Login = () => {
                 <h1 className="profil__title">{isRegisterMode ? "Inscription" : "Connexion"}</h1>
 
                 <label className="profil__label" htmlFor="profil-email">
-                    E-mail
+                    E-mail <span className="profil__required">*</span>
                 </label>
                 <input
                     id="profil-email"
@@ -113,7 +113,7 @@ const Login = () => {
                 {isRegisterMode && (
                     <>
                         <label className="profil__label" htmlFor="profil-last-name">
-                            Nom
+                            Nom <span className="profil__required">*</span>
                         </label>
                         <input
                             id="profil-last-name"
@@ -126,7 +126,7 @@ const Login = () => {
                         />
 
                         <label className="profil__label" htmlFor="profil-first-name">
-                            Prenom
+                            Prenom <span className="profil__required">*</span>
                         </label>
                         <input
                             id="profil-first-name"
@@ -141,7 +141,7 @@ const Login = () => {
                 )}
 
                 <label className="profil__label" htmlFor="profil-password">
-                    Mot de passe
+                    Mot de passe <span className="profil__required">*</span>
                 </label>
                 <input
                     id="profil-password"
@@ -156,7 +156,7 @@ const Login = () => {
                 {isRegisterMode && (
                     <>
                         <label className="profil__label" htmlFor="profil-confirm-password">
-                            Confirmer le mot de passe
+                            Confirmer le mot de passe <span className="profil__required">*</span>
                         </label>
                         <input
                             id="profil-confirm-password"

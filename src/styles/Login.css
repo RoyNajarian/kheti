@@ -73,6 +73,11 @@
 	font-weight: 600;
 }
 
+.profil__required {
+	color: #ff6b6b;
+	font-weight: 700;
+}
+
 .profil__input {
 	width: 100%;
 	height: 46px;
