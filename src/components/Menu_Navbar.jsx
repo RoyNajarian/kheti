@@ -62,7 +62,7 @@ const MenuNavbar = () => {
                     </a>
                 </li>
                 <li>
-                    <a href='/register' className="nav-button" aria-label="Se connecter à son compte" onClick={handleLinkClick}>
+                    <a href='/login' className="nav-button" aria-label="Se connecter à son compte" onClick={handleLinkClick}>
                         Connexion
                     </a>
                 </li>
