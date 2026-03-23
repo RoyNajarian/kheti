@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { NavLink } from 'react-router';
 import '../styles/Menu_Navbar.css';
 
 const MenuNavbar = () => {
@@ -52,24 +53,45 @@ const MenuNavbar = () => {
                 className={`nav-buttons${isOpen ? ' nav-buttons--open' : ''}`}
             >
                 <li>
-                    <a href="/" className="nav-button" aria-label="Accueil" onClick={handleLinkClick}>
+                    <NavLink
+                        to="/"
+                        end
+                        className={({ isActive }) => `nav-button${isActive ? ' nav-button--active' : ''}`}
+                        aria-label="Accueil"
+                        onClick={handleLinkClick}
+                    >
                         Accueil
-                    </a>
+                    </NavLink>
                 </li>
                 <li>
-                    <a href='/reservation' className="nav-button" aria-label="Réserver vos billets" onClick={handleLinkClick}>
+                    <NavLink
+                        to='/reservation'
+                        className={({ isActive }) => `nav-button${isActive ? ' nav-button--active' : ''}`}
+                        aria-label="Réserver vos billets"
+                        onClick={handleLinkClick}
+                    >
                         Réserver
-                    </a>
+                    </NavLink>
                 </li>
                 <li>
-                    <a href='/login' className="nav-button" aria-label="Se connecter à son compte" onClick={handleLinkClick}>
+                    <NavLink
+                        to='/login'
+                        className={({ isActive }) => `nav-button${isActive ? ' nav-button--active' : ''}`}
+                        aria-label="Se connecter à son compte"
+                        onClick={handleLinkClick}
+                    >
                         Connexion
-                    </a>
+                    </NavLink>
                 </li>
                 <li>
-                    <a href="/jeu" className="nav-button nav-button--labyrinth" aria-label="Accéder au Labyrinthe" onClick={handleLinkClick}>
+                    <NavLink
+                        to="/jeu"
+                        className={({ isActive }) => `nav-button nav-button--labyrinth${isActive ? ' nav-button--active' : ''}`}
+                        aria-label="Accéder au Labyrinthe"
+                        onClick={handleLinkClick}
+                    >
                         Labyrinth
-                    </a>
+                    </NavLink>
                 </li>
             </ul>
         </nav>

@@ -1,30 +1,96 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { createReservation } from "../back-office/api";
 
 const ReservationStep5 = ({ reservationData, onPrevious }) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [orderNumber] = useState(
-    Math.floor(Math.random() * 1000000)
-      .toString()
-      .padStart(6, "0")
-  );
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [apiError, setApiError] = useState("");
+  const [orderNumber, setOrderNumber] = useState("");
+
+  const ticketPrices = {
+    explorateur: 20,
+    scribe: 10,
+    scarabee: 7,
+  };
+
+  const isValidEmail = (value) => {
+    const normalized = String(value || "").trim();
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized);
+  };
+
+  const toSqlHour = (value) => {
+    if (!value) return "";
+    if (/^\d{2}:\d{2}:\d{2}$/.test(value)) return value;
+    if (/^\d{2}:\d{2}$/.test(value)) return `${value}:00`;
+    return value;
+  };
 
   const handleConfirm = async () => {
+    setApiError("");
     setIsLoading(true);
-    // Simuler l'envoi de la commande
-    setTimeout(() => {
-      setIsLoading(false);
-      // Rediriger vers la page d'accueil après 3 secondes
+
+    try {
+      const adultCount = Number(reservationData.quantities?.explorateur || 0);
+      const childCount = Number(reservationData.quantities?.scarabee || 0);
+      const studentCount = Number(reservationData.quantities?.scribe || 0);
+      const totalTickets = adultCount + childCount + studentCount;
+
+      if (!reservationData.date || !reservationData.time || totalTickets <= 0) {
+        throw new Error("Informations de reservation incompletes.");
+      }
+
+      const normalizedEmail = String(reservationData.email || "").trim().toLowerCase();
+      if (!normalizedEmail) {
+        throw new Error("Email manquant pour finaliser la reservation.");
+      }
+      if (!isValidEmail(normalizedEmail)) {
+        throw new Error("L'adresse email est invalide. Exemple attendu: nom@domaine.com");
+      }
+
+      const totalPrice =
+        adultCount * ticketPrices.explorateur +
+        childCount * ticketPrices.scarabee +
+        studentCount * ticketPrices.scribe;
+
+      const payload = {
+        day: reservationData.date,
+        hour: toSqlHour(reservationData.time),
+        price: totalPrice,
+        adult_count: adultCount,
+        child_count: childCount,
+        student_count: studentCount,
+        email: normalizedEmail,
+      };
+
+      const response = await createReservation(payload);
+      const reservationId =
+        response?.data?.id_reservation ??
+        response?.data?.id ??
+        response?.id_reservation ??
+        response?.id;
+
+      const fallbackOrder = Math.floor(Math.random() * 1000000)
+        .toString()
+        .padStart(6, "0");
+
+      setOrderNumber(String(reservationId || fallbackOrder));
+      setIsSuccess(true);
+
       setTimeout(() => {
         navigate("/");
       }, 3000);
-    }, 1500);
+    } catch (error) {
+      setApiError(error.message || "Erreur lors de l'envoi de la reservation.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="reservation-step-5">
-      {!isLoading ? (
+      {!isSuccess ? (
         <>
           <h2 className="step-title">Étape 5 : Validation finale</h2>
 
@@ -81,9 +147,11 @@ const ReservationStep5 = ({ reservationData, onPrevious }) => {
               onClick={handleConfirm}
               disabled={isLoading}
             >
-              {isLoading ? "Traitement..." : "Confirmer la commande"}
+              {isLoading ? "Envoi en cours..." : "Confirmer la commande"}
             </button>
           </div>
+
+          {apiError && <p className="info-message error">{apiError}</p>}
         </>
       ) : (
         <div className="confirmation-success">

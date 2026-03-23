@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router";
 import "../styles/Breadcrumb.css";
 
 const Breadcrumb = ({ currentStep, totalSteps }) => {
@@ -14,14 +13,6 @@ const Breadcrumb = ({ currentStep, totalSteps }) => {
   return (
     <div className="breadcrumb">
       <div className="breadcrumb-container">
-        <Link
-          to="/"
-          className="breadcrumb-brand"
-          aria-label="Retourner à l'accueil"
-        >
-          <img src="/images/kheti-logo.png" alt="Kheti" className="breadcrumb-logo" />
-        </Link>
-
         <div className="breadcrumb-steps">
           {steps.map((step, index) => (
             <React.Fragment key={step.number}>
@@ -43,8 +34,6 @@ const Breadcrumb = ({ currentStep, totalSteps }) => {
             </React.Fragment>
           ))}
         </div>
-
-        <div className="breadcrumb-spacer" aria-hidden="true" />
       </div>
     </div>
   );
