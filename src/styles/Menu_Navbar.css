@@ -9,7 +9,7 @@
     align-items: center;
     justify-content: flex-end;
 
-    &::before {
+    /* &::before {
         content: "";
         position: absolute;
         inset: 0;
@@ -19,7 +19,7 @@
         z-index: 0;
         mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
         -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
-    }
+    } */
 }
 
 /* Overlay sombre (mobile) */
@@ -158,9 +158,9 @@
     .top-nav {
         padding: 32px clamp(24px, 4vw, 64px);
         justify-content: flex-start;
+        gap: clamp(16px, 2vw, 32px);
     }
 
-    /* Cache le burger */
     .nav-burger {
         display: none;
     }
@@ -192,6 +192,72 @@
     /* Cache l'overlay sur desktop */
     .nav-overlay {
         display: none !important;
+    }
+}
+
+/* ── Bouton langue ── */
+.nav-lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(63, 63, 63, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #ffffff;
+    font-family: 'Cormorant Garamond', 'Palatino Linotype', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.2s ease,
+        opacity 0.25s ease 0s,
+        visibility 0.25s ease 0s;
+
+    /* Mobile : caché par défaut, affiché quand le drawer est ouvert */
+    position: fixed;
+    top: 20px;
+    right: 200px;
+    z-index: 200;
+    opacity: 0;
+    visibility: hidden;
+
+    &:hover {
+        background: rgba(213, 183, 123, 0.20);
+        border-color: rgba(213, 183, 123, 0.55);
+        color: #D5B77B;
+        transform: translateY(-1px);
+    }
+}
+
+/* Apparition synchronisée avec le drawer (même délai que le 1er li) */
+.nav-lang--open {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.10s;
+}
+
+.nav-lang__globe {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.nav-lang__label {
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .nav-lang {
+        position: static;
+        margin-right: auto;
+        opacity: 1;
+        visibility: visible;
+        transition-delay: 0s;
     }
 }
 
@@ -243,17 +309,3 @@
         width: auto;
     }
 }
-
-/* ── Variante Labyrinth — accent doré ── */
-/* .nav-button--labyrinth {
-    background: rgba(213, 183, 123, 0.15);
-    border-color: rgba(213, 183, 123, 0.45);
-    color: #D5B77B;
-    font-style: italic;
-
-    &:hover {
-        background: rgba(213, 183, 123, 0.28);
-        border-color: #D5B77B;
-        color: #f0d49a;
-    }
-} */

@@ -1,8 +1,15 @@
 import { useState, useEffect } from 'react';
 import '../styles/Menu_Navbar.css';
 
+const LANGS = ['FR', 'EN'];
+
 const MenuNavbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [lang, setLang] = useState('FR');
+
+    const cycleLang = () => {
+        setLang(prev => LANGS[(LANGS.indexOf(prev) + 1) % LANGS.length]);
+    };
 
     // Ferme le menu au resize si on passe en tablette/desktop
     useEffect(() => {
@@ -25,6 +32,7 @@ const MenuNavbar = () => {
 
     return (
         <nav className="top-nav" aria-label="Navigation principale">
+
             {/* Burger button — visible uniquement sur mobile */}
             <button
                 className={`nav-burger${isOpen ? ' nav-burger--open' : ''}`}
@@ -72,6 +80,32 @@ const MenuNavbar = () => {
                     </a>
                 </li>
             </ul>
+            {/* Bouton langue — mobile : coin haut-gauche du drawer | desktop : inline flex-end */}
+            <button
+                className={`nav-lang${isOpen ? ' nav-lang--open' : ''}`}
+                onClick={cycleLang}
+                aria-label={`Langue actuelle : ${lang}. Cliquer pour changer.`}
+                type="button"
+            >
+                <span className="nav-lang__globe" aria-hidden="true">
+                    {lang === 'FR' ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 3 2" aria-hidden="true">
+                            <rect width="1" height="2" fill="#002395" />
+                            <rect x="1" width="1" height="2" fill="#fff" />
+                            <rect x="2" width="1" height="2" fill="#ED2939" />
+                        </svg>
+                    ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 60 30" aria-hidden="true">
+                            <rect width="60" height="30" fill="#012169" />
+                            <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6" />
+                            <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" strokeWidth="4" />
+                            <path d="M30,0 V30 M0,15 H60" stroke="#fff" strokeWidth="10" />
+                            <path d="M30,0 V30 M0,15 H60" stroke="#C8102E" strokeWidth="6" />
+                        </svg>
+                    )}
+                </span>
+                <span className="nav-lang__label">{lang}</span>
+            </button>
         </nav>
     );
 };
