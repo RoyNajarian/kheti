@@ -1,139 +1,110 @@
 import React, { useState } from "react";
+import Breadcrumb from "../components/Breadcrumb";
+import ReservationStep1 from "../components/ReservationStep1";
+import ReservationStep2 from "../components/ReservationStep2";
+import ReservationStep3 from "../components/ReservationStep3";
+import ReservationStep4 from "../components/ReservationStep4";
+import ReservationStep5 from "../components/ReservationStep5";
 import "../styles/Reservation.css";
 
+const getInitialReservationEmail = () => {
+  try {
+    const raw = localStorage.getItem("khetiUser");
+    if (!raw) return "";
+    const user = JSON.parse(raw);
+    return String(user?.email || "").trim();
+  } catch {
+    return "";
+  }
+};
+
 const Reservation = () => {
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [quantities, setQuantities] = useState({
-    explorateur: 1,
-    scribe: 0,
-    scarabee: 0,
-    pass: 0,
+  const [currentStep, setCurrentStep] = useState(1);
+  const [reservationData, setReservationData] = useState({
+    date: "",
+    time: "",
+    quantities: {
+      explorateur: 0,
+      scribe: 0,
+      scarabee: 0,
+    },
+    email: getInitialReservationEmail(),
   });
-  const prices = {
-    explorateur: 20,
-    scribe: 10,
-    scarabee: 7,
-    pass: 40,
-  };
-  const total =
-    quantities.explorateur * prices.explorateur +
-    quantities.scribe * prices.scribe +
-    quantities.scarabee * prices.scarabee +
-    quantities.pass * prices.pass;
+
   const handleQuantity = (type, delta) => {
-    setQuantities((q) => ({
-      ...q,
-      [type]: Math.max(0, q[type] + delta),
+    setReservationData((prev) => ({
+      ...prev,
+      quantities: {
+        ...prev.quantities,
+        [type]: Math.max(0, prev.quantities[type] + delta),
+      },
     }));
   };
 
+  const handleNextStep = () => {
+    setCurrentStep((prev) => Math.min(prev + 1, 5));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handlePreviousStep = () => {
+    setCurrentStep((prev) => Math.max(prev - 1, 1));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <div className="reservation-bg">
-      <div className="reservation-scroll">
-        <div className="reservation-panel cartoon-egypt">
-          <h2 className="reservation-title cartoon-egypt-title">
-            <span>BILLETTERIE - RÉSERVEZ VOTRE VOYAGE</span>
-          </h2>
-          <div className="reservation-main-row">
-            {/* Colonne gauche : calendrier */}
-            <div className="reservation-step reservation-col-left">
-              <div className="step-title cartoon-egypt-step">1. QUAND ?</div>
-              <input
-                type="date"
-                className="reservation-date cartoon-egypt-input"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-              />
-              <div className="reservation-times">
-                {["10:00", "12:00", "14:00", "16:00"].map((t) => (
-                  <button
-                    key={t}
-                    className={`reservation-time-btn cartoon-egypt-btn${time === t ? " selected" : ""}`}
-                    onClick={() => setTime(t)}
-                  >
-                    {t}
-                  </button>
-                ))}
-              </div>
-            </div>
+    <div className="reservation-container">
+      <Breadcrumb currentStep={currentStep} totalSteps={5} />
 
-            {/* Colonne droite : tarifs avec icônes BD/Égypte */}
-            <div className="reservation-step reservation-col-right">
-              <div className="step-title cartoon-egypt-step">2. POUR QUI ?</div>
-              <div className="reservation-cards">
-                <div className="reservation-card cartoon-egypt-card">
-                  <img src="/public/images/hat.png" alt="Explorateur" className="cartoon-egypt-icon" />
-                  <div className="card-title">EXPLORATEUR <span className="card-desc">Adulte</span></div>
-                  <div className="card-price">20€</div>
-                  <div className="card-qty">
-                    <button className="cartoon-egypt-btn" onClick={() => handleQuantity("explorateur", -1)}>-</button>
-                    <span>{quantities.explorateur}</span>
-                    <button className="cartoon-egypt-btn" onClick={() => handleQuantity("explorateur", 1)}>+</button>
-                  </div>
-                </div>
-                <div className="reservation-card cartoon-egypt-card">
-                  <img src="/public/images/papyrus.png" alt="Scribe" className="cartoon-egypt-icon" />
-                  <div className="card-title">SCRIBE</div>
-                  <div className="card-price">10€</div>
-                  <div className="card-qty">
-                    <button className="cartoon-egypt-btn" onClick={() => handleQuantity("scribe", -1)}>-</button>
-                    <span>{quantities.scribe}</span>
-                    <button className="cartoon-egypt-btn" onClick={() => handleQuantity("scribe", 1)}>+</button>
-                  </div>
-                </div>
-                <div className="reservation-card cartoon-egypt-card">
-                  <img src="/public/images/pharaon.png" alt="Petit Scarabée" className="cartoon-egypt-icon" />
-                  <div className="card-title">PETIT SCARABÉE <span className="card-desc">Enfant (≤12 ans)</span></div>
-                  <div className="card-price">7€</div>
-                  <div className="card-qty">
-                    <button className="cartoon-egypt-btn" onClick={() => handleQuantity("scarabee", -1)}>-</button>
-                    <span>{quantities.scarabee}</span>
-                    <button className="cartoon-egypt-btn" onClick={() => handleQuantity("scarabee", 1)}>+</button>
-                  </div>
-                </div>
-                <div className="reservation-card cartoon-egypt-card">
-                  <img src="/public/images/pharaon.png" alt="Pass Pharaon" className="cartoon-egypt-icon" />
-                  <div className="card-title">PASS PHARAON</div>
-                  <div className="card-price">40€</div>
-                  <div className="card-qty">
-                    <button className="cartoon-egypt-btn" onClick={() => handleQuantity("pass", -1)}>-</button>
-                    <span>{quantities.pass}</span>
-                    <button className="cartoon-egypt-btn" onClick={() => handleQuantity("pass", 1)}>+</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div className="reservation-wrapper">
+        <h1 className="reservation-main-title">Billetterie - Réservez votre voyage</h1>
 
-          {/* 3. Panier sacré */}
-          <div className="reservation-step cartoon-egypt-step">
-            <div className="step-title">3. VOTRE PANIER SACRÉ</div>
-            <div className="reservation-cart cartoon-egypt-cart">
-              <div className="cart-row">
-                <span>EXPLORATEUR</span>
-                <span>{prices.explorateur}€ x {quantities.explorateur}</span>
-              </div>
-              <div className="cart-row">
-                <span>SCRIBE</span>
-                <span>{prices.scribe}€ x {quantities.scribe}</span>
-              </div>
-              <div className="cart-row">
-                <span>PETIT SCARABÉE</span>
-                <span>{prices.scarabee}€ x {quantities.scarabee}</span>
-              </div>
-              <div className="cart-row">
-                <span>PASS PHARAON</span>
-                <span>{prices.pass}€ x {quantities.pass}</span>
-              </div>
-              <div className="cart-total">
-                <span>TOTAL</span>
-                <span>{total}€</span>
-              </div>
-            </div>
-            <button className="reservation-submit cartoon-egypt-btn">VALIDER MON OFFRANDE</button>
-          </div>
-        </div>
+        {currentStep === 1 && (
+          <ReservationStep1
+            date={reservationData.date}
+            setDate={(date) =>
+              setReservationData({ ...reservationData, date })
+            }
+            time={reservationData.time}
+            setTime={(time) =>
+              setReservationData({ ...reservationData, time })
+            }
+            quantities={reservationData.quantities}
+            handleQuantity={handleQuantity}
+            onNext={handleNextStep}
+          />
+        )}
+
+        {currentStep === 2 && (
+          <ReservationStep2
+            reservationData={reservationData}
+            onPrevious={handlePreviousStep}
+            onNext={handleNextStep}
+          />
+        )}
+
+        {currentStep === 3 && (
+          <ReservationStep3
+            reservationData={reservationData}
+            setReservationData={setReservationData}
+            onPrevious={handlePreviousStep}
+            onNext={handleNextStep}
+          />
+        )}
+
+        {currentStep === 4 && (
+          <ReservationStep4
+            reservationData={reservationData}
+            onPrevious={handlePreviousStep}
+            onNext={handleNextStep}
+          />
+        )}
+
+        {currentStep === 5 && (
+          <ReservationStep5
+            reservationData={reservationData}
+            onPrevious={handlePreviousStep}
+          />
+        )}
       </div>
     </div>
   );

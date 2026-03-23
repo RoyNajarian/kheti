@@ -15,24 +15,29 @@ export async function getUsers() {
 }
 
 export async function authenticateUser(email, password) {
-  const users = await getUsers();
   const normalizedEmail = String(email || "").trim().toLowerCase();
 
-  const user = users.find(
-    (item) => String(item.email || "").trim().toLowerCase() === normalizedEmail,
-  );
+  const res = await fetch(`${BASE_URL}/auth`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: normalizedEmail,
+      password: String(password || ""),
+    }),
+  });
 
-  if (!user) {
-    return { success: false, error: "Aucun compte trouve pour cet e-mail." };
+  const json = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    return {
+      success: false,
+      error: json.error || "Identifiants invalides.",
+    };
   }
 
-  // Si le backend expose un mot de passe, on le verifie; sinon on valide via l'e-mail.
-  const backendPassword = user.password ?? user.pass ?? null;
-  if (backendPassword !== null && String(backendPassword) !== String(password)) {
-    return { success: false, error: "Mot de passe incorrect." };
-  }
-
-  return { success: true, user };
+  const user = json?.data?.user || json?.user || null;
+  const token = json?.data?.token || json?.token || null;
+  return { success: true, user, token };
 }
 
 export async function createUser(data) {

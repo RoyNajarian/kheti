@@ -304,6 +304,13 @@
         transform: translateY(0);
     }
 
+    &.nav-button--active {
+        background: rgba(213, 183, 123, 0.25);
+        border-color: rgba(213, 183, 123, 0.65);
+        color: #d5b77b;
+        box-shadow: 0 4px 14px rgba(213, 183, 123, 0.2);
+    }
+
     /* Sur tablette/desktop, largeur auto */
     @media (min-width: 768px) {
         width: auto;

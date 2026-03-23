@@ -7,6 +7,8 @@ const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [isRegisterMode, setIsRegisterMode] = useState(false);
+    const [lastName, setLastName] = useState("");
+    const [firstName, setFirstName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -26,13 +28,18 @@ const Login = () => {
             return;
         }
 
+        if (isRegisterMode && (!lastName.trim() || !firstName.trim())) {
+            setFeedback({ type: "error", message: "Veuillez renseigner votre nom et votre prenom." });
+            return;
+        }
+
         try {
             setIsSubmitting(true);
 
             if (isRegisterMode) {
                 const payload = {
-                    name: email.split("@")[0] || "Utilisateur",
-                    first_name: "",
+                    name: lastName.trim(),
+                    first_name: firstName.trim(),
                     email: email.trim(),
                     password,
                     admin_state: 0,
@@ -52,6 +59,9 @@ const Login = () => {
             }
 
             localStorage.setItem("khetiUser", JSON.stringify(result.user));
+            if (result.token) {
+                localStorage.setItem("khetiToken", result.token);
+            }
             setFeedback({ type: "success", message: "Connexion reussie." });
             navigate("/");
         } catch (error) {
@@ -66,6 +76,8 @@ const Login = () => {
 
     const switchMode = (nextIsRegisterMode) => {
         setIsRegisterMode(nextIsRegisterMode);
+        setLastName("");
+        setFirstName("");
         setPassword("");
         setConfirmPassword("");
         setFeedback({ type: "", message: "" });
@@ -89,7 +101,7 @@ const Login = () => {
                 <h1 className="profil__title">{isRegisterMode ? "Inscription" : "Connexion"}</h1>
 
                 <label className="profil__label" htmlFor="profil-email">
-                    E-mail
+                    E-mail <span className="profil__required">*</span>
                 </label>
                 <input
                     id="profil-email"
@@ -101,8 +113,38 @@ const Login = () => {
                     required
                 />
 
+                {isRegisterMode && (
+                    <>
+                        <label className="profil__label" htmlFor="profil-last-name">
+                            Nom <span className="profil__required">*</span>
+                        </label>
+                        <input
+                            id="profil-last-name"
+                            type="text"
+                            className="profil__input"
+                            placeholder="Entrez votre nom"
+                            value={lastName}
+                            onChange={(event) => setLastName(event.target.value)}
+                            required
+                        />
+
+                        <label className="profil__label" htmlFor="profil-first-name">
+                            Prenom <span className="profil__required">*</span>
+                        </label>
+                        <input
+                            id="profil-first-name"
+                            type="text"
+                            className="profil__input"
+                            placeholder="Entrez votre prenom"
+                            value={firstName}
+                            onChange={(event) => setFirstName(event.target.value)}
+                            required
+                        />
+                    </>
+                )}
+
                 <label className="profil__label" htmlFor="profil-password">
-                    Mot de passe
+                    Mot de passe <span className="profil__required">*</span>
                 </label>
                 <input
                     id="profil-password"
@@ -117,7 +159,7 @@ const Login = () => {
                 {isRegisterMode && (
                     <>
                         <label className="profil__label" htmlFor="profil-confirm-password">
-                            Confirmer le mot de passe
+                            Confirmer le mot de passe <span className="profil__required">*</span>
                         </label>
                         <input
                             id="profil-confirm-password"
