@@ -19,6 +19,7 @@ const Profil = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("khetiUser");
+    localStorage.removeItem("khetiToken");
     setUser(null);
     navigate("/login");
   };

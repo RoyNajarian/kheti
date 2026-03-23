@@ -24,7 +24,7 @@ const Navbar = () => {
         menuDeroulant = (
             <div className="dropdown-menu">
                 <Link to="/login" onClick={() => setmenuOpen(false)}>Se connecter</Link>
-                <Link to="/register" onClick={() => setmenuOpen(false)}>Créer un compte</Link>
+                <Link to="/login" onClick={() => setmenuOpen(false)}>Créer un compte</Link>
             </div>
         );
     }

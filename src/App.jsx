@@ -1,6 +1,6 @@
-import { Routes, Route, Outlet, useLocation } from "react-router";
+import { Routes, Route, Outlet, useLocation, Navigate } from "react-router";
 
-import MenuNavbar from "./components/menu_navbar";
+import MenuNavbar from "./components/Menu_Navbar";
 
 import Accueil from "./pages/Accueil";
 import Login from "./pages/Login";
@@ -19,9 +19,11 @@ import "/src/styles/Footer.css";
 
 const PublicLayout = () => {
   const location = useLocation();
-  console.log(location.pathname); // ← ajoutez cette ligne
 
-  const ifGamePage = location.pathname === "/jeu";
+  const ifGamePage =
+    location.pathname === "/jeu" ||
+    location.pathname === "/login" ||
+    location.pathname === "/register";
 
   return (
     <>
@@ -30,6 +32,29 @@ const PublicLayout = () => {
       {!ifGamePage && <Footer />}
     </>
   );
+};
+
+const AdminRoute = () => {
+  let user = null;
+
+  try {
+    const rawUser = localStorage.getItem("khetiUser");
+    if (rawUser) {
+      user = JSON.parse(rawUser);
+    }
+  } catch {
+    localStorage.removeItem("khetiUser");
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (Number(user.admin_state) !== 1) {
+    return <Navigate to="/profil" replace />;
+  }
+
+  return <Outlet />;
 };
 
 const App = () => {
@@ -46,11 +71,13 @@ const App = () => {
         <Route path="reservation" element={<Reservation />} />
       </Route>
 
-      {/* Routes back-office (sans Navbar publique) */}
-      <Route path="back-office" element={<BackOfficeLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="reservations" element={<BackOfficeReservations />} />
-        <Route path="users" element={<BackOfficeUsers />} />
+      {/* Routes back-office reservees aux admins */}
+      <Route element={<AdminRoute />}>
+        <Route path="back-office" element={<BackOfficeLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="reservations" element={<BackOfficeReservations />} />
+          <Route path="users" element={<BackOfficeUsers />} />
+        </Route>
       </Route>
     </Routes>
   );
