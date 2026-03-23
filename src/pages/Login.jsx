@@ -59,6 +59,9 @@ const Login = () => {
             }
 
             localStorage.setItem("khetiUser", JSON.stringify(result.user));
+            if (result.token) {
+                localStorage.setItem("khetiToken", result.token);
+            }
             setFeedback({ type: "success", message: "Connexion reussie." });
             navigate("/");
         } catch (error) {

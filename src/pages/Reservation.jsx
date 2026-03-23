@@ -7,6 +7,17 @@ import ReservationStep4 from "../components/ReservationStep4";
 import ReservationStep5 from "../components/ReservationStep5";
 import "../styles/Reservation.css";
 
+const getInitialReservationEmail = () => {
+  try {
+    const raw = localStorage.getItem("khetiUser");
+    if (!raw) return "";
+    const user = JSON.parse(raw);
+    return String(user?.email || "").trim();
+  } catch {
+    return "";
+  }
+};
+
 const Reservation = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [reservationData, setReservationData] = useState({
@@ -17,7 +28,7 @@ const Reservation = () => {
       scribe: 0,
       scarabee: 0,
     },
-    email: "",
+    email: getInitialReservationEmail(),
   });
 
   const handleQuantity = (type, delta) => {

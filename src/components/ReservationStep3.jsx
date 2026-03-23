@@ -11,12 +11,25 @@ const ReservationStep3 = ({
   const [email, setEmail] = useState(existingEmail || "");
   const [identityMethod, setIdentityMethod] = useState("login"); // "login", "register", or "guest"
 
+  const isValidEmail = (value) => {
+    const normalized = String(value || "").trim();
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized);
+  };
+
   const handleContinue = () => {
-    if (!email.trim()) {
+    const normalizedEmail = String(email || "").trim().toLowerCase();
+
+    if (!normalizedEmail) {
       alert("Veuillez entrer votre email");
       return;
     }
-    setReservationData({ ...reservationData, email });
+
+    if (!isValidEmail(normalizedEmail)) {
+      alert("Veuillez saisir un email valide (exemple: nom@domaine.com)");
+      return;
+    }
+
+    setReservationData({ ...reservationData, email: normalizedEmail });
     onNext();
   };
 

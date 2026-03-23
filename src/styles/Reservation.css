@@ -9,12 +9,13 @@
   background-repeat: no-repeat;
   background-position: center;
   position: relative;
+  padding-top: clamp(86px, 11vw, 130px);
 }
 
 .reservation-wrapper {
   max-width: 900px;
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 1.5rem 1.5rem;
 }
 
 .reservation-main-title {
