@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { RESERVATION_TICKETS } from "./reservationTickets";
 
 const ReservationStep1 = ({
   date,
@@ -14,30 +15,6 @@ const ReservationStep1 = ({
     const source = date ? new Date(`${date}T00:00:00`) : today;
     return new Date(source.getFullYear(), source.getMonth(), 1);
   });
-
-  const ticketTypes = [
-    {
-      id: "explorateur",
-      name: "L'Explorateur",
-      description: "Adulte",
-      price: 20,
-      icon: "/icons/explorateur.png",
-    },
-    {
-      id: "scribe",
-      name: "Le Scribe",
-      description: "Étudiant (justificatif requis)",
-      price: 10,
-      icon: "/icons/scribe.png",
-    },
-    {
-      id: "scarabee",
-      name: "Petit Scarabée",
-      description: "Enfant (moins de 12 ans)",
-      price: 7,
-      icon: "/icons/scarabee.png",
-    },
-  ];
 
   const totalTickets =
     quantities.explorateur + quantities.scribe + quantities.scarabee;
@@ -167,7 +144,7 @@ const ReservationStep1 = ({
           <div className="form-group">
             <label>Créneau <span className="required">*</span></label>
             <div className="time-slots">
-              {["10:00", "12:00", "14:00", "16:00"].map((t) => (
+              {["10:00", "12:00", "14:00", "16:00", "18:00"].map((t) => (
                 <button
                   key={t}
                   className={`time-slot ${time === t ? "selected" : ""}`}
@@ -186,7 +163,7 @@ const ReservationStep1 = ({
       <div className="step-section">
         <h3 className="section-subtitle">Sélectionnez vos billets</h3>
         <div className="tickets-grid">
-          {ticketTypes.map((ticket) => (
+          {RESERVATION_TICKETS.map((ticket) => (
             <div key={ticket.id} className="ticket-card">
               <div className="ticket-main">
                 <img
@@ -221,10 +198,6 @@ const ReservationStep1 = ({
                     type="number"
                     min="0"
                     value={quantities[ticket.id]}
-                    onChange={(e) => {
-                      const newVal = Math.max(0, parseInt(e.target.value, 10) || 0);
-                      handleQuantity(ticket.id, newVal - quantities[ticket.id]);
-                    }}
                     readOnly
                   />
                   <button

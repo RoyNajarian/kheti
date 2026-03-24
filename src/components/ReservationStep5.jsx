@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { createReservation } from "../back-office/api";
+import { RESERVATION_PRICE_BY_TICKET } from "./reservationTickets";
 
 const ReservationStep5 = ({ reservationData, onPrevious }) => {
   const navigate = useNavigate();
@@ -8,12 +9,6 @@ const ReservationStep5 = ({ reservationData, onPrevious }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [apiError, setApiError] = useState("");
   const [orderNumber, setOrderNumber] = useState("");
-
-  const ticketPrices = {
-    explorateur: 20,
-    scribe: 10,
-    scarabee: 7,
-  };
 
   const isValidEmail = (value) => {
     const normalized = String(value || "").trim();
@@ -50,9 +45,9 @@ const ReservationStep5 = ({ reservationData, onPrevious }) => {
       }
 
       const totalPrice =
-        adultCount * ticketPrices.explorateur +
-        childCount * ticketPrices.scarabee +
-        studentCount * ticketPrices.scribe;
+        adultCount * RESERVATION_PRICE_BY_TICKET.explorateur +
+        childCount * RESERVATION_PRICE_BY_TICKET.scarabee +
+        studentCount * RESERVATION_PRICE_BY_TICKET.scribe;
 
       const payload = {
         day: reservationData.date,

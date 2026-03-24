@@ -53,7 +53,7 @@ const Reservation = () => {
 
   return (
     <div className="reservation-container">
-      <Breadcrumb currentStep={currentStep} totalSteps={5} />
+      <Breadcrumb currentStep={currentStep} />
 
       <div className="reservation-wrapper">
         <h1 className="reservation-main-title">Billetterie - Réservez votre voyage</h1>

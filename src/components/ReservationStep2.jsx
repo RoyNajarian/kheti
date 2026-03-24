@@ -1,19 +1,16 @@
 import React, { useMemo } from "react";
+import { RESERVATION_TICKETS } from "./reservationTickets";
 
 const ReservationStep2 = ({ reservationData, onPrevious, onNext }) => {
   const { date, time, quantities } = reservationData;
 
-  const ticketDetails = [
-    { id: "explorateur", label: "L'Explorateur (Adulte)", price: 20 },
-    { id: "scribe", label: "Le Scribe (Étudiant)", price: 10 },
-    { id: "scarabee", label: "Petit Scarabée (Enfant)", price: 7 },
-  ];
-
   const cartItems = useMemo(() => {
-    return ticketDetails
+    return RESERVATION_TICKETS
       .filter((t) => quantities[t.id] > 0)
       .map((t) => ({
-        ...t,
+        id: t.id,
+        label: t.label,
+        price: t.price,
         quantity: quantities[t.id],
         subtotal: quantities[t.id] * t.price,
       }));

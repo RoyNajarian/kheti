@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/Breadcrumb.css";
 
-const Breadcrumb = ({ currentStep, totalSteps }) => {
+const Breadcrumb = ({ currentStep }) => {
   const steps = [
     { number: 1, label: "Sélection" },
     { number: 2, label: "Panier" },
