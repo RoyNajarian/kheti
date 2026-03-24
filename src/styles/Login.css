@@ -1,11 +1,13 @@
 .profil {
+	--header-offset: 92px;
 	position: relative;
-	min-height: 100vh;
-	padding: 40px 16px;
+	min-height: calc(100vh - var(--header-offset));
+	padding: calc(var(--header-offset) + 12px) 16px 40px;
 	display: flex;
 	justify-content: center;
-	align-items: center;
-	overflow: hidden;
+	align-items: flex-start;
+	overflow-x: hidden;
+	overflow-y: auto;
 	background-image:
 		linear-gradient(rgba(25, 12, 3, 0.35), rgba(25, 12, 3, 0.35)),
 		url("/images/pharaon.png"),
@@ -182,9 +184,10 @@
 
 @media (max-width: 768px) {
 	.profil {
+		--header-offset: 80px;
 		background-position: center, right -220px bottom -6px, center;
 		background-size: cover, min(72vw, 430px), 340px;
-		padding: 28px 14px;
+		padding: calc(var(--header-offset) + 8px) 14px 28px;
 	}
 
 	.profil__logo {
@@ -198,10 +201,17 @@
 
 	.profil__card {
 		padding: 28px 20px 24px;
-		margin-top: 40px;
+		margin-top: 0;
 	}
 
 	.profil__title {
 		font-size: 1.9rem;
+	}
+}
+
+@media (min-width: 768px) {
+	.profil {
+		--header-offset: 136px;
+		padding-top: calc(var(--header-offset) + 8px);
 	}
 }

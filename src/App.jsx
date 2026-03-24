@@ -8,6 +8,7 @@ import Profil from "./pages/Profil";
 import Immersive from "./pages/Immersive";
 import Jeu from "./pages/Jeu";
 import Reservation from "./pages/Reservation";
+import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import BackOfficeLayout from "./back-office/BackOfficeLayout";
@@ -66,6 +67,7 @@ const App = () => {
         <Route path="immersive" element={<Immersive />} />
         <Route path="jeu" element={<Jeu />} />
         <Route path="reservation" element={<Reservation />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
 
       {/* Routes back-office reservees aux admins */}
