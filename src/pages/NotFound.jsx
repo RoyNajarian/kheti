@@ -12,7 +12,7 @@ const NotFound = () => {
                     Oups, cette page n'existe pas
                 </h1>
                 <p className="notfound__text">
-                    Le chemin que vous avez saisi est introuvable. Revenez a l'accueil pour continuer
+                    Le chemin que vous avez saisi est introuvable. Revenez à l'accueil pour continuer
                     l'expérience Kheti.
                 </p>
 

@@ -1,12 +1,28 @@
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router';
+import { NavLink, useLocation, useNavigate } from 'react-router';
 import '../styles/Menu_Navbar.css';
 
 const LANGS = ['FR', 'EN'];
 
 const MenuNavbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [user, setUser] = useState(null);
     const [lang, setLang] = useState('FR');
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const isAuthenticated = Boolean(user);
+    const isAdmin = Number(user?.admin_state) === 1;
+
+    const syncUser = () => {
+        try {
+            const rawUser = localStorage.getItem('khetiUser');
+            setUser(rawUser ? JSON.parse(rawUser) : null);
+        } catch {
+            localStorage.removeItem('khetiUser');
+            setUser(null);
+        }
+    };
 
     const cycleLang = () => {
         setLang(prev => LANGS[(LANGS.indexOf(prev) + 1) % LANGS.length]);
@@ -29,7 +45,25 @@ const MenuNavbar = () => {
         return () => { document.body.style.overflow = ''; };
     }, [isOpen]);
 
+    useEffect(() => {
+        syncUser();
+    }, [location.pathname]);
+
+    useEffect(() => {
+        const handleStorage = () => syncUser();
+        window.addEventListener('storage', handleStorage);
+        return () => window.removeEventListener('storage', handleStorage);
+    }, []);
+
     const handleLinkClick = () => setIsOpen(false);
+
+    const handleLogout = () => {
+        localStorage.removeItem('khetiUser');
+        localStorage.removeItem('khetiToken');
+        setUser(null);
+        setIsOpen(false);
+        navigate('/login');
+    };
 
     return (
         <nav className="top-nav" aria-label="Navigation principale">
@@ -83,16 +117,6 @@ const MenuNavbar = () => {
                 </li>
                 <li>
                     <NavLink
-                        to='/login'
-                        className={({ isActive }) => `nav-button${isActive ? ' nav-button--active' : ''}`}
-                        aria-label="Se connecter à son compte"
-                        onClick={handleLinkClick}
-                    >
-                        Connexion
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
                         to="/jeu"
                         className={({ isActive }) => `nav-button nav-button--labyrinth${isActive ? ' nav-button--active' : ''}`}
                         aria-label="Accéder au Labyrinthe"
@@ -128,6 +152,39 @@ const MenuNavbar = () => {
                 </span>
                 <span className="nav-lang__label">{lang}</span>
             </button>
+
+            <div className="nav-profile-link" aria-label="Menu connexion">
+                <button type="button" className="nav-profile-link__trigger" aria-haspopup="true">
+                    <img src="/icons/default.png" alt="Profil" className="nav-profile-link__icon" />
+                </button>
+
+                <div className="nav-profile-dropdown" role="menu" aria-label="Options de connexion">
+                    {isAuthenticated ? (
+                        <>
+                            <NavLink to="/profil" className="nav-profile-dropdown__item" role="menuitem" onClick={handleLinkClick}>
+                                Mon profil
+                            </NavLink>
+                            {isAdmin && (
+                                <NavLink to="/back-office" className="nav-profile-dropdown__item" role="menuitem" onClick={handleLinkClick}>
+                                    Back Office
+                                </NavLink>
+                            )}
+                            <button type="button" className="nav-profile-dropdown__item" role="menuitem" onClick={handleLogout}>
+                                Se déconnecter
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <NavLink to="/login" className="nav-profile-dropdown__item" role="menuitem" onClick={handleLinkClick}>
+                                Se connecter
+                            </NavLink>
+                            <NavLink to="/register" className="nav-profile-dropdown__item" role="menuitem" onClick={handleLinkClick}>
+                                S'inscrire
+                            </NavLink>
+                        </>
+                    )}
+                </div>
+            </div>
         </nav>
     );
 };

@@ -30,15 +30,8 @@
 .notfound__card {
     position: relative;
     z-index: 1;
-    width: min(100%, 760px);
-    background: rgba(17, 14, 10, 0.72);
-    border: 1px solid rgba(224, 195, 132, 0.3);
-    border-radius: 20px;
     padding: 34px 24px;
     text-align: center;
-    box-shadow: 0 22px 54px rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
 }
 
 .notfound__code {
