@@ -21,10 +21,7 @@ const PublicLayout = () => {
   const location = useLocation();
 
   const ifGamePage =
-    location.pathname === "/jeu" ||
-    location.pathname === "/login" ||
-    location.pathname === "/register";
-
+    location.pathname === "/jeu";
   return (
     <>
       {!ifGamePage && <MenuNavbar />}
