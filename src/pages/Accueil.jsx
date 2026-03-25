@@ -1,65 +1,63 @@
 import { useState, useEffect, useRef } from 'react';
 
+const accueilBdCarrousel = [
+    {
+        id: 1,
+        title: "Les cigares du pharaon",
+        année: "1934",
+        catchphrase: "L'Égypte comme décor mystérieux (décors clichés)",
+        content: "<span>Dans Les Cigares du Pharaon, Hergé représente l'Égypte comme un lieu mystérieux et exotique.<br>Inspiré par la découverte du tombeau de Toutânkhamon en 1922, l'album montre une Égypte remplie de pyramides, de tombes et de momies.</span><span>L'architecture et les tombeaux servent surtout de décor d'aventure, avec des passages secrets et des lieux cachés liés à des sociétés secrètes, comme lorsque Tintin explore le tombeau de Kih-Oskh entouré de rangées de momies.</span>",
+        image: "/public/images/carrousel-cover-tintin.png",
+        bgImage: "/public/images/carrousel-bg-tintin.jpg",
+    },
+    {
+        id: 2,
+        title: "Le Mystère de la Grande Pyramide",
+        année: "1954",
+        catchphrase: "L'Égypte fantastique et le mythe de la malédiction",
+        content: "<span>Dans Le Mystère de la Grande Pyramide de Edgar P. Jacobs, l'Égypte est représentée de manière très réaliste, avec des vues détaillées du Caire, du plateau de Gizeh, du Sphinx et des pyramides.</span><span>L'architecture y apparaît comme sacrée et monumentale, opposant la ville moderne au silence des pyramides, qui sont présentées comme des lieux anciens chargés de mystère et de spiritualité, notamment avec la « Chambre d'Horus ».</span>",
+        image: "/public/images/carrousel-cover-BeM.png",
+        bgImage: "/public/images/carrousel-bg-BeM.webp",
+    },
+    {
+        id: 3,
+        title: "Astérix et Cléopâtre",
+        année: "1965",
+        catchphrase: "L'Égypte parodique et festive",
+        content: "<span>Dans Astérix et Cléopâtre de René Goscinny et Albert Uderzo, qui se déroule en 48 av. J.-C., l'Égypte est représentée à travers ses monuments emblématiques, comme les palais, les pyramides et le Sphinx.</span><span>Les bâtiments sont dessinés de manière spectaculaire et colorée, montrant une Égypte grandiose et monumentale, tout en mettant en scène les constructions et les chantiers pour créer des situations comiques.</span>",
+        image: "/public/images/carrousel-cover-asterix.png",
+        bgImage: "/public/images/carrousel-bg-asterix.jpeg",
+    },
+    {
+        id: 4,
+        title: "Papyrus",
+        année: "1974",
+        catchphrase: "L'Égypte comme théâtre politique grandiose",
+        content: "<span>Dans Papyrus de Lucien De Gieter, qui se déroule dans l'Égypte antique des pharaons, l'Égypte est représentée comme un univers mythologique inspiré des croyances de l'Égypte antique.</span><span>Les dieux à têtes d'animaux, les créatures fantastiques et la magie y sont omniprésents, ce qui présente l'Égypte comme un monde de légendes où les divinités interviennent directement auprès des humains.</span>",
+        image: "/public/images/carrousel-cover-horus.png",
+        bgImage: "/public/images/carrousel-bg-horus.webp",
+    },
+    {
+        id: 5,
+        title: "Le Prince du Nil",
+        année: "1974",
+        catchphrase: "L'Égypte comme centre de pouvoir et de complots",
+        content: "<span>Dans Le Prince du Nil de Jacques Martin, qui se déroule à l'époque ptolémaïque vers 51 av. J.-C., l'Égypte est représentée comme un royaume riche et puissant, marqué par le luxe des palais, des bijoux et des costumes.</span><span>Le pays apparaît aussi comme un centre de pouvoir et de complots autour du trône des pharaons.</span>",
+        image: "/public/images/carrousel-cover-prince_du_nil.png",
+        bgImage: "/public/images/carrousel-bg-prince_du_nil.jpg",
+    },
+    {
+        id: 6,
+        title: "Indiana Jones",
+        année: "2001",
+        catchphrase: "L'Égypte comme décor d'aventure cinématographique",
+        content: "<span>Dans Les Cigares du Pharaon, Hergé représente l'Égypte comme un lieu mystérieux et exotique.<br>Inspiré par la découverte du tombeau de Toutânkhamon en 1922, l'album montre une Égypte remplie de pyramides, de tombes et de momies.</span><span>L'architecture et les tombeaux servent surtout de décor d'aventure, avec des passages secrets et des lieux cachés liés à des sociétés secrètes, comme lorsque Tintin explore le tombeau de Kih-Oskh entouré de rangées de momies.</span>",
+        image: "/public/images/carrousel-cover-papyrus.png",
+        bgImage: "/public/images/carrousel-bg-indiana_jones.jpg",
+    },
+];
+
 const Accueil = () => {
-
-    const accueilBdCarrousel = [
-        {
-            "id": 1,
-            "title": "Les cigares du pharaon",
-            "année": "1934",
-            "catchphrase": "L'Égypte comme décor mystérieux (décors clichés)",
-            "content": "<span>Dans Les Cigares du Pharaon, Hergé représente l'Égypte comme un lieu mystérieux et exotique.<br>Inspiré par la découverte du tombeau de Toutânkhamon en 1922, l'album montre une Égypte remplie de pyramides, de tombes et de momies.</span><span>L'architecture et les tombeaux servent surtout de décor d'aventure, avec des passages secrets et des lieux cachés liés à des sociétés secrètes, comme lorsque Tintin explore le tombeau de Kih-Oskh entouré de rangées de momies.</span>",
-            "image": "/public/images/carrousel-cover-tintin.png",
-            "bg-image": "/public/images/carrousel-bg-tintin.jpg"
-        },
-        {
-            "id": 2,
-            "title": "Le Mystère de la Grande Pyramide",
-            "année": "1954",
-            "catchphrase": "L'Égypte fantastique et le mythe de la malédiction",
-            "content": "<span>Dans Le Mystère de la Grande Pyramide de Edgar P. Jacobs, l'Égypte est représentée de manière très réaliste, avec des vues détaillées du Caire, du plateau de Gizeh, du Sphinx et des pyramides.</span><span>L'architecture y apparaît comme sacrée et monumentale, opposant la ville moderne au silence des pyramides, qui sont présentées comme des lieux anciens chargés de mystère et de spiritualité, notamment avec la « Chambre d'Horus ».</span>",
-            "image": "/public/images/carrousel-cover-BeM.png",
-            "bg-image": "/public/images/carrousel-bg-BeM.webp"
-        },
-        {
-            "id": 3,
-            "title": "Astérix et Cléopâtre",
-            "année": "1965",
-            "catchphrase": "L'Égypte parodique et festive",
-            "content": "<span>Dans Astérix et Cléopâtre de René Goscinny et Albert Uderzo, qui se déroule en 48 av. J.-C., l'Égypte est représentée à travers ses monuments emblématiques, comme les palais, les pyramides et le Sphinx.</span><span>Les bâtiments sont dessinés de manière spectaculaire et colorée, montrant une Égypte grandiose et monumentale, tout en mettant en scène les constructions et les chantiers pour créer des situations comiques.</span>",
-            "image": "/public/images/carrousel-cover-asterix.png",
-            "bg-image": "/public/images/carrousel-bg-asterix.jpeg"
-        },
-        {
-            "id": 4,
-            "title": "Papyrus",
-            "année": "1974",
-            "catchphrase": "L'Égypte comme théâtre politique grandiose",
-            "content": "<span>Dans Papyrus de Lucien De Gieter, qui se déroule dans l'Égypte antique des pharaons, l'Égypte est représentée comme un univers mythologique inspiré des croyances de l'Égypte antique.</span><span>Les dieux à têtes d'animaux, les créatures fantastiques et la magie y sont omniprésents, ce qui présente l'Égypte comme un monde de légendes où les divinités interviennent directement auprès des humains.</span>",
-            "image": "/public/images/carrousel-cover-horus.png",
-            "bg-image": "/public/images/carrousel-bg-horus.webp"
-        },
-        {
-            "id": 5,
-            "title": "Le Prince du Nil",
-            "année": "1974",
-            "catchphrase": "L'Égypte comme centre de pouvoir et de complots",
-            "content": "<span>Dans Le Prince du Nil de Jacques Martin, qui se déroule à l'époque ptolémaïque vers 51 av. J.-C., l'Égypte est représentée comme un royaume riche et puissant, marqué par le luxe des palais, des bijoux et des costumes. </span><span>Le pays apparaît aussi comme un centre de pouvoir et de complots autour du trône des pharaons.</span>",
-            "image": "/public/images/carrousel-cover-prince_du_nil.png",
-            "bg-image": "/public/images/carrousel-bg-prince_du_nil.jpg"
-        },
-        {
-            "id": 6,
-            "title": "Indiana Jones",
-            "année": "2001",
-            "catchphrase": "L'Égypte comme décor d'aventure cinématographique",
-            "content": "<span>Dans Les Cigares du Pharaon, Hergé représente l'Égypte comme un lieu mystérieux et exotique.<br>Inspiré par la découverte du tombeau de Toutânkhamon en 1922, l'album montre une Égypte remplie de pyramides, de tombes et de momies.</span><span>L'architecture et les tombeaux servent surtout de décor d'aventure, avec des passages secrets et des lieux cachés liés à des sociétés secrètes, comme lorsque Tintin explore le tombeau de Kih-Oskh entouré de rangées de momies.</span>",
-            "image": "/public/images/carrousel-cover-papyrus.png",
-            "bg-image": "/public/images/carrousel-bg-indiana_jones.jpg"
-        }
-    ];
-
-    // ── État du carrousel ──
     const [activeIndex, setActiveIndex] = useState(0);
     const [prevIndex, setPrevIndex] = useState(null);
     const [isTransitioning, setIsTransitioning] = useState(false);
@@ -68,15 +66,15 @@ const Accueil = () => {
 
     const navigate = (nextIndex) => {
         if (isTransitioning) return;
+
         setIsTransitioning(true);
         setContentVisible(false);
         setPrevIndex(activeIndex);
 
-        // Délai pour laisser le contenu s'effacer avant de changer
         transitionTimer.current = setTimeout(() => {
             setActiveIndex(nextIndex);
             setContentVisible(true);
-            // Fin de la transition bg après le crossfade
+
             setTimeout(() => {
                 setPrevIndex(null);
                 setIsTransitioning(false);
@@ -99,7 +97,6 @@ const Accueil = () => {
     const active = accueilBdCarrousel[activeIndex];
     const prev = prevIndex !== null ? accueilBdCarrousel[prevIndex] : null;
 
-    // 3 items visibles : précédent, actif, suivant
     const visibleItems = [
         accueilBdCarrousel[(activeIndex - 1 + accueilBdCarrousel.length) % accueilBdCarrousel.length],
         active,
@@ -109,14 +106,17 @@ const Accueil = () => {
     return (
         <main className="main">
 
+            {/* =============================================
+                SECTION HERO
+            ============================================= */}
             <section className="accueil" aria-label="Page d'accueil Kheti">
 
-                {/* ── Bandeau de dates (mobile uniquement) ── */}
+                {/* Bandeau de dates (mobile uniquement) */}
                 <div className="accueil-dates-banner" aria-label="Dates de l'exposition">
                     DU 20 JUIN AU 20 JUILLET - PARIS -
                 </div>
 
-                {/* ── Contenu héro ── */}
+                {/* Contenu héro */}
                 <div className="accueil-content">
 
                     {/* Logo + CTA */}
@@ -144,7 +144,7 @@ const Accueil = () => {
                         className="accueil-pharaon"
                     />
 
-                    {/* BD égyptiennes — desktop/tablette uniquement */}
+                    {/* Couvertures BD (desktop/tablette uniquement) */}
                     <div className="accueil-bd" aria-label="Bandes dessinées à thème égyptien">
                         <figure className="accueil-bd__item accueil-bd__item--left">
                             <img
@@ -169,7 +169,7 @@ const Accueil = () => {
                         </figure>
                     </div>
 
-                    {/* Scroll CTA — desktop/tablette uniquement */}
+                    {/* Scroll CTA (desktop/tablette uniquement) */}
                     <a
                         href="#suite"
                         className="accueil-scroll-action"
@@ -194,9 +194,9 @@ const Accueil = () => {
             </section>
 
 
-            {/* <img src="/public/images/separator.svg" alt="" className="hr-separator-1" /> */}
-
-
+            {/* =============================================
+                SECTION EXPO-DESC
+            ============================================= */}
             <section className="expo-desc">
                 <div className="expo-desc__content">
                     <h2 className="expo-desc__title">
@@ -204,48 +204,56 @@ const Accueil = () => {
                     </h2>
                     <p className="expo-desc__text">
                         <span>
-                            Dans la langue des bâtisseurs de pyramides, "Kheti" est le mot qui s'approche le plus de ce que nous appelons aujourd'hui la bande dessinée.
+                            Dans la langue des bâtisseurs de pyramides, "Kheti" est le mot qui s'approche le plus
+                            de ce que nous appelons aujourd'hui la bande dessinée.
                         </span>
                         <span>
-                            Depuis près d'un siècle, les mystères du sable et des tombeaux nourrissent l'imaginaire des plus grands dessinateurs.
-                            Du Mystère de la Grande Pyramide d'Edgar P. Jacobs aux parodies cultes d'Astérix, embarquez pour un voyage chronologique et visuel.
+                            Depuis près d'un siècle, les mystères du sable et des tombeaux nourrissent l'imaginaire
+                            des plus grands dessinateurs. Du Mystère de la Grande Pyramide d'Edgar P. Jacobs aux
+                            parodies cultes d'Astérix, embarquez pour un voyage chronologique et visuel.
                         </span>
                         <span>
                             Laissez-vous porter par le courant et observez l'évolution d'un mythe de papier.
                         </span>
                     </p>
                 </div>
-                <img src="/public/images/egypte-bird-expo-desc.png" alt="egypte bird illustration" className="expo-desc__bird" />
+                <img
+                    src="/public/images/egypte-bird-expo-desc.png"
+                    alt=""
+                    aria-hidden="true"
+                    className="expo-desc__bird"
+                />
             </section>
 
-            {/* <img src="/public/images/separator.svg" alt="" className="hr-separator-2" /> */}
 
             {/* =============================================
-                SECTION PRÉSENTATION BD — Carrousel
+                SECTION PRES-BD — Carrousel
             ============================================= */}
             <section className="pres-bd" aria-label="Présentation des bandes dessinées">
 
-                {/* Couche précédente (sort en fondu) */}
+                {/* Fond : couche précédente (sort en fondu) */}
                 {prev && (
                     <div
                         className="pres-bd__bg pres-bd__bg--prev"
-                        style={{ backgroundImage: `url(${prev['bg-image']})` }}
+                        style={{ backgroundImage: `url(${prev.bgImage})` }}
                         aria-hidden="true"
                     />
                 )}
-                {/* Couche active (entre en fondu) */}
+
+                {/* Fond : couche active (entre en fondu) */}
                 <div
                     key={activeIndex}
                     className="pres-bd__bg pres-bd__bg--active"
-                    style={{ backgroundImage: `url(${active['bg-image']})` }}
+                    style={{ backgroundImage: `url(${active.bgImage})` }}
                     aria-hidden="true"
                 />
+
                 {/* Voile sombre */}
                 <div className="pres-bd__overlay" aria-hidden="true" />
 
                 <div className="pres-bd__inner">
 
-                    {/* ── Colonne gauche : liste verticale + navigation ── */}
+                    {/* Colonne gauche : navigation + couvertures */}
                     <div className="pres-bd__carrousel" aria-label="Navigation des bandes dessinées">
 
                         <button
@@ -258,9 +266,9 @@ const Accueil = () => {
                             </svg>
                         </button>
 
-                        <div className="carrousel__select-bd" role="list">
+                        <ul className="carrousel__select-bd" role="list" aria-label="Couvertures de bandes dessinées">
                             {visibleItems.map((item, pos) => (
-                                <figure
+                                <li
                                     key={`${item.id}-${pos}`}
                                     className={`carrousel__bd-item ${pos === 1 ? 'carrousel__bd-item--active' : 'carrousel__bd-item--side'}`}
                                     role="listitem"
@@ -271,9 +279,9 @@ const Accueil = () => {
                                         alt={item.title || 'Couverture de bande dessinée'}
                                         className="carrousel__bd-cover"
                                     />
-                                </figure>
+                                </li>
                             ))}
-                        </div>
+                        </ul>
 
                         <button
                             className="pres-bd__carrousel-btn carrousel-btn__next"
@@ -287,8 +295,11 @@ const Accueil = () => {
 
                     </div>
 
-                    {/* ── Colonne droite : contenu de la BD active ── */}
-                    <div className={`pres-bd__content${contentVisible ? ' pres-bd__content--visible' : ' pres-bd__content--hidden'}`} key={active.id}>
+                    {/* Colonne droite : contenu de la BD active */}
+                    <div
+                        className={`pres-bd__content${contentVisible ? ' pres-bd__content--visible' : ' pres-bd__content--hidden'}`}
+                        key={active.id}
+                    >
                         {active.année && (
                             <span className="pres-bd__year" aria-label={`Année : ${active.année}`}>
                                 {active.année}
@@ -315,14 +326,16 @@ const Accueil = () => {
                             ))}
                         </div>
                     </div>
+
                 </div>
 
                 {/* Décor Nil */}
                 <div className="pres-bd__nil" aria-hidden="true">
-                    <img src="/public/images/pres-bd_nil.png" alt="" className='pres-bd__nil-img' />
+                    <img src="/public/images/pres-bd_nil.png" alt="" className="pres-bd__nil-img" />
                 </div>
 
             </section>
+
 
             {/* =============================================
                 SECTION LABYRINTHE — Mini-jeu
@@ -344,6 +357,7 @@ const Accueil = () => {
 
                     {/* Colonne gauche : visuel du labyrinthe */}
                     <div className="labyrinthe__visual" aria-hidden="true">
+
                         {/* Torches */}
                         <div className="labyrinthe__torch labyrinthe__torch--tl">
                             <span className="torch__flame" />
@@ -354,19 +368,25 @@ const Accueil = () => {
                             <span className="torch__glow" />
                         </div>
 
-                        {/* Grille labyrinthe SVG stylisée */}
+                        {/* Grille labyrinthe SVG */}
                         <div className="labyrinthe__maze-wrap">
-                            <svg className="labyrinthe__maze-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Illustration du labyrinthe">
+                            <svg
+                                className="labyrinthe__maze-svg"
+                                viewBox="0 0 200 200"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                aria-label="Illustration du labyrinthe"
+                            >
                                 {/* Murs */}
                                 <rect x="10" y="10" width="180" height="180" rx="4" stroke="#D5B77B" strokeWidth="2.5" fill="none" opacity="0.6" />
-                                {/* Intérieur — couloirs */}
+                                {/* Couloirs */}
                                 <path d="M10 50 H80 M120 50 H190" stroke="#D5B77B" strokeWidth="2" opacity="0.5" />
                                 <path d="M10 90 H60 M100 90 H190" stroke="#D5B77B" strokeWidth="2" opacity="0.5" />
                                 <path d="M10 130 H140 M170 130 H190" stroke="#D5B77B" strokeWidth="2" opacity="0.5" />
                                 <path d="M50 10 V80 M50 110 V190" stroke="#D5B77B" strokeWidth="2" opacity="0.5" />
                                 <path d="M100 10 V40 M100 70 V130 M100 160 V190" stroke="#D5B77B" strokeWidth="2" opacity="0.5" />
                                 <path d="M150 10 V60 M150 90 V190" stroke="#D5B77B" strokeWidth="2" opacity="0.5" />
-                                {/* Balle */}
+                                {/* Balle animée */}
                                 <circle className="maze-ball" cx="20" cy="20" r="5" fill="#F0D49A" />
                                 <circle cx="20" cy="20" r="5" fill="#D5B77B" opacity="0.4">
                                     <animate attributeName="r" values="5;9;5" dur="2s" repeatCount="indefinite" />
@@ -375,10 +395,9 @@ const Accueil = () => {
                                 {/* Sortie */}
                                 <rect x="180" y="178" width="12" height="12" rx="2" fill="#8B6914" opacity="0.9" />
                                 <text x="186" y="188" fontSize="7" fill="#F0D49A" textAnchor="middle" fontWeight="bold">✦</text>
-                                {/* Chemin suggéré — pointillés */}
+                                {/* pointillés */}
                                 <path d="M20 20 H20 V50 H80 V90 H60 V130 H140 V90 H190" stroke="#F0D49A" strokeWidth="1.5" strokeDasharray="4 4" opacity="0.2" />
                             </svg>
-                            {/* Halo central */}
                             <div className="labyrinthe__maze-halo" />
                         </div>
 
@@ -394,19 +413,20 @@ const Accueil = () => {
                         </div>
 
                         <h2 className="labyrinthe__title">
-                            <span className="labyrinthe__title-deco">𓂀</span>
+                            <span className="labyrinthe__title-deco" aria-hidden="true">𓂀</span>
                             Le&nbsp;Labyrinthe
                         </h2>
 
                         <p className="labyrinthe__desc">
-                            Oserez-vous relevez le défi ? Testez votre sens de l'orientation et votre logique en guidant une balle jusqu'à la sortie.
-                            Mais attention… certains chemins mènent à des impasses !
-                            Prenez le bon tournant, réfléchissez vite et trouvez la sortie le plus rapidement possible.
-                            <br />
-                            <br />
-                            Et ce n'est pas tout ! Les joueurs qui réussiront le défi pourront repartir avec un goodies gratuit.
-                            Une bonne raison de tenter votre chance !
-                            Prêt à jouer ? Entrez dans le labyrinthe et voyer si vous avez l'âme d'un véritable explorateur !                        </p>
+                            Oserez-vous relever le défi ? Testez votre sens de l'orientation et votre logique en
+                            guidant une balle jusqu'à la sortie. Mais attention… certains chemins mènent à des
+                            impasses ! Prenez le bon tournant, réfléchissez vite et trouvez la sortie le plus
+                            rapidement possible.
+                            <br /><br />
+                            Et ce n'est pas tout ! Les joueurs qui réussiront le défi pourront repartir avec un
+                            goodies gratuit. Une bonne raison de tenter votre chance ! Prêt à jouer ? Entrez dans
+                            le labyrinthe et voyez si vous avez l'âme d'un véritable explorateur !
+                        </p>
 
                         <a href="#labyrinthe-jeu" className="labyrinthe__cta" aria-label="Jouer au labyrinthe">
                             <span className="labyrinthe__cta-bg" aria-hidden="true" />
@@ -419,13 +439,13 @@ const Accueil = () => {
                     </div>
                 </div>
 
-                {/* Bas sable dégradé */}
+                {/* Fond sable bas */}
                 <div className="labyrinthe__sand" aria-hidden="true" />
 
             </section>
 
         </main>
     );
-}
+};
 
 export default Accueil;
