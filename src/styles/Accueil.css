@@ -1,16 +1,24 @@
 /* =============================================
    ACCUEIL — Kheti | Mobile First
-   Breakpoint tablette/desktop : 768px
+   Breakpoint tablette : 768px | Desktop : 900px+
    ============================================= */
 
-/* Focus visible global */
+
+/* =============================================
+   ACCESSIBILITÉ
+   ============================================= */
+
 :focus-visible {
     outline: 3px solid #D5B77B;
     outline-offset: 4px;
     border-radius: 4px;
 }
 
-/* ---- Animations ---- */
+
+/* =============================================
+   ANIMATIONS GLOBALES
+   ============================================= */
+
 @keyframes float {
 
     0%,
@@ -47,6 +55,28 @@
     }
 }
 
+@keyframes hero-fade {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes banner-shimmer {
+    0% {
+        background-position: -200% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
+
 @keyframes bd-enter {
     from {
         opacity: 0;
@@ -71,18 +101,6 @@
     }
 }
 
-@keyframes hero-fade {
-    from {
-        opacity: 0;
-        transform: translateY(18px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 @keyframes sun-pulse {
 
     0%,
@@ -97,435 +115,6 @@
     }
 }
 
-@keyframes banner-shimmer {
-    0% {
-        background-position: -200% center;
-    }
-
-    100% {
-        background-position: 200% center;
-    }
-}
-
-/* =============================================
-   BANDEAU DATES — mobile uniquement
-   ============================================= */
-.accueil-dates-banner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 14px 20px;
-    background: linear-gradient(90deg,
-            #8B6914 0%,
-            #D5B77B 30%,
-            #F0D49A 50%,
-            #D5B77B 70%,
-            #8B6914 100%);
-    background-size: 200% auto;
-    animation: banner-shimmer 4s linear infinite;
-
-    color: #1a0e00;
-    font-family: 'Cormorant Garamond', 'Palatino Linotype', serif;
-    font-size: clamp(0.95rem, 4vw, 1.15rem);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-
-    /* Bords décoratifs */
-    border-top: 2px solid #8B6914;
-    border-bottom: 2px solid #8B6914;
-
-    /* Position sous la navbar */
-    position: relative;
-    top: 56px;
-    z-index: 2;
-    width: 100%;
-}
-
-/* Caché sur tablette/desktop */
-@media (min-width: 768px) {
-    .accueil-dates-banner {
-        display: none;
-    }
-}
-
-/* =============================================
-   SECTION PRINCIPALE
-   ============================================= */
-
-.accueil {
-    background-image: url('/public/images/lobby_hero_bg.png');
-    background-size: cover;
-    background-position: center;
-    min-height: 100svh;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-
-    /* Voile mobile : moins sombre pour laisser voir le fond hiéroglyphes */
-    &::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(180deg,
-                rgba(8, 4, 0, 0.35) 0%,
-                rgba(14, 8, 2, 0.20) 40%,
-                rgba(8, 4, 0, 0.55) 100%);
-        pointer-events: none;
-        z-index: 0;
-    }
-
-    /* Tablette/desktop : parallax + voile standard */
-    @media (min-width: 768px) {
-        background-attachment: fixed;
-        min-height: 90vh;
-
-        &::before {
-            background: linear-gradient(160deg,
-                    rgba(8, 4, 0, 0.55) 0%,
-                    rgba(14, 8, 2, 0.40) 50%,
-                    rgba(8, 4, 0, 0.65) 100%);
-        }
-    }
-}
-
-/* =============================================
-   CONTENU HÉRO
-   ============================================= */
-.accueil-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    position: relative;
-    z-index: 1;
-    /* Mobile : hauteur plein écran moins le bandeau */
-    min-height: calc(100svh - 52px);
-    padding-top: 80px;
-    /* espace sous navbar */
-    padding-bottom: 0;
-
-    @media (min-width: 768px) {
-        flex-direction: row;
-        align-items: center;
-        height: 90vh;
-        min-height: 90vh;
-        padding-top: 0;
-    }
-}
-
-/* ---- Soleil décoratif (mobile uniquement) ---- */
-.accueil-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 28px;
-    position: relative;
-    width: 100%;
-    padding: 0 24px;
-    animation: hero-fade 0.9s ease both;
-
-    @media (min-width: 768px) {
-        align-items: center;
-        margin-left: clamp(48px, 18vw, 300px);
-        width: auto;
-        padding: 0;
-
-        &::before {
-            display: none;
-            /* Soleil masqué sur desktop si le logo l'intègre */
-        }
-    }
-}
-
-.accueil-logo {
-    width: clamp(220px, 70vw, 380px);
-    height: auto;
-    filter: drop-shadow(0 8px 40px rgba(213, 183, 123, 0.25));
-    transition: filter 0.3s ease, transform 0.3s ease;
-    position: relative;
-    z-index: 1;
-
-    &:hover {
-        filter: drop-shadow(0 12px 52px rgba(213, 183, 123, 0.45));
-        transform: scale(1.015);
-    }
-
-    @media (min-width: 768px) {
-        width: clamp(280px, 40vw, 600px);
-    }
-}
-
-/* ---- Bouton trailer ---- */
-.accueil-trailer-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: clamp(14px, 1.8vh, 20px) clamp(36px, 10vw, 64px);
-    border-radius: 30px;
-
-    /* Glass sombre (mobile : plus opaque pour contraste sur fond texturé) */
-    background: rgba(30, 20, 5, 0.55);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1.5px solid rgba(213, 183, 123, 0.35);
-
-    color: #fff;
-    font-size: clamp(1rem, 4vw, 1.3rem);
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    cursor: pointer;
-
-    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-    position: relative;
-    overflow: hidden;
-
-    &::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.1' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)'/%3E%3C/svg%3E");
-        opacity: 0.05;
-        mix-blend-mode: overlay;
-        pointer-events: none;
-    }
-
-    &:hover {
-        background: rgba(213, 183, 123, 0.25);
-        border-color: #D5B77B;
-        transform: translateY(-3px);
-        box-shadow: 0 12px 36px rgba(213, 183, 123, 0.25);
-    }
-
-    &:active {
-        transform: translateY(0);
-    }
-
-    @media (min-width: 768px) {
-        background: rgba(213, 183, 123, 0.12);
-        padding: clamp(14px, 1.8vh, 20px) clamp(28px, 3.5vw, 48px);
-        font-size: clamp(1.1rem, 1.6vw, 1.5rem);
-    }
-}
-
-.accueil-trailer-btn__icon {
-    font-size: 0.85em;
-    opacity: 0.85;
-}
-
-/* ---- Pharaon décoratif ---- */
-.accueil-pharaon {
-    /* Mobile : centré en bas, émerge du bas de l'écran */
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: clamp(280px, 85vw, 420px);
-    width: 400px;
-    pointer-events: none;
-    animation: float-pharaon 5s ease-in-out infinite;
-    filter: drop-shadow(0 -10px 40px rgba(0, 0, 0, 0.5));
-    transform-origin: bottom center;
-    /* opacity: 50%; */
-
-    @media (min-width: 768px) {
-        right: 0;
-        left: auto;
-        bottom: 0;
-        transform: translateX(30%);
-        width: auto;
-        height: 87.5%;
-        animation: float-pharaon-desktop 5s ease-in-out infinite;
-        filter: drop-shadow(-20px 0 60px rgba(0, 0, 0, 0.5));
-    }
-}
-
-/* Dégradé sable sous le pharaon (mobile) */
-.accueil::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 30%;
-    background: linear-gradient(to top,
-            rgba(180, 130, 50, 0.45) 0%,
-            rgba(160, 110, 30, 0.20) 50%,
-            transparent 100%);
-    pointer-events: none;
-    z-index: 2;
-
-
-    @media (min-width: 768px) {
-        display: none;
-    }
-}
-
-/* ---- BD — cachées sur mobile ---- */
-.accueil-bd {
-    display: none;
-
-    @media (min-width: 768px) {
-        display: flex;
-        position: absolute;
-        left: 4%;
-        bottom: -50px;
-        gap: clamp(24px, 4vw, 60px);
-        align-items: flex-end;
-    }
-}
-
-.accueil-bd__item {
-    margin: 0;
-    padding: 0;
-    cursor: default;
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
-    filter: drop-shadow(4px 8px 16px rgba(0, 0, 0, 0.55));
-
-    &:hover {
-        filter: drop-shadow(6px 12px 28px rgba(213, 183, 123, 0.40));
-        z-index: 5;
-    }
-}
-
-.accueil-bd__cover {
-    width: auto;
-    height: clamp(140px, 14vh, 200px);
-    display: block;
-    border-radius: 3px;
-}
-
-.accueil-bd__item--left {
-    transform: rotate(6deg);
-    animation: bd-enter 0.7s 0.3s ease both;
-
-    &:hover {
-        transform: rotate(3deg) translateY(-12px) scale(1.05);
-    }
-}
-
-.accueil-bd__item--center {
-    transform: rotate(-3deg) scale(1.06);
-    animation: bd-enter-center 0.7s 0.5s ease both;
-
-    &:hover {
-        transform: rotate(-1deg) translateY(-14px) scale(1.10);
-    }
-}
-
-.accueil-bd__item--right {
-    transform: rotate(5deg);
-    animation: bd-enter 0.7s 0.7s ease both;
-
-    &:hover {
-        transform: rotate(2deg) translateY(-12px) scale(1.05);
-    }
-}
-
-/* ---- Scroll CTA — caché sur mobile ---- */
-.accueil-scroll-action {
-    display: none;
-
-    @media (min-width: 768px) {
-        display: flex;
-        position: absolute;
-        bottom: 40px;
-        left: 50%;
-        transform: translateX(-50%);
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-        color: rgba(255, 255, 255, 0.75);
-        animation: float 2.5s ease-in-out infinite;
-        transition: color 0.2s ease;
-
-        &:hover,
-        &:focus-visible {
-            color: #D5B77B;
-        }
-    }
-}
-
-.accueil-scroll-action__label {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-}
-
-.hr-separator-1 {
-    position: absolute;
-    bottom: -80px;
-    z-index: 10;
-}
-
-/* =============================================   
-   SECTIONS — expo-desc
-   ============================================= */
-
-.expo-desc {
-    position: relative;
-    z-index: 1;
-    padding: 80px 24px;
-    background: #111111;
-    width: 100%;
-    height: 450px;
-    overflow: hidden;
-}
-
-.expo-desc__content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 32px;
-}
-
-.expo-desc__title {
-    font-family: 'Heroes Legend', sans-serif;
-    font-size: 1.25rem;
-    text-align: center;
-}
-
-.expo-desc__text {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    padding: 0 40px;
-
-}
-
-.expo-desc__bird {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: auto;
-    opacity: 30%;
-    z-index: -1;
-    pointer-events: none;
-}
-
-.hr-separator-2 {
-    position: absolute;
-    bottom: -525px;
-    z-index: 10;
-}
-
-/* =============================================
-   SECTION pres-bd — Carrousel BD
-   Remplace le bloc .pres-bd existant dans Accueil.css
-   ============================================= */
-
-/* ---- Animations spécifiques ---- */
 @keyframes content-fade-in {
     from {
         opacity: 0;
@@ -562,171 +151,6 @@
     }
 }
 
-/* =============================================
-   CONTENEUR PRINCIPAL
-   ============================================= */
-.pres-bd {
-    position: relative;
-    width: 100%;
-    min-height: 600px;
-    overflow: hidden;
-    background: #0d0805;
-}
-
-/* ---- Images de fond — système double couche pour crossfade ---- */
-.pres-bd__bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 0;
-}
-
-/* Couche précédente : reste visible, part en fondu */
-.pres-bd__bg--prev {
-    opacity: 1;
-    z-index: 0;
-}
-
-/* Couche active : entre en fondu par-dessus */
-.pres-bd__bg--active {
-    opacity: 0;
-    z-index: 1;
-    animation: bg-crossfade 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-/* ---- Voile sombre pour lisibilité ---- */
-.pres-bd__overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(100deg,
-            rgba(8, 4, 0, 0.85) 0%,
-            rgba(8, 4, 0, 0.75) 40%,
-            rgba(8, 4, 0, 0.55) 100%);
-    z-index: 1;
-}
-
-/* ---- Décor Nil (droite) — placeholder visuel ---- */
-.pres-bd__nil {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: clamp(60px, 8vw, 120px);
-    z-index: 2;
-    pointer-events: none;
-    border-left: 1px solid rgba(213, 183, 123, 0.08);
-}
-
-.pres-bd__nil-img {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translate(-50%, -50%);
-    height: 100%;
-    z-index: 3;
-}
-
-/* =============================================
-   INNER — Layout flex
-   ============================================= */
-.pres-bd__inner {
-    position: relative;
-    z-index: 3;
-    display: flex;
-
-    align-items: center;
-    gap: 32px;
-    padding: 48px 24px;
-    min-height: 600px;
-
-    @media (min-width: 768px) {
-        align-items: center;
-        gap: clamp(32px, 5vw, 72px);
-        padding: 64px clamp(32px, 6vw, 80px);
-        padding-right: clamp(80px, 12vw, 160px);
-        /* espace pour le Nil */
-    }
-}
-
-/* =============================================
-   CARROUSEL — Colonne gauche
-   ============================================= */
-.pres-bd__carrousel {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    flex-shrink: 0;
-}
-
-/* ---- Boutons navigation ---- */
-.pres-bd__carrousel-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: rgba(213, 183, 123, 0.55);
-    transition: color 0.2s ease, transform 0.2s ease;
-
-    &:hover {
-        color: #D5B77B;
-        transform: scale(1.15);
-    }
-
-    &:active {
-        transform: scale(0.95);
-    }
-}
-
-/* ---- Liste de couvertures ---- */
-.carrousel__select-bd {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-/* ---- Item couverture ---- */
-.carrousel__bd-item {
-    margin: 0;
-    padding: 0;
-    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
-        opacity 0.4s ease,
-        filter 0.4s ease,
-        height 0.4s ease;
-    cursor: pointer;
-    will-change: transform, opacity;
-}
-
-.carrousel__bd-item--active {
-    filter: drop-shadow(0 8px 28px rgba(213, 183, 123, 0.5));
-    z-index: 2;
-    animation: carrousel-item-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-
-.carrousel__bd-item--side {
-    opacity: 0.45;
-    filter: brightness(0.65) saturate(0.7);
-    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
-        opacity 0.4s ease,
-        filter 0.4s ease;
-
-    &:hover {
-        opacity: 0.72;
-        filter: brightness(0.85) saturate(0.9);
-        transform: scale(1.04);
-    }
-}
-
 @keyframes carrousel-item-in {
     from {
         opacity: 0.4;
@@ -740,251 +164,6 @@
         filter: drop-shadow(0 8px 28px rgba(213, 183, 123, 0.5));
     }
 }
-
-/* ---- Couvertures : taille variable selon position ---- */
-.carrousel__bd-cover {
-    display: block;
-    border-radius: 3px;
-    object-fit: cover;
-    width: auto;
-    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-        box-shadow 0.4s ease;
-}
-
-.carrousel__bd-item--active .carrousel__bd-cover {
-    height: clamp(140px, 18vh, 200px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-}
-
-.carrousel__bd-item--side .carrousel__bd-cover {
-    height: clamp(100px, 13vh, 150px);
-}
-
-/* =============================================
-   CONTENU — Colonne droite
-   ============================================= */
-.pres-bd__content {
-    padding-right: 120px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    max-width: 600px;
-    /* Base : transition CSS pour les deux états */
-    transition: opacity 0.25s ease, transform 0.25s ease;
-
-    @media (min-width: 768px) {
-        gap: 24px;
-    }
-}
-
-/* Entrée : fondu vers le bas */
-.pres-bd__content--visible {
-    animation: content-fade-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-/* Sortie : fondu vers le haut */
-.pres-bd__content--hidden {
-    animation: content-fade-out 0.25s ease forwards;
-}
-
-/* ---- Année ---- */
-.pres-bd__year {
-    font-family: 'Cormorant Garamond', 'Palatino Linotype', serif;
-    font-size: clamp(1rem, 2.5vw, 1.25rem);
-    font-weight: 500;
-    color: #D5B77B;
-    letter-spacing: 0.12em;
-    opacity: 0.85;
-    align-self: flex-end;
-
-    @media (min-width: 768px) {
-        align-self: flex-end;
-    }
-}
-
-/* ---- Catchphrase / titre thématique ---- */
-.pres-bd__catchphrase {
-    font-family: 'Cormorant Garamond', 'Palatino Linotype', serif;
-    font-size: clamp(1.35rem, 3.5vw, 2rem);
-    font-weight: 600;
-    line-height: 1.2;
-    color: #f5ede0;
-    margin: 0;
-    letter-spacing: 0.01em;
-}
-
-/* ---- Texte descriptif ---- */
-.pres-bd__text {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    color: rgba(240, 230, 215, 0.85);
-    font-family: 'Cormorant Garamond', 'Palatino Linotype', serif;
-    font-size: clamp(0.95rem, 1.8vw, 1.1rem);
-    line-height: 1.75;
-    font-weight: 400;
-
-    span {
-        display: block;
-    }
-}
-
-/* ---- Indicateur dots ---- */
-.pres-bd__dots {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-top: 8px;
-}
-
-.pres-bd__dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    border: 1.5px solid rgba(213, 183, 123, 0.5);
-    background: transparent;
-    cursor: pointer;
-    padding: 0;
-    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
-
-    &:hover {
-        border-color: #D5B77B;
-        transform: scale(1.2);
-    }
-}
-
-.pres-bd__dot--active {
-    background: #D5B77B;
-    border-color: #D5B77B;
-    transform: scale(1.15);
-}
-
-/* =============================================
-   RESPONSIVE — tablette étroite
-   ============================================= */
-@media (min-width: 768px) and (max-width: 900px) {
-    .pres-bd__inner {
-        gap: 28px;
-        padding: 48px 28px;
-    }
-
-    .pres-bd__catchphrase {
-        font-size: 1.4rem;
-    }
-
-    .carrousel__bd-item--active .carrousel__bd-cover {
-        height: clamp(120px, 15vh, 160px);
-    }
-
-    .carrousel__bd-item--side .carrousel__bd-cover {
-        height: clamp(90px, 11vh, 130px);
-    }
-}
-
-/* =============================================
-   MOTION RÉDUIT
-   ============================================= */
-@media (prefers-reduced-motion: reduce) {
-
-    .pres-bd__bg--active,
-    .pres-bd__bg--prev,
-    .pres-bd__content,
-    .pres-bd__content--visible,
-    .pres-bd__content--hidden,
-    .carrousel__bd-item,
-    .carrousel__bd-item--active,
-    .pres-bd__carrousel-btn,
-    .pres-bd__dot {
-        animation: none !important;
-        transition: none !important;
-    }
-
-    .pres-bd__bg--active {
-        opacity: 1;
-    }
-
-    .pres-bd__content--hidden {
-        opacity: 0;
-    }
-
-    .pres-bd__content--visible {
-        opacity: 1;
-    }
-}
-
-/* =============================================
-   RESPONSIVE — ajustements tablette (768–900px)
-   ============================================= */
-@media (min-width: 768px) and (max-width: 900px) {
-    .accueil-main {
-        margin-left: 0;
-        margin-top: 120px;
-        width: 100%;
-        padding: 0 24px;
-    }
-
-    .accueil-pharaon {
-        display: none;
-    }
-
-    .accueil-content {
-        justify-content: center;
-    }
-
-    .accueil-bd {
-        gap: 20px;
-    }
-
-    .accueil-bd__cover {
-        height: clamp(100px, 10vh, 140px);
-    }
-}
-
-@media (min-width: 900px) {
-    .accueil-pharaon {
-        height: 70%;
-        top: 20%;
-    }
-}
-
-@media (min-width: 1024px) {
-    .accueil-pharaon {
-        height: 80%;
-        top: 15%;
-    }
-}
-
-@media (min-width: 1400px) {
-    .accueil-pharaon {
-        height: 90%;
-        right: 10%;
-        top: 10%;
-    }
-}
-
-/* =============================================
-   MOTION RÉDUIT — accessibilité
-   ============================================= */
-@media (prefers-reduced-motion: reduce) {
-
-    .accueil-pharaon,
-    .accueil-scroll-action,
-    .accueil-main,
-    .accueil-main::before,
-    .accueil-dates-banner,
-    .accueil-bd__item,
-    .accueil-bd__item--left,
-    .accueil-bd__item--center,
-    .accueil-bd__item--right {
-        animation: none;
-        transition: none;
-    }
-}
-
-/* =============================================
-   SECTION LABYRINTHE — Mini-jeu
-   ============================================= */
 
 @keyframes torch-flicker {
 
@@ -1112,13 +291,785 @@
     }
 }
 
+
+/* =============================================
+   SECTION HERO — .accueil
+   ============================================= */
+
+.accueil {
+    position: relative;
+    width: 100%;
+    min-height: 100svh;
+    overflow: hidden;
+    background-image: url('/public/images/lobby_hero_bg.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.accueil::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+            rgba(8, 4, 0, 0.35) 0%,
+            rgba(14, 8, 2, 0.20) 40%,
+            rgba(8, 4, 0, 0.55) 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Dégradé sable sous le pharaon (mobile uniquement) */
+.accueil::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    background: linear-gradient(to top,
+            rgba(180, 130, 50, 0.45) 0%,
+            rgba(160, 110, 30, 0.20) 50%,
+            transparent 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* ---- Bandeau dates (mobile uniquement) ---- */
+.accueil-dates-banner {
+    position: relative;
+    top: 56px;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 14px 20px;
+    border-top: 2px solid #8B6914;
+    border-bottom: 2px solid #8B6914;
+    background: linear-gradient(90deg,
+            #8B6914 0%,
+            #D5B77B 30%,
+            #F0D49A 50%,
+            #D5B77B 70%,
+            #8B6914 100%);
+    background-size: 200% auto;
+    animation: banner-shimmer 4s linear infinite;
+    color: #1a0e00;
+    font-family: 'Cormorant Garamond', 'Palatino Linotype', serif;
+    font-size: clamp(0.95rem, 4vw, 1.15rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* ---- Contenu héro ---- */
+.accueil-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: calc(100svh - 52px);
+    padding-top: 80px;
+    padding-bottom: 0;
+}
+
+/* ---- Logo + CTA ---- */
+.accueil-main {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    padding: 0 24px;
+    animation: hero-fade 0.9s ease both;
+}
+
+.accueil-logo {
+    position: relative;
+    z-index: 1;
+    width: clamp(220px, 70vw, 380px);
+    height: auto;
+    filter: drop-shadow(0 8px 40px rgba(213, 183, 123, 0.25));
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.accueil-logo:hover {
+    filter: drop-shadow(0 12px 52px rgba(213, 183, 123, 0.45));
+    transform: scale(1.015);
+}
+
+/* ---- Bouton trailer ---- */
+.accueil-trailer-btn {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: clamp(14px, 1.8vh, 20px) clamp(36px, 10vw, 64px);
+    border-radius: 30px;
+    border: 1.5px solid rgba(213, 183, 123, 0.35);
+    background: rgba(30, 20, 5, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #fff;
+    font-size: clamp(1rem, 4vw, 1.3rem);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.accueil-trailer-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.1' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+.accueil-trailer-btn:hover {
+    background: rgba(213, 183, 123, 0.25);
+    border-color: #D5B77B;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 36px rgba(213, 183, 123, 0.25);
+}
+
+.accueil-trailer-btn:active {
+    transform: translateY(0);
+}
+
+.accueil-trailer-btn__icon {
+    font-size: 0.85em;
+    opacity: 0.85;
+}
+
+/* ---- Pharaon décoratif ---- */
+.accueil-pharaon {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(280px, 85vw, 420px);
+    pointer-events: none;
+    transform-origin: bottom center;
+    animation: float-pharaon 5s ease-in-out infinite;
+    filter: drop-shadow(0 -10px 40px rgba(0, 0, 0, 0.5));
+}
+
+/* ---- Couvertures BD décoratives (masquées sur mobile) ---- */
+.accueil-bd {
+    display: none;
+}
+
+.accueil-bd__item {
+    margin: 0;
+    padding: 0;
+    cursor: default;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+    filter: drop-shadow(4px 8px 16px rgba(0, 0, 0, 0.55));
+}
+
+.accueil-bd__item:hover {
+    filter: drop-shadow(6px 12px 28px rgba(213, 183, 123, 0.40));
+    z-index: 5;
+}
+
+.accueil-bd__cover {
+    display: block;
+    width: auto;
+    height: clamp(140px, 14vh, 200px);
+    border-radius: 3px;
+}
+
+.accueil-bd__item--left {
+    transform: rotate(6deg);
+    animation: bd-enter 0.7s 0.3s ease both;
+}
+
+.accueil-bd__item--left:hover {
+    transform: rotate(3deg) translateY(-12px) scale(1.05);
+}
+
+.accueil-bd__item--center {
+    transform: rotate(-3deg) scale(1.06);
+    animation: bd-enter-center 0.7s 0.5s ease both;
+}
+
+.accueil-bd__item--center:hover {
+    transform: rotate(-1deg) translateY(-14px) scale(1.10);
+}
+
+.accueil-bd__item--right {
+    transform: rotate(5deg);
+    animation: bd-enter 0.7s 0.7s ease both;
+}
+
+.accueil-bd__item--right:hover {
+    transform: rotate(2deg) translateY(-12px) scale(1.05);
+}
+
+/* ---- Scroll CTA (masqué sur mobile) ---- */
+.accueil-scroll-action {
+    display: none;
+}
+
+.accueil-scroll-action__label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+/* ---- Responsive : tablette étroite (768–900px) ---- */
+@media (min-width: 768px) and (max-width: 900px) {
+    .accueil-main {
+        margin-left: 0;
+        margin-top: 120px;
+        width: 100%;
+        padding: 0 24px;
+    }
+
+    .accueil-content {
+        justify-content: center;
+    }
+
+    .accueil-pharaon {
+        display: none;
+    }
+
+    .accueil-bd {
+        gap: 20px;
+    }
+
+    .accueil-bd__cover {
+        height: clamp(100px, 10vh, 140px);
+    }
+}
+
+/* ---- Responsive : tablette (768px+) ---- */
+@media (min-width: 768px) {
+    .accueil {
+        background-attachment: fixed;
+        min-height: 90vh;
+    }
+
+    .accueil::before {
+        background: linear-gradient(160deg,
+                rgba(8, 4, 0, 0.55) 0%,
+                rgba(14, 8, 2, 0.40) 50%,
+                rgba(8, 4, 0, 0.65) 100%);
+    }
+
+    .accueil::after {
+        display: none;
+    }
+
+    .accueil-dates-banner {
+        display: none;
+    }
+
+    .accueil-content {
+        flex-direction: row;
+        align-items: center;
+        height: 90vh;
+        min-height: 90vh;
+        padding-top: 0;
+    }
+
+    .accueil-main {
+        align-items: center;
+        margin-left: clamp(48px, 18vw, 300px);
+        width: auto;
+        padding: 0;
+    }
+
+    .accueil-main::before {
+        display: none;
+    }
+
+    .accueil-logo {
+        width: clamp(280px, 40vw, 600px);
+    }
+
+    .accueil-trailer-btn {
+        background: rgba(213, 183, 123, 0.12);
+        padding: clamp(14px, 1.8vh, 20px) clamp(28px, 3.5vw, 48px);
+        font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+    }
+
+    .accueil-pharaon {
+        right: 0;
+        left: auto;
+        bottom: 0;
+        transform: translateX(30%);
+        width: auto;
+        height: 87.5%;
+        animation: float-pharaon-desktop 5s ease-in-out infinite;
+        filter: drop-shadow(-20px 0 60px rgba(0, 0, 0, 0.5));
+    }
+
+    .accueil-bd {
+        display: flex;
+        position: absolute;
+        left: 4%;
+        bottom: -50px;
+        gap: clamp(24px, 4vw, 60px);
+        align-items: flex-end;
+    }
+
+    .accueil-scroll-action {
+        display: flex;
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.75);
+        animation: float 2.5s ease-in-out infinite;
+        transition: color 0.2s ease;
+    }
+
+    .accueil-scroll-action:hover,
+    .accueil-scroll-action:focus-visible {
+        color: #D5B77B;
+    }
+}
+
+/* ---- Responsive : grands écrans ---- */
+@media (min-width: 900px) {
+    .accueil-pharaon {
+        height: 70%;
+        top: 20%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .accueil-pharaon {
+        height: 80%;
+        top: 15%;
+    }
+}
+
+@media (min-width: 1400px) {
+    .accueil-pharaon {
+        height: 90%;
+        top: 10%;
+        right: 10%;
+    }
+}
+
+/* ---- Motion réduit ---- */
+@media (prefers-reduced-motion: reduce) {
+
+    .accueil-pharaon,
+    .accueil-scroll-action,
+    .accueil-main,
+    .accueil-main::before,
+    .accueil-dates-banner,
+    .accueil-bd__item,
+    .accueil-bd__item--left,
+    .accueil-bd__item--center,
+    .accueil-bd__item--right {
+        animation: none;
+        transition: none;
+    }
+}
+
+
+/* =============================================
+   SECTION EXPO-DESC
+   ============================================= */
+
+.expo-desc {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 450px;
+    padding: 80px 24px;
+    overflow: hidden;
+    background: #111111;
+}
+
+.expo-desc__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+}
+
+.expo-desc__title {
+    font-family: 'Heroes Legend', sans-serif;
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+.expo-desc__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 40px;
+}
+
+.expo-desc__bird {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: auto;
+    opacity: 0.3;
+    z-index: -1;
+    pointer-events: none;
+}
+
+
+/* =============================================
+   SECTION PRES-BD — Carrousel BD
+   ============================================= */
+
+/* ---- Conteneur principal ---- */
+.pres-bd {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    overflow: hidden;
+    background: #0d0805;
+}
+
+/* ---- Fond : système double couche pour crossfade ---- */
+.pres-bd__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+}
+
+.pres-bd__bg--prev {
+    opacity: 1;
+    z-index: 0;
+}
+
+.pres-bd__bg--active {
+    opacity: 0;
+    z-index: 1;
+    animation: bg-crossfade 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ---- Voile sombre ---- */
+.pres-bd__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(100deg,
+            rgba(8, 4, 0, 0.85) 0%,
+            rgba(8, 4, 0, 0.75) 40%,
+            rgba(8, 4, 0, 0.55) 100%);
+}
+
+/* ---- Décor Nil (droite) ---- */
+.pres-bd__nil {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: clamp(60px, 8vw, 120px);
+    z-index: 2;
+    pointer-events: none;
+    border-left: 1px solid rgba(213, 183, 123, 0.08);
+}
+
+.pres-bd__nil-img {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%);
+    height: 100%;
+    z-index: 3;
+}
+
+/* ---- Layout inner ---- */
+.pres-bd__inner {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 48px 24px;
+    min-height: 600px;
+}
+
+/* ---- Carrousel (colonne gauche) ---- */
+.pres-bd__carrousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+}
+
+.pres-bd__carrousel-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: rgba(213, 183, 123, 0.55);
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.pres-bd__carrousel-btn:hover {
+    color: #D5B77B;
+    transform: scale(1.15);
+}
+
+.pres-bd__carrousel-btn:active {
+    transform: scale(0.95);
+}
+
+/* ---- Liste de couvertures ---- */
+.carrousel__select-bd {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.carrousel__bd-item {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    will-change: transform, opacity;
+    transition:
+        transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+        opacity 0.4s ease,
+        filter 0.4s ease,
+        height 0.4s ease;
+}
+
+.carrousel__bd-item--active {
+    z-index: 2;
+    filter: drop-shadow(0 8px 28px rgba(213, 183, 123, 0.5));
+    animation: carrousel-item-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.carrousel__bd-item--side {
+    opacity: 0.45;
+    filter: brightness(0.65) saturate(0.7);
+    transition:
+        transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+        opacity 0.4s ease,
+        filter 0.4s ease;
+}
+
+.carrousel__bd-item--side:hover {
+    opacity: 0.72;
+    filter: brightness(0.85) saturate(0.9);
+    transform: scale(1.04);
+}
+
+/* ---- Couvertures : taille selon position ---- */
+.carrousel__bd-cover {
+    display: block;
+    width: auto;
+    border-radius: 3px;
+    object-fit: cover;
+    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+}
+
+.carrousel__bd-item--active .carrousel__bd-cover {
+    height: clamp(140px, 18vh, 200px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.carrousel__bd-item--side .carrousel__bd-cover {
+    height: clamp(100px, 13vh, 150px);
+}
+
+/* ---- Contenu BD (colonne droite) ---- */
+.pres-bd__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px;
+    padding-right: 120px;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.pres-bd__content--visible {
+    animation: content-fade-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.pres-bd__content--hidden {
+    animation: content-fade-out 0.25s ease forwards;
+}
+
+/* ---- Année ---- */
+.pres-bd__year {
+    align-self: flex-end;
+    font-family: 'Cormorant Garamond', 'Palatino Linotype', serif;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-weight: 500;
+    color: #D5B77B;
+    letter-spacing: 0.12em;
+    opacity: 0.85;
+}
+
+/* ---- Catchphrase ---- */
+.pres-bd__catchphrase {
+    margin: 0;
+    font-family: 'Cormorant Garamond', 'Palatino Linotype', serif;
+    font-size: clamp(1.35rem, 3.5vw, 2rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    color: #f5ede0;
+}
+
+/* ---- Texte descriptif ---- */
+.pres-bd__text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-family: 'Cormorant Garamond', 'Palatino Linotype', serif;
+    font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+    font-weight: 400;
+    line-height: 1.75;
+    color: rgba(240, 230, 215, 0.85);
+}
+
+.pres-bd__text span {
+    display: block;
+}
+
+/* ---- Dots de navigation ---- */
+.pres-bd__dots {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.pres-bd__dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1.5px solid rgba(213, 183, 123, 0.5);
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.pres-bd__dot:hover {
+    border-color: #D5B77B;
+    transform: scale(1.2);
+}
+
+.pres-bd__dot--active {
+    background: #D5B77B;
+    border-color: #D5B77B;
+    transform: scale(1.15);
+}
+
+/* ---- Responsive : tablette (768px+) ---- */
+@media (min-width: 768px) {
+    .pres-bd__inner {
+        align-items: center;
+        gap: clamp(32px, 5vw, 72px);
+        padding: 64px clamp(32px, 6vw, 80px);
+        padding-right: clamp(80px, 12vw, 160px);
+    }
+
+    .pres-bd__content {
+        gap: 24px;
+    }
+}
+
+/* ---- Responsive : tablette étroite (768–900px) ---- */
+@media (min-width: 768px) and (max-width: 900px) {
+    .pres-bd__inner {
+        gap: 28px;
+        padding: 48px 28px;
+    }
+
+    .pres-bd__catchphrase {
+        font-size: 1.4rem;
+    }
+
+    .carrousel__bd-item--active .carrousel__bd-cover {
+        height: clamp(120px, 15vh, 160px);
+    }
+
+    .carrousel__bd-item--side .carrousel__bd-cover {
+        height: clamp(90px, 11vh, 130px);
+    }
+}
+
+/* ---- Motion réduit ---- */
+@media (prefers-reduced-motion: reduce) {
+
+    .pres-bd__bg--active,
+    .pres-bd__bg--prev,
+    .pres-bd__content,
+    .pres-bd__content--visible,
+    .pres-bd__content--hidden,
+    .carrousel__bd-item,
+    .carrousel__bd-item--active,
+    .pres-bd__carrousel-btn,
+    .pres-bd__dot {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .pres-bd__bg--active {
+        opacity: 1;
+    }
+
+    .pres-bd__content--hidden {
+        opacity: 0;
+    }
+
+    .pres-bd__content--visible {
+        opacity: 1;
+    }
+}
+
+
+/* =============================================
+   SECTION LABYRINTHE — Mini-jeu
+   ============================================= */
+
 /* ---- Conteneur principal ---- */
 .labyrinthe {
     position: relative;
-    background: #0a0602;
+    width: 100%;
     overflow: hidden;
     padding: 80px 0;
-    width: 100%;
+    background: #0a0602;
 }
 
 /* ---- Colonnes hiéroglyphes latérales ---- */
@@ -1126,13 +1077,13 @@
     position: absolute;
     top: 0;
     bottom: 0;
+    z-index: 0;
     width: clamp(28px, 4vw, 56px);
+    opacity: 0.18;
+    pointer-events: none;
     background-image: url('/public/images/hieroglyphs-column.png');
     background-size: cover;
     background-repeat: repeat-y;
-    opacity: 0.18;
-    pointer-events: none;
-    z-index: 0;
 }
 
 .labyrinthe__col--left {
@@ -1148,9 +1099,9 @@
 .labyrinthe__particles {
     position: absolute;
     inset: 0;
-    pointer-events: none;
     z-index: 1;
     overflow: hidden;
+    pointer-events: none;
 }
 
 .labyrinthe__particle {
@@ -1163,7 +1114,6 @@
     animation: sand-drift linear infinite;
 }
 
-/* Positions et timings variés */
 .labyrinthe__particle--0 {
     left: 8%;
     bottom: 10%;
@@ -1224,7 +1174,6 @@
     background: #C4A356;
 }
 
-/* Dupliquer avec offsets pour plus de densité */
 .labyrinthe__particle:nth-child(n+7) {
     animation-delay: calc(var(--i, 0) * 0.7s + 4s);
     bottom: 20%;
@@ -1331,17 +1280,9 @@
     max-width: 1200px;
     margin: 0 auto;
     animation: laby-enter 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
-
-    @media (min-width: 768px) {
-        flex-direction: row;
-        align-items: center;
-        gap: clamp(40px, 6vw, 96px);
-    }
 }
 
-/* =============================================
-   COLONNE VISUELLE (labyrinthe illustré)
-   ============================================= */
+/* ---- Colonne visuelle (labyrinthe illustré) ---- */
 .labyrinthe__visual {
     position: relative;
     flex-shrink: 0;
@@ -1375,68 +1316,67 @@
     display: block;
     width: 14px;
     height: 22px;
-    background: radial-gradient(ellipse at 50% 80%,
-            #fff7c0 0%, #FFB347 35%, #E05C00 70%, transparent 100%);
+    background: radial-gradient(ellipse at 50% 80%, #fff7c0 0%, #FFB347 35%, #E05C00 70%, transparent 100%);
     border-radius: 50% 50% 30% 30% / 60% 60% 40% 40%;
-    animation: torch-flicker 0.8s ease-in-out infinite alternate;
     filter: blur(0.5px);
     transform-origin: bottom center;
+    animation: torch-flicker 0.8s ease-in-out infinite alternate;
 }
 
 .torch__glow {
     display: block;
-    width: 36px;
-    height: 36px;
-    background: radial-gradient(circle, rgba(255, 160, 50, 0.55) 0%, transparent 70%);
-    border-radius: 50%;
     position: absolute;
     top: -8px;
     left: 50%;
     transform: translateX(-50%);
-    animation: torch-glow-pulse 1.2s ease-in-out infinite;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 160, 50, 0.55) 0%, transparent 70%);
     pointer-events: none;
+    animation: torch-glow-pulse 1.2s ease-in-out infinite;
 }
 
-/* ---- Maze wrap + cadre ---- */
+/* ---- Cadre du labyrinthe ---- */
 .labyrinthe__maze-wrap {
     position: relative;
     width: 100%;
     aspect-ratio: 1;
-    background: linear-gradient(135deg, #1a0f04 0%, #0d0703 50%, #1a0f04 100%);
+    overflow: hidden;
     border-radius: 12px;
     border: 2px solid rgba(213, 183, 123, 0.35);
+    background: linear-gradient(135deg, #1a0f04 0%, #0d0703 50%, #1a0f04 100%);
     box-shadow:
         0 0 0 1px rgba(213, 183, 123, 0.1),
         0 0 40px rgba(139, 105, 20, 0.3),
         inset 0 0 60px rgba(0, 0, 0, 0.6);
-    overflow: hidden;
+}
 
-    /* Coins dorés */
-    &::before,
-    &::after {
-        content: '';
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        border-color: #D5B77B;
-        border-style: solid;
-        opacity: 0.7;
-        z-index: 5;
-    }
+/* Coins dorés */
+.labyrinthe__maze-wrap::before,
+.labyrinthe__maze-wrap::after {
+    content: '';
+    position: absolute;
+    z-index: 5;
+    width: 20px;
+    height: 20px;
+    border-color: #D5B77B;
+    border-style: solid;
+    opacity: 0.7;
+}
 
-    &::before {
-        top: 8px;
-        left: 8px;
-        border-width: 2px 0 0 2px;
-        border-radius: 3px 0 0 0;
-    }
+.labyrinthe__maze-wrap::before {
+    top: 8px;
+    left: 8px;
+    border-width: 2px 0 0 2px;
+    border-radius: 3px 0 0 0;
+}
 
-    &::after {
-        bottom: 8px;
-        right: 8px;
-        border-width: 0 2px 2px 0;
-        border-radius: 0 0 3px 0;
-    }
+.labyrinthe__maze-wrap::after {
+    bottom: 8px;
+    right: 8px;
+    border-width: 0 2px 2px 0;
+    border-radius: 0 0 3px 0;
 }
 
 .labyrinthe__maze-svg {
@@ -1452,21 +1392,17 @@
 .labyrinthe__maze-halo {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 50% 50%,
-            rgba(213, 183, 123, 0.1) 0%, transparent 65%);
-    animation: laby-halo-pulse 3s ease-in-out infinite;
+    background: radial-gradient(ellipse at 50% 50%, rgba(213, 183, 123, 0.1) 0%, transparent 65%);
     pointer-events: none;
+    animation: laby-halo-pulse 3s ease-in-out infinite;
 }
 
-/* =============================================
-   COLONNE CONTENU (texte + CTA)
-   ============================================= */
+/* ---- Colonne contenu (texte + CTA) ---- */
 .labyrinthe__content {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 28px;
-    /* max-width: 520px; */
 }
 
 /* ---- Eyebrow ---- */
@@ -1487,34 +1423,30 @@
     display: block;
     flex: 1;
     height: 1px;
-    background: linear-gradient(to right, transparent, rgba(213, 183, 123, 0.4), transparent);
     max-width: 60px;
+    background: linear-gradient(to right, transparent, rgba(213, 183, 123, 0.4), transparent);
 }
 
 /* ---- Titre ---- */
 .labyrinthe__title {
-    font-family: 'Heroes Legend', sans-serif;
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
-    font-weight: 400;
-    color: #f5ede0;
-    margin: 0;
-    line-height: 1.05;
-    letter-spacing: 0.03em;
     display: flex;
     align-items: center;
     gap: 16px;
-
-    @media (min-width: 768px) {
-        font-size: clamp(2.5rem, 4vw, 3.8rem);
-    }
+    margin: 0;
+    font-family: 'Heroes Legend', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+    color: #f5ede0;
 }
 
 .labyrinthe__title-deco {
+    display: inline-block;
     font-size: 0.7em;
     color: #D5B77B;
     opacity: 0.6;
     animation: torch-glow-pulse 2.5s ease-in-out infinite;
-    display: inline-block;
 }
 
 /* ---- Description ---- */
@@ -1523,8 +1455,6 @@
     font-size: clamp(1rem, 2vw, 1.15rem);
     line-height: 1.8;
     color: rgba(240, 230, 215, 0.75);
-    /* margin: 8px; */
-
 }
 
 /* ---- Perks ---- */
@@ -1543,56 +1473,59 @@
     gap: 14px;
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(0.95rem, 1.8vw, 1.05rem);
-    color: rgba(240, 230, 215, 0.82);
     line-height: 1.5;
+    color: rgba(240, 230, 215, 0.82);
+}
 
-    strong {
-        color: #D5B77B;
-        font-weight: 700;
-    }
+.labyrinthe__perk strong {
+    color: #D5B77B;
+    font-weight: 700;
 }
 
 .perk__icon {
     flex-shrink: 0;
+    margin-top: 1px;
     font-size: 1.3em;
+    line-height: 1;
     color: #D5B77B;
     opacity: 0.8;
-    margin-top: 1px;
-    line-height: 1;
 }
 
 /* ---- CTA ---- */
 .labyrinthe__cta {
     position: relative;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
-    gap: 12px;
     align-self: flex-start;
+    gap: 12px;
     padding: clamp(14px, 2vh, 18px) clamp(28px, 4vw, 44px);
     border-radius: 4px;
     text-decoration: none;
-    overflow: hidden;
     cursor: pointer;
-
-    /* Fond doré texturé */
     background: linear-gradient(135deg,
-            #8B6914 0%, #C4A356 35%, #D5B77B 50%, #C4A356 65%, #8B6914 100%);
+            #8B6914 0%,
+            #C4A356 35%,
+            #D5B77B 50%,
+            #C4A356 65%,
+            #8B6914 100%);
     background-size: 200% 100%;
-    transition: background-position 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
-
     box-shadow:
         0 4px 20px rgba(139, 105, 20, 0.5),
         inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transition: background-position 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-    &:hover {
-        background-position: 100% 0;
-        transform: translateY(-3px);
-        box-shadow: 0 8px 32px rgba(139, 105, 20, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    }
+.labyrinthe__cta:hover {
+    background-position: 100% 0;
+    transform: translateY(-3px);
+    box-shadow:
+        0 8px 32px rgba(139, 105, 20, 0.65),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
 
-    &:active {
-        transform: translateY(0);
-    }
+.labyrinthe__cta:active {
+    transform: translateY(0);
 }
 
 /* Effet shimmer au hover */
@@ -1600,15 +1533,15 @@
     position: absolute;
     top: 0;
     bottom: 0;
+    left: -80%;
     width: 60px;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-    left: -80%;
     transform: skewX(-20deg);
     pointer-events: none;
+}
 
-    .labyrinthe__cta:hover & {
-        animation: cta-shimmer 0.7s ease forwards;
-    }
+.labyrinthe__cta:hover .labyrinthe__cta-bg {
+    animation: cta-shimmer 0.7s ease forwards;
 }
 
 .labyrinthe__cta-text {
@@ -1617,19 +1550,19 @@
     font-size: clamp(1rem, 2vw, 1.15rem);
     font-weight: 700;
     letter-spacing: 0.06em;
-    color: #1a0e00;
     text-transform: uppercase;
+    color: #1a0e00;
 }
 
 .labyrinthe__cta-arrow {
     position: relative;
+    flex-shrink: 0;
     color: #1a0e00;
     transition: transform 0.3s ease;
-    flex-shrink: 0;
+}
 
-    .labyrinthe__cta:hover & {
-        transform: translateX(4px);
-    }
+.labyrinthe__cta:hover .labyrinthe__cta-arrow {
+    transform: translateX(4px);
 }
 
 /* ---- Fond sable bas ---- */
@@ -1638,18 +1571,29 @@
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 1;
     height: 80px;
+    pointer-events: none;
     background: linear-gradient(to top,
             rgba(139, 105, 20, 0.18) 0%,
             rgba(120, 85, 10, 0.08) 50%,
             transparent 100%);
-    pointer-events: none;
-    z-index: 1;
 }
 
-/* =============================================
-   RESPONSIVE mobile
-   ============================================= */
+/* ---- Responsive : tablette (768px+) ---- */
+@media (min-width: 768px) {
+    .labyrinthe__inner {
+        flex-direction: row;
+        align-items: center;
+        gap: clamp(40px, 6vw, 96px);
+    }
+
+    .labyrinthe__title {
+        font-size: clamp(2.5rem, 4vw, 3.8rem);
+    }
+}
+
+/* ---- Responsive : mobile (max 767px) ---- */
 @media (max-width: 767px) {
     .labyrinthe {
         padding: 60px 0 72px;
@@ -1664,9 +1608,7 @@
     }
 }
 
-/* =============================================
-   MOTION RÉDUIT
-   ============================================= */
+/* ---- Motion réduit ---- */
 @media (prefers-reduced-motion: reduce) {
 
     .torch__flame,
