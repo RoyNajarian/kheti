@@ -1,4 +1,7 @@
-/* ===== CONTAINER ===== */
+﻿body {
+  margin: 0;
+  background-color: #1c140c;
+}
 .reservation-container {
   --header-offset: 92px;
   min-height: 100vh;
@@ -33,10 +36,6 @@
   padding: 0 0.8rem 1.2rem;
 }
 
-.reservation-wrapper--narrow {
-  width: min(100%, 900px);
-}
-
 .reservation-main-title {
   margin: 1rem 0 1.4rem;
   color: #f8e5be;
@@ -45,8 +44,6 @@
   font-family: "Heroes Legend", "Cormorant Garamond", "Palatino Linotype", serif;
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.28);
 }
-
-/* ===== BOOKING LAYOUT ===== */
 .booking-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 340px;
@@ -61,7 +58,6 @@
 .booking-panel {
   margin-bottom: 1rem;
   padding: 0.35rem 0 1.15rem;
-  border-bottom: 1px dashed rgba(240, 220, 181, 0.24);
 }
 
 .booking-panel:last-child {
@@ -82,8 +78,6 @@
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
-
-/* ===== FORM ===== */
 .form-group {
   margin-bottom: 0.95rem;
   min-width: 0;
@@ -121,8 +115,6 @@
 .input-text::placeholder {
   color: #baa77f;
 }
-
-/* ===== TIME SLOTS ===== */
 .time-slots {
   display: flex;
   flex-direction: column;
@@ -220,8 +212,6 @@
   color: #d4a5a0;
   font-weight: 600;
 }
-
-/* ===== TICKETS ===== */
 .ticket-lines {
   display: grid;
   gap: 0.65rem;
@@ -309,9 +299,10 @@
 
 .ticket-quantity-control input {
   width: 28px;
-  border: none;
-  background: transparent;
-  color: #f7ebd0;
+  border: 1px solid rgba(240, 220, 181, 0);
+  border-radius: 4px;
+  background: rgba(12, 10, 8, 0);
+  color: #fff4da;
   font-weight: 700;
   text-align: center;
 }
@@ -325,8 +316,6 @@
   color: #f5ddaa;
   font-weight: 700;
 }
-
-/* ===== STICKY CART ===== */
 .booking-cart {
   position: sticky;
   top: calc(var(--header-offset));
@@ -369,8 +358,6 @@
   border: 3px solid #120d08;
   box-shadow: 3px 3px 0 #120d08;
 }
-
-/* ===== CALENDAR ===== */
 .calendar-widget {
   border: 1px solid rgba(240, 220, 181, 0.24);
   background: rgba(20, 14, 10, 0.28);
@@ -539,124 +526,6 @@
   filter: none;
   box-shadow: 3px 3px 0 #120d08;
 }
-
-.btn.recap-confirm-cta {
-  width: 60%;
-  margin : auto;
-  border: 3px solid #ead7a5;
-  border-radius: 24px;
-  background:
-    radial-gradient(circle at 24% 28%, rgba(18, 13, 8, 0.42) 0 1.3px, transparent 2.4px),
-    linear-gradient(180deg, #2b1c0f 0%, #1d130b 58%, #120d08 100%);
-  color: #f7dfad;
-  font-family: "Heroes Legend", "Cormorant Garamond", "Palatino Linotype", serif;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  box-shadow: 4px 4px 0 #ead7a5;
-  animation: none;
-  padding: 0.9rem 1rem;
-  font-size: 0.65rem;
-}
-
-.btn.recap-confirm-cta:hover {
-  filter: none;
-  transform: translate(-1px, -1px);
-  box-shadow: 6px 6px 0 #ead7a5;
-}
-
-.btn.recap-confirm-cta:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 #ead7a5;
-}
-
-.btn.recap-confirm-cta:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-  transform: none;
-  filter: none;
-  box-shadow: 3px 3px 0 #ead7a5;
-}
-
-/* ===== RECAP ===== */
-.recap-page {
-  padding: 0.2rem 0;
-}
-
-.recap-container {
-  border: 1px dashed rgba(240, 220, 181, 0.28);
-  border-radius: 10px;
-  margin-top: 0.85rem;
-}
-
-.recap-section {
-  padding: 1rem;
-  background: transparent;
-  border-bottom: 1px dashed rgba(235, 219, 188, 0.3);
-}
-
-.recap-section:last-child {
-  border-bottom: none;
-}
-
-.recap-edit-action {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.recap-edit-link {
-  background: transparent;
-  border: none;
-  color: #f5ddaa;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  font-weight: 700;
-  padding: 0;
-}
-
-.recap-edit-link:hover {
-  color: #fff2cf;
-}
-
-.recap-title {
-  margin: 0 0 0.8rem;
-  color: #f3ead8;
-  font-size: 1.1rem;
-}
-
-.recap-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 0.75rem;
-  padding: 0.2rem 0;
-}
-
-.recap-label {
-  color: #ccb992;
-}
-
-.recap-value {
-  color: #fff2d2;
-  text-align: right;
-}
-
-.recap-row.total {
-  margin-top: 0.45rem;
-  padding-top: 0.65rem;
-  border-top: 1px solid rgba(240, 220, 181, 0.24);
-}
-
-.recap-row.total .recap-value {
-  font-size: 1.2rem;
-  color: #f7deac;
-}
-
-.recap-email {
-  overflow-wrap: anywhere;
-}
-
-/* ===== FEEDBACK + BUTTONS ===== */
 .info-message {
   margin-top: 0.9rem;
   padding: 0.75rem;
@@ -668,13 +537,6 @@
   background: rgb(214, 54, 45);
   color: #fff4f1;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.32);
-}
-
-.step-actions {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  margin-top: 1rem;
 }
 
 .btn {
@@ -724,47 +586,6 @@
     background-position: 200% center;
   }
 }
-
-.btn-secondary {
-  background: rgba(61, 45, 21, 0.55);
-  color: #f9e9c3;
-  border-color: rgba(223, 202, 152, 0.55);
-}
-
-.btn-lg {
-  padding-inline: 1.8rem;
-}
-
-.confirmation-success {
-  text-align: center;
-  border-radius: 14px;
-  border: 1px solid rgba(240, 220, 181, 0.24);
-  background: rgba(20, 14, 10, 0.36);
-  padding: 2.1rem 1.2rem;
-}
-
-.confirmation-success h2 {
-  margin-bottom: 0.9rem;
-  font-family: "Heroes Legend", "Cormorant Garamond", "Palatino Linotype", serif;
-}
-
-.success-icon {
-  font-size: 4.4rem;
-  color: #8fcf7b;
-}
-
-.order-number {
-  margin: 1rem auto;
-  width: fit-content;
-  padding: 0.8rem 1rem;
-  border-radius: 8px;
-  background: rgba(213, 183, 123, 0.12);
-  border: 1px solid rgba(213, 183, 123, 0.3);
-  color: #f1d18d;
-  font-weight: 700;
-}
-
-/* ===== RESPONSIVE ===== */
 @media (min-width: 768px) {
   .reservation-container {
     --header-offset: 136px;
@@ -807,17 +628,10 @@
     justify-content: space-between;
   }
 
-  .step-actions {
-    flex-direction: column;
-  }
-
   .btn {
     width: 100%;
   }
 
-  .btn.recap-confirm-cta {
-    min-width: 0;
-  }
 }
 
 @media (max-width: 600px) {
@@ -825,3 +639,4 @@
     padding-inline: 14px;
   }
 }
+

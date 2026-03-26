@@ -154,8 +154,13 @@ const MenuNavbar = () => {
             </button>
 
             <div className="nav-profile-link" aria-label="Menu connexion">
-                <button type="button" className="nav-profile-link__trigger" aria-haspopup="true">
-                    <img src="/icons/pharaon_icone.png" alt="Profil" className="nav-profile-link__icon" />
+                <button
+                    type="button"
+                    className="nav-profile-link__trigger"
+                    aria-haspopup="true"
+                    aria-label="Profil"
+                >
+                    <img src="/icons/pharaon_icone.png" alt="" className="nav-profile-link__icon" />
                 </button>
 
                 <div className="nav-profile-dropdown" role="menu" aria-label="Options de connexion">
