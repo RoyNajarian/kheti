@@ -4,6 +4,7 @@ import Breadcrumb from "../components/Breadcrumb";
 import { createReservation } from "../back-office/api";
 import { RESERVATION_TICKETS, RESERVATION_PRICE_BY_TICKET } from "../components/reservationTickets";
 import "../styles/Reservation.css";
+import "../styles/ReservationRecap.css";
 
 const RESERVATION_DRAFT_KEY = "khetiReservationDraft";
 

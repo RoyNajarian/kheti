@@ -397,11 +397,6 @@ const Reservation = () => {
 
             <div className="booking-panel">
               <h2 className="step-title">Choix des billets</h2>
-              {remainingSeatsForSelectedSlot !== null && (
-                <p className="booking-limit-hint">
-                  Places restantes sur le créneau choisi: {remainingSeatsForSelectedSlot}
-                </p>
-              )}
               <div className="ticket-lines">
                 {RESERVATION_TICKETS.map((ticket) => (
                   <article className="ticket-line" key={ticket.id}>
@@ -421,15 +416,25 @@ const Reservation = () => {
                           className="qty-btn"
                           onClick={() => handleQuantity(ticket.id, -1)}
                           disabled={formData.quantities[ticket.id] === 0}
+                          aria-label={`Retirer un billet ${ticket.name}`}
                         >
                           -
                         </button>
-                        <input type="number" min="0" readOnly value={formData.quantities[ticket.id]} />
+                        <input
+                          id={`qty-${ticket.id}`}
+                          type="number"
+                          min="0"
+                          readOnly
+                          value={formData.quantities[ticket.id]}
+                          aria-label={`Quantité de billets ${ticket.name}`}
+                          title={`Quantité de billets ${ticket.name}`}
+                        />
                         <button
                           type="button"
                           className="qty-btn"
                           onClick={() => handleQuantity(ticket.id, 1)}
                           disabled={isAtSelectedSlotLimit}
+                          aria-label={`Ajouter un billet ${ticket.name}`}
                         >
                           +
                         </button>

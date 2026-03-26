@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { getReservations } from "../back-office/api";
+import { getReservations, updateUserPassword } from "../back-office/api";
 import "../styles/Profil.css";
 
 const getStoredUser = () => {
@@ -49,10 +49,39 @@ const Profil = () => {
   const [isPasswordFormOpen, setIsPasswordFormOpen] = useState(false);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
 
   useEffect(() => {
     setUser(getStoredUser());
   }, []);
+
+  useEffect(() => {
+    if (!isPasswordFormOpen) return;
+
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setIsPasswordFormOpen(false);
+        setOldPassword("");
+        setNewPassword("");
+        setShowOldPassword(false);
+        setShowNewPassword(false);
+        setResetFeedback({ type: "", message: "" });
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isPasswordFormOpen]);
+
+  useEffect(() => {
+    if (!isPasswordFormOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isPasswordFormOpen]);
 
   useEffect(() => {
     if (!user?.email) {
@@ -124,7 +153,7 @@ const Profil = () => {
     };
   }, [user]);
 
-  const handlePasswordReset = () => {
+  const handlePasswordReset = async () => {
     if (!user?.email) {
       setResetFeedback({
         type: "error",
@@ -149,12 +178,32 @@ const Profil = () => {
       return;
     }
 
+    const result = await updateUserPassword({
+      email: user.email,
+      oldPassword,
+      newPassword,
+      name: user?.name || "",
+      firstName: user?.first_name || "",
+    });
+
+    if (!result.success) {
+      setResetFeedback({
+        type: "error",
+        message:
+          String(result.error || "").trim() ||
+          "La mise à jour du mot de passe a échoué. Vérifiez vos identifiants.",
+      });
+      return;
+    }
+
     setResetFeedback({
       type: "success",
-      message: "Mot de passe mis à jour (démo front).",
+      message: "Mot de passe mis à jour avec succès.",
     });
     setOldPassword("");
     setNewPassword("");
+    setShowOldPassword(false);
+    setShowNewPassword(false);
     setIsPasswordFormOpen(false);
   };
 
@@ -194,6 +243,8 @@ const Profil = () => {
                       className="profileIconBtn"
                       onClick={() => {
                         setIsPasswordFormOpen((prev) => !prev);
+                        setShowOldPassword(false);
+                        setShowNewPassword(false);
                         setResetFeedback({ type: "", message: "" });
                       }}
                       aria-expanded={isPasswordFormOpen}
@@ -207,57 +258,6 @@ const Profil = () => {
                 </div>
               </dl>
 
-              {isPasswordFormOpen && (
-                <form
-                  className="profilePasswordForm"
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    handlePasswordReset();
-                  }}
-                >
-                  <div className="profilePasswordField">
-                    <label htmlFor="old-password">Ancien mot de passe</label>
-                    <input
-                      id="old-password"
-                      type="password"
-                      value={oldPassword}
-                      onChange={(event) => setOldPassword(event.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="profilePasswordField">
-                    <label htmlFor="new-password">Nouveau mot de passe</label>
-                    <input
-                      id="new-password"
-                      type="password"
-                      value={newPassword}
-                      onChange={(event) => setNewPassword(event.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="profilePasswordActions">
-                    <button type="submit" className="profileBtn">Enregistrer</button>
-                    <button
-                      type="button"
-                      className="profileBtn profileBtn--ghost"
-                      onClick={() => {
-                        setIsPasswordFormOpen(false);
-                        setOldPassword("");
-                        setNewPassword("");
-                        setResetFeedback({ type: "", message: "" });
-                      }}
-                    >
-                      Annuler
-                    </button>
-                  </div>
-                </form>
-              )}
-
-              {resetFeedback.message && (
-                <p className={`profileInlineFeedback profileInlineFeedback--${resetFeedback.type}`}>
-                  {resetFeedback.message}
-                </p>
-              )}
             </section>
 
             <section className="profileSection" aria-labelledby="profile-reservations-title">
@@ -322,6 +322,111 @@ const Profil = () => {
               </Link>
             </div>
           </>
+        )}
+
+        {isPasswordFormOpen && (
+          <div
+            className="profilePasswordModalBackdrop"
+            onClick={(event) => {
+              if (event.target !== event.currentTarget) return;
+              setIsPasswordFormOpen(false);
+              setOldPassword("");
+              setNewPassword("");
+              setShowOldPassword(false);
+              setShowNewPassword(false);
+              setResetFeedback({ type: "", message: "" });
+            }}
+          >
+            <div className="profilePasswordModal" role="dialog" aria-modal="true" aria-labelledby="password-modal-title">
+              <h2 id="password-modal-title" className="profileSectionTitle">Modifier le mot de passe</h2>
+
+              <form
+                className="profilePasswordForm"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  handlePasswordReset();
+                }}
+              >
+                <div className="profilePasswordField">
+                  <label htmlFor="old-password">Ancien mot de passe</label>
+                  <div className="profilePasswordInputWrap">
+                    <input
+                      id="old-password"
+                      type={showOldPassword ? "text" : "password"}
+                      value={oldPassword}
+                      onChange={(event) => setOldPassword(event.target.value)}
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="profilePasswordToggle"
+                      onClick={() => setShowOldPassword((prev) => !prev)}
+                      aria-label={showOldPassword ? "Masquer l'ancien mot de passe" : "Afficher l'ancien mot de passe"}
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        {showOldPassword ? (
+                          <path d="M2.1 3.51L1 4.62l4.03 4.03C3.77 9.67 2.8 10.99 2 12c1.73 2.39 4.56 5 10 5 2.02 0 3.74-.36 5.2-.96l3.18 3.18 1.11-1.11L2.1 3.51zM12 7c3.72 0 6.22 1.85 7.99 4.06-.57.72-1.23 1.43-2.04 2.07l-1.46-1.46c.32-.53.51-1.15.51-1.82a3.5 3.5 0 0 0-3.5-3.5c-.67 0-1.29.19-1.82.51l-1.44-1.44c.56-.23 1.16-.42 1.76-.42zM8.27 11.89l3.84 3.84A3.5 3.5 0 0 1 8.27 11.9z" />
+                        ) : (
+                          <path d="M12 5c-5.44 0-8.27 2.61-10 5 1.73 2.39 4.56 5 10 5s8.27-2.61 10-5c-1.73-2.39-4.56-5-10-5zm0 8.5A3.5 3.5 0 1 1 12 6a3.5 3.5 0 0 1 0 7.5zm0-1.5A2 2 0 1 0 12 8a2 2 0 0 0 0 4z" />
+                        )}
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="profilePasswordField">
+                  <label htmlFor="new-password">Nouveau mot de passe</label>
+                  <div className="profilePasswordInputWrap">
+                    <input
+                      id="new-password"
+                      type={showNewPassword ? "text" : "password"}
+                      value={newPassword}
+                      onChange={(event) => setNewPassword(event.target.value)}
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="profilePasswordToggle"
+                      onClick={() => setShowNewPassword((prev) => !prev)}
+                      aria-label={showNewPassword ? "Masquer le nouveau mot de passe" : "Afficher le nouveau mot de passe"}
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        {showNewPassword ? (
+                          <path d="M2.1 3.51L1 4.62l4.03 4.03C3.77 9.67 2.8 10.99 2 12c1.73 2.39 4.56 5 10 5 2.02 0 3.74-.36 5.2-.96l3.18 3.18 1.11-1.11L2.1 3.51zM12 7c3.72 0 6.22 1.85 7.99 4.06-.57.72-1.23 1.43-2.04 2.07l-1.46-1.46c.32-.53.51-1.15.51-1.82a3.5 3.5 0 0 0-3.5-3.5c-.67 0-1.29.19-1.82.51l-1.44-1.44c.56-.23 1.16-.42 1.76-.42zM8.27 11.89l3.84 3.84A3.5 3.5 0 0 1 8.27 11.9z" />
+                        ) : (
+                          <path d="M12 5c-5.44 0-8.27 2.61-10 5 1.73 2.39 4.56 5 10 5s8.27-2.61 10-5c-1.73-2.39-4.56-5-10-5zm0 8.5A3.5 3.5 0 1 1 12 6a3.5 3.5 0 0 1 0 7.5zm0-1.5A2 2 0 1 0 12 8a2 2 0 0 0 0 4z" />
+                        )}
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="profilePasswordActions">
+                  <button type="submit" className="profileBtn">Enregistrer</button>
+                  <button
+                    type="button"
+                    className="profileBtn profileBtn--ghost"
+                    onClick={() => {
+                      setIsPasswordFormOpen(false);
+                      setOldPassword("");
+                      setNewPassword("");
+                      setShowOldPassword(false);
+                      setShowNewPassword(false);
+                      setResetFeedback({ type: "", message: "" });
+                    }}
+                  >
+                    Annuler
+                  </button>
+                </div>
+              </form>
+
+              {resetFeedback.message && (
+                <p className={`profileInlineFeedback profileInlineFeedback--${resetFeedback.type}`}>
+                  {resetFeedback.message}
+                </p>
+              )}
+            </div>
+          </div>
         )}
       </div>
     </section>

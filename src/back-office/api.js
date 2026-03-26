@@ -40,6 +40,77 @@ export async function authenticateUser(email, password) {
   return { success: true, user, token };
 }
 
+export async function updateUserPassword({
+  email,
+  oldPassword,
+  newPassword,
+  name,
+  firstName,
+}) {
+  const normalizedEmail = String(email || "").trim().toLowerCase();
+  const currentPassword = String(oldPassword || "");
+  const nextPassword = String(newPassword || "");
+
+  try {
+    // 1) Vérifier l'ancien mot de passe avec l'endpoint d'auth existant.
+    const authRes = await fetch(`${BASE_URL}/auth`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: normalizedEmail,
+        password: currentPassword,
+      }),
+    });
+
+    const authJson = await authRes.json().catch(() => ({}));
+    if (!authRes.ok) {
+      return {
+        success: false,
+        error:
+          String(authJson?.error || "").trim() ||
+          "Ancien mot de passe incorrect.",
+      };
+    }
+
+    // 2) Mettre à jour l'utilisateur via PUT /users/{email}.
+    const updateRes = await fetch(`${BASE_URL}/users/${normalizedEmail}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: String(name || "").trim(),
+          first_name: String(firstName || "").trim(),
+          email: normalizedEmail,
+          password: nextPassword,
+        }),
+      }
+    );
+
+    const updateJson = await updateRes.json().catch(() => ({}));
+    if (!updateRes.ok) {
+      return {
+        success: false,
+        error:
+          String(updateJson?.error || "").trim() ||
+          `Erreur API (${updateRes.status}) lors de la mise à jour du mot de passe.`,
+      };
+    }
+
+    return {
+      success: true,
+      data: updateJson?.data || updateJson || null,
+    };
+  } catch (error) {
+    const rawError = String(error?.message || "").trim();
+    return {
+      success: false,
+      error:
+        /failed to fetch|networkerror|load failed/i.test(rawError)
+          ? "Impossible de joindre l'API. Vérifiez que le back-end est démarré et accessible."
+          : rawError || "Erreur réseau pendant la modification du mot de passe.",
+    };
+  }
+}
+
 export async function createUser(data) {
   const res = await fetch(`${BASE_URL}/users`, {
     method: "POST",
