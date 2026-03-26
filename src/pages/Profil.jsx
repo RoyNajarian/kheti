@@ -166,7 +166,6 @@ const Profil = () => {
           <div className="profileTitleRow">
             <h1 className="profileTitle">Mon profil</h1>
           </div>
-          <p className="profileSubtitle">Gérez votre compte et suivez vos réservations.</p>
         </header>
 
         {user ? (
