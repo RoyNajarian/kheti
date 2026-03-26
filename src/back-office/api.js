@@ -65,3 +65,41 @@ export async function createReservation(data) {
   if (!res.ok) throw new Error(json.error || "Erreur lors de la création de la réservation");
   return json;
 }
+
+export async function getAvailableSlots() {
+  const res = await fetch(`${BASE_URL}/reservations`);
+  if (!res.ok) throw new Error("Erreur lors du chargement des disponibilités");
+  const json = await res.json();
+  
+  // Compter les places par créneau/jour (clé: YYYY-MM-DD_HH:MM)
+  const availability = {};
+  (json.data || []).forEach((reservation) => {
+    const rawDay = String(reservation.day || "").trim();
+    const rawHour = String(reservation.hour || "").trim();
+
+    // day peut arriver en "YYYY-MM-DD" ou "YYYY-MM-DDTHH:mm:ss..."
+    const dateStr = rawDay.includes("T") ? rawDay.split("T")[0] : rawDay;
+
+    // hour peut arriver en "HH", "HH:MM" ou "HH:MM:SS"
+    let hourStr = rawHour;
+    if (/^\d{1,2}$/.test(hourStr)) {
+      hourStr = `${hourStr.padStart(2, "0")}:00`;
+    } else if (/^\d{1,2}:\d{2}$/.test(hourStr)) {
+      hourStr = hourStr.padStart(5, "0");
+    } else if (/^\d{1,2}:\d{2}:\d{2}$/.test(hourStr)) {
+      hourStr = hourStr.slice(0, 5).padStart(5, "0");
+    }
+
+    if (!dateStr || !hourStr) return;
+
+    const key = `${dateStr}_${hourStr}`;
+    const count =
+      (reservation.adult_count || 0) +
+      (reservation.child_count || 0) +
+      (reservation.student_count || 0);
+
+    availability[key] = (availability[key] || 0) + count;
+  });
+  
+  return availability;
+}

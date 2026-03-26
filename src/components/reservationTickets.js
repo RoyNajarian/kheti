@@ -5,7 +5,7 @@ export const RESERVATION_TICKETS = [
     label: "L'Explorateur (Adulte)",
     description: "Adulte",
     price: 20,
-    icon: "/icons/explorateur.png",
+    icon: "/images/logo-explorateur.png",
   },
   {
     id: "scribe",
@@ -13,15 +13,15 @@ export const RESERVATION_TICKETS = [
     label: "Le Scribe (Etudiant)",
     description: "Etudiant (justificatif requis)",
     price: 10,
-    icon: "/icons/scribe.png",
+    icon: "/images/logo-scribe.png",
   },
   {
     id: "scarabee",
-    name: "Petit Scarabee",
-    label: "Petit Scarabee (Enfant)",
+    name: "Petit Scarabée",
+    label: "Petit Scarabée (Enfant)",
     description: "Enfant (moins de 12 ans)",
     price: 7,
-    icon: "/icons/scarabee.png",
+    icon: "/images/logo-petit-scarabee.png",
   },
 ];
 

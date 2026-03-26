@@ -1,14 +1,15 @@
 import React from "react";
 import "../styles/Breadcrumb.css";
 
-const Breadcrumb = ({ currentStep }) => {
-  const steps = [
+const DEFAULT_STEPS = [
     { number: 1, label: "Sélection" },
     { number: 2, label: "Panier" },
     { number: 3, label: "Identité" },
     { number: 4, label: "Récapitulatif" },
     { number: 5, label: "Validation" },
-  ];
+];
+
+const Breadcrumb = ({ currentStep, steps = DEFAULT_STEPS }) => {
 
   return (
     <div className="breadcrumb">

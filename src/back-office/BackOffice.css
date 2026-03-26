@@ -230,9 +230,6 @@
 }
 
 .bo-chart-card {
-  background: var(--bo-surface);
-  border: 1px solid var(--bo-border);
-  border-radius: 14px;
   padding: 18px;
 }
 
