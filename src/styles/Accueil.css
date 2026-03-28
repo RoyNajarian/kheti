@@ -880,6 +880,19 @@
     z-index: 3;
 }
 
+.pres-bd__nil-boat {
+    position: absolute;
+    top: 0;
+    right: -70px;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 4;
+    overflow: hidden;
+    width: 300%;
+}
+
 /* ---- Layout inner ---- */
 .pres-bd__inner {
     position: relative;
@@ -1098,6 +1111,10 @@
     }
 
     .pres-bd__nil {
+        display: none;
+    }
+
+    .pres-bd__nil-boat {
         display: none;
     }
 
