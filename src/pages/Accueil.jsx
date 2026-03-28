@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import Boat3D from '../components/Boat3D';
 
 const accueilBdCarrousel = [
     {
@@ -331,8 +332,11 @@ const Accueil = () => {
 
                 </div>
 
-                {/* Décor Nil */}
+                {/* Décor Nil avec bateau 3D */}
                 <div className="pres-bd__nil" aria-hidden="true">
+                    <div className="pres-bd__nil-boat">
+                        <Boat3D carouselPosition={activeIndex} />
+                    </div>
                     <img src="/public/images/pres-bd_nil.png" alt="" className="pres-bd__nil-img" />
                 </div>
 
