@@ -8,6 +8,8 @@ import Profil from "./pages/Profil";
 import Immersive from "./pages/Immersive";
 import Jeu from "./pages/Jeu";
 import Reservation from "./pages/Reservation";
+import ReservationRecap from "./pages/ReservationRecap";
+import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import BackOfficeLayout from "./back-office/BackOfficeLayout";
@@ -21,10 +23,7 @@ const PublicLayout = () => {
   const location = useLocation();
 
   const ifGamePage =
-    location.pathname === "/jeu" ||
-    location.pathname === "/login" ||
-    location.pathname === "/register";
-
+    location.pathname === "/jeu";
   return (
     <>
       {!ifGamePage && <MenuNavbar />}
@@ -69,6 +68,8 @@ const App = () => {
         <Route path="immersive" element={<Immersive />} />
         <Route path="jeu" element={<Jeu />} />
         <Route path="reservation" element={<Reservation />} />
+        <Route path="reservation/recap" element={<ReservationRecap />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
 
       {/* Routes back-office reservees aux admins */}

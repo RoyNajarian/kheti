@@ -89,13 +89,6 @@ const Login = () => {
             className="profil"
             aria-label={isRegisterMode ? "Inscription a un compte" : "Connexion a votre compte"}
         >
-            <Link to="/" className="profil__logoLink" aria-label="Retour a l'accueil">
-                <img
-                    src="/images/kheti-logo.png"
-                    alt="Kheti"
-                    className="profil__logo"
-                />
-            </Link>
 
             <form className="profil__card" onSubmit={handleSubmit}>
                 <h1 className="profil__title">{isRegisterMode ? "Inscription" : "Connexion"}</h1>
