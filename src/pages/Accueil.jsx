@@ -192,7 +192,7 @@ const Accueil = () => {
 
                 </div>
             </section>
-
+            <img src="/public/images/separator.svg" alt="" className="section-separator__img" />
 
             {/* =============================================
                 SECTION EXPO-DESC
@@ -224,6 +224,8 @@ const Accueil = () => {
                     className="expo-desc__bird"
                 />
             </section>
+
+            <img src="/public/images/separator.svg" alt="" className="section-separator__img" />
 
 
             {/* =============================================
@@ -336,6 +338,8 @@ const Accueil = () => {
 
             </section>
 
+            <img src="/public/images/separator.svg" alt="" className="section-separator__img" />
+
 
             {/* =============================================
                 SECTION LABYRINTHE — Mini-jeu
@@ -392,9 +396,6 @@ const Accueil = () => {
                                     <animate attributeName="r" values="5;9;5" dur="2s" repeatCount="indefinite" />
                                     <animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite" />
                                 </circle>
-                                {/* Sortie */}
-                                <rect x="180" y="178" width="12" height="12" rx="2" fill="#8B6914" opacity="0.9" />
-                                <text x="186" y="188" fontSize="7" fill="#F0D49A" textAnchor="middle" fontWeight="bold">✦</text>
                                 {/* pointillés */}
                                 <path d="M20 20 H20 V50 H80 V90 H60 V130 H140 V90 H190" stroke="#F0D49A" strokeWidth="1.5" strokeDasharray="4 4" opacity="0.2" />
                             </svg>
@@ -428,7 +429,7 @@ const Accueil = () => {
                             le labyrinthe et voyez si vous avez l'âme d'un véritable explorateur !
                         </p>
 
-                        <a href="#labyrinthe-jeu" className="labyrinthe__cta" aria-label="Jouer au labyrinthe">
+                        <a href="/jeu" className="labyrinthe__cta" aria-label="Jouer au labyrinthe">
                             <span className="labyrinthe__cta-bg" aria-hidden="true" />
                             <span className="labyrinthe__cta-text">Entrer dans le labyrinthe</span>
                             <svg className="labyrinthe__cta-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -443,6 +444,8 @@ const Accueil = () => {
                 <div className="labyrinthe__sand" aria-hidden="true" />
 
             </section>
+
+            <img src="/public/images/separator.svg" alt="" className="section-separator__img" />
 
         </main>
     );
