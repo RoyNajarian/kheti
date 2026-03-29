@@ -1,0 +1,94 @@
+.legal-page {
+  min-height: 100vh;
+  position: relative;
+  padding: clamp(110px, 12vw, 150px) 20px 64px;
+  background-image: url("/images/lobby_hero_bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #f5edd9;
+}
+
+.legal-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    165deg,
+    rgba(13, 9, 4, 0.72) 0%,
+    rgba(26, 17, 9, 0.58) 42%,
+    rgba(12, 8, 3, 0.78) 100%
+  );
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  pointer-events: none;
+}
+
+.legal-shell {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 960px);
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 36px);
+}
+
+.legal-title {
+  margin: 0;
+  font-family: "Heroes Legend", "Cormorant Garamond", "Palatino Linotype", serif;
+  color: #f6dfaa;
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  letter-spacing: 0.02em;
+}
+
+.legal-intro {
+  margin: 0.8rem 0 1.6rem;
+  color: #d9c39a;
+  line-height: 1.6;
+}
+
+.legal-block {
+  padding: 1rem 0;
+  border-top: 1px dashed rgba(240, 220, 181, 0.24);
+}
+
+.legal-block h2 {
+  margin: 0 0 0.65rem;
+  color: #f5ddaa;
+  font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+  font-family: "Cormorant Garamond", "Palatino Linotype", serif;
+}
+
+.legal-block p {
+  margin: 0 0 0.65rem;
+  color: #e8d7b4;
+  line-height: 1.6;
+}
+
+.legal-block ul {
+  margin: 0.3rem 0 0.4rem;
+  padding-left: 1.2rem;
+}
+
+.legal-block li {
+  margin-bottom: 0.4rem;
+  color: #e6d2a9;
+  line-height: 1.5;
+}
+
+.legal-updated {
+  margin: 1.3rem 0 0;
+  padding-top: 0.85rem;
+  border-top: 1px dashed rgba(240, 220, 181, 0.24);
+  color: #c9b48c;
+  font-size: 0.92rem;
+}
+
+@media (max-width: 768px) {
+  .legal-page {
+    padding-inline: 14px;
+  }
+
+  .legal-shell {
+    border-radius: 14px;
+  }
+}

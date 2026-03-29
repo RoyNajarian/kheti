@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 const Footer = () => {
     return (
         <footer className="page-footer" role="contentinfo" aria-label="Pied de page Kheti">
@@ -16,7 +18,12 @@ const Footer = () => {
                         </a>
 
                         <nav className="footer-nav" aria-label="Liens légaux">
-                            <a href="/mentions-legales">Mentions légales</a>
+                            <Link
+                                to="/mentions-legales"
+                                onClick={() => window.scrollTo({ top: 0, behavior: "auto" })}
+                            >
+                                Mentions légales
+                            </Link>
                             <a href="/avis">Vos avis</a>
                         </nav>
                     </div>
