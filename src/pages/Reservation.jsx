@@ -75,8 +75,15 @@ const Reservation = () => {
 
   useEffect(() => {
     getAvailableSlots()
-      .then(setSlotAvailability)
-      .catch(() => {
+      .then((data) => {
+        console.log("📍 Disponibilités chargées pour la date:", {
+          date: formData.date,
+          availability: data,
+        });
+        setSlotAvailability(data);
+      })
+      .catch((err) => {
+        console.warn("⚠️ Erreur chargement disponibilités:", err);
         // Silently fail - les slots seront affichés sans restriction
       });
   }, [formData.date]);

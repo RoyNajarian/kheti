@@ -1,14 +1,40 @@
-const BASE_URL = "http://localhost/kheti/back-end/api";
+const DEFAULT_BASE_URL = "https://kheti.leolesimple.fr/api/index.php";
+
+const BASE_URL = (import.meta.env.VITE_API_BASE_URL || DEFAULT_BASE_URL).replace(/\/+$/, "");
+
+function buildApiUrl(resource, id) {
+  const url = new URL(BASE_URL);
+  url.searchParams.set("resource", resource);
+  if (id !== undefined && id !== null && String(id).trim() !== "") {
+    url.searchParams.set("id", String(id));
+  }
+  return url.toString();
+}
 
 export async function getReservations() {
-  const res = await fetch(`${BASE_URL}/reservations`);
-  if (!res.ok) throw new Error("Erreur lors du chargement des réservations");
-  const json = await res.json();
-  return json.data;
+  const reservationsUrl = new URL(buildApiUrl("reservations"));
+  reservationsUrl.searchParams.set("_ts", String(Date.now()));
+
+  const res = await fetch(reservationsUrl.toString(), {
+    cache: "no-store",
+  });
+  const json = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    throw new Error(json?.error || "Erreur lors du chargement des réservations");
+  }
+
+  const reservations = Array.isArray(json?.data) ? json.data : [];
+  console.log("✅ getReservations()", {
+    url: reservationsUrl.toString(),
+    count: reservations.length,
+  });
+
+  return reservations;
 }
 
 export async function getUsers() {
-  const res = await fetch(`${BASE_URL}/users`);
+  const res = await fetch(buildApiUrl("users"));
   if (!res.ok) throw new Error("Erreur lors du chargement des utilisateurs");
   const json = await res.json();
   return json.data;
@@ -17,7 +43,7 @@ export async function getUsers() {
 export async function authenticateUser(email, password) {
   const normalizedEmail = String(email || "").trim().toLowerCase();
 
-  const res = await fetch(`${BASE_URL}/auth`, {
+  const res = await fetch(buildApiUrl("auth"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -53,7 +79,7 @@ export async function updateUserPassword({
 
   try {
     // 1) Vérifier l'ancien mot de passe avec l'endpoint d'auth existant.
-    const authRes = await fetch(`${BASE_URL}/auth`, {
+    const authRes = await fetch(buildApiUrl("auth"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -73,7 +99,7 @@ export async function updateUserPassword({
     }
 
     // 2) Mettre à jour l'utilisateur via PUT /users/{email}.
-    const updateRes = await fetch(`${BASE_URL}/users/${normalizedEmail}`, {
+    const updateRes = await fetch(buildApiUrl("users", normalizedEmail), {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -112,7 +138,7 @@ export async function updateUserPassword({
 }
 
 export async function createUser(data) {
-  const res = await fetch(`${BASE_URL}/users`, {
+  const res = await fetch(buildApiUrl("users"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -127,13 +153,37 @@ export async function createUser(data) {
 }
 
 export async function createReservation(data) {
-  const res = await fetch(`${BASE_URL}/reservations`, {
+  const reservationUrl = buildApiUrl("reservations");
+
+  console.log("📤 Envoi réservation:", {
+    url: reservationUrl,
+    data,
+    timestamp: new Date().toISOString(),
+  });
+
+  const res = await fetch(reservationUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
+
+  console.log("📊 Réponse API:", {
+    status: res.status,
+    statusText: res.statusText,
+    headers: Object.fromEntries(res.headers),
+  });
+
   const json = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(json.error || "Erreur lors de la création de la réservation");
+  
+  console.log("📥 Réponse JSON:", json);
+
+  if (!res.ok) {
+    const errorMsg = json.error || json.message || `Erreur HTTP ${res.status}`;
+    console.error("❌ Erreur création réservation:", errorMsg);
+    throw new Error(errorMsg);
+  }
+  
+  console.log("✅ Réservation créée avec succès");
   return json;
 }
 
@@ -151,7 +201,6 @@ export async function sendConfirmationEmail(email, reservationId, date, time, pr
         reservation_id: reservationId,
         date: normalizedDate,
         time: normalizedTime,
-        // Compatibilite avec une API qui attend day/hour.
         day: normalizedDate,
         hour: normalizedTime,
         price,
@@ -172,39 +221,46 @@ export async function sendConfirmationEmail(email, reservationId, date, time, pr
 }
 
 export async function getAvailableSlots() {
-  const res = await fetch(`${BASE_URL}/reservations`);
-  if (!res.ok) throw new Error("Erreur lors du chargement des disponibilités");
-  const json = await res.json();
-  
-  // Compter les places par créneau/jour (clé: YYYY-MM-DD_HH:MM)
-  const availability = {};
-  (json.data || []).forEach((reservation) => {
-    const rawDay = String(reservation.day || "").trim();
-    const rawHour = String(reservation.hour || "").trim();
+  try {
+    // Utiliser getReservations() qui gère les fallbacks automatiquement
+    const reservations = await getReservations();
+    
+    console.log("📍 getAvailableSlots() - Réservations reçues:", reservations.length);
+    
+    // Compter les places par créneau/jour (clé: YYYY-MM-DD_HH:MM)
+    const availability = {};
+    (reservations || []).forEach((reservation) => {
+      const rawDay = String(reservation.day || "").trim();
+      const rawHour = String(reservation.hour || "").trim();
 
-    // day peut arriver en "YYYY-MM-DD" ou "YYYY-MM-DDTHH:mm:ss..."
-    const dateStr = rawDay.includes("T") ? rawDay.split("T")[0] : rawDay;
+      // day peut arriver en "YYYY-MM-DD" ou "YYYY-MM-DDTHH:mm:ss..."
+      const dateStr = rawDay.includes("T") ? rawDay.split("T")[0] : rawDay;
 
-    // hour peut arriver en "HH", "HH:MM" ou "HH:MM:SS"
-    let hourStr = rawHour;
-    if (/^\d{1,2}$/.test(hourStr)) {
-      hourStr = `${hourStr.padStart(2, "0")}:00`;
-    } else if (/^\d{1,2}:\d{2}$/.test(hourStr)) {
-      hourStr = hourStr.padStart(5, "0");
-    } else if (/^\d{1,2}:\d{2}:\d{2}$/.test(hourStr)) {
-      hourStr = hourStr.slice(0, 5).padStart(5, "0");
-    }
+      // hour peut arriver en "HH", "HH:MM" ou "HH:MM:SS"
+      let hourStr = rawHour;
+      if (/^\d{1,2}$/.test(hourStr)) {
+        hourStr = `${hourStr.padStart(2, "0")}:00`;
+      } else if (/^\d{1,2}:\d{2}$/.test(hourStr)) {
+        hourStr = hourStr.padStart(5, "0");
+      } else if (/^\d{1,2}:\d{2}:\d{2}$/.test(hourStr)) {
+        hourStr = hourStr.slice(0, 5).padStart(5, "0");
+      }
 
-    if (!dateStr || !hourStr) return;
+      if (!dateStr || !hourStr) return;
 
-    const key = `${dateStr}_${hourStr}`;
-    const count =
-      (reservation.adult_count || 0) +
-      (reservation.child_count || 0) +
-      (reservation.student_count || 0);
+      const key = `${dateStr}_${hourStr}`;
+      const count =
+        (reservation.adult_count || 0) +
+        (reservation.child_count || 0) +
+        (reservation.student_count || 0);
 
-    availability[key] = (availability[key] || 0) + count;
-  });
-  
-  return availability;
+      availability[key] = (availability[key] || 0) + count;
+    });
+    
+    console.log("✅ Disponibilités calculées:", availability);
+    return availability;
+  } catch (error) {
+    console.error("❌ Erreur getAvailableSlots:", error);
+    return {};
+  }
 }
