@@ -4,12 +4,13 @@ import gsap from 'gsap';
 let personnageMesh = null;
 let isMoving = false;
 
+// Position et rotation actuelles du personnage
 let positionX = 0;
 let positionZ = 0;
-
 let rotationX = 0;
 let rotationZ = 0;
 
+// Trouve la position de départ du personnage
 export const start = (currentLevel) => {
     for (let i = 0; i < currentLevel.length; i++) {
         for (let j = 0; j < currentLevel[i].length; j++) {
@@ -20,13 +21,14 @@ export const start = (currentLevel) => {
     }
 }
 
+// Crée le personnage et l'ajoute à la scène
 export const createPersonnage = (scene, currentLevel) => {
     const textureLoader = new THREE.TextureLoader();
 
     const ballTexture = textureLoader.load('/images/ball.jpg');
     ballTexture.colorSpace = THREE.SRGBColorSpace;
 
-    const geometry = new THREE.SphereGeometry(0.4, 16, 16);
+    const geometry = new THREE.SphereGeometry(0.46, 16, 16);
     const material = new THREE.MeshLambertMaterial({ map: ballTexture });
     personnageMesh = new THREE.Mesh(geometry, material);
 
@@ -38,6 +40,8 @@ export const createPersonnage = (scene, currentLevel) => {
     scene.add(personnageMesh);
 };
 
+
+// Déplace le personnage dans la direction donnée, en vérifiant les collisions avec les murs et en animant le mouvement.
 export const movePersonnage = (direction, currentLevel, whenFinish) => {
     if (isMoving || !personnageMesh) {
         return null;
@@ -46,16 +50,16 @@ export const movePersonnage = (direction, currentLevel, whenFinish) => {
     let stepX = 0;
     let stepZ = 0;
 
-    if (direction === 'haut') {
+    if (direction === 'up') {
         stepZ -= 1;
     }
-    else if (direction === 'bas') {
+    else if (direction === 'down') {
         stepZ += 1;
     }
-    else if (direction === 'gauche') {
+    else if (direction === 'left') {
         stepX -= 1;
     }
-    else if (direction === 'droite') {
+    else if (direction === 'right') {
         stepX += 1;
     }
 
@@ -79,7 +83,7 @@ export const movePersonnage = (direction, currentLevel, whenFinish) => {
         gsap.to(personnageMesh.position, {
             x: destinationX,
             z: destinationZ,
-            duration: 0.3,
+            duration: 0.2,
             onComplete: () => {
                 isMoving = false;
                 if (currentLevel[destinationZ][destinationX] === 3) {
@@ -89,9 +93,12 @@ export const movePersonnage = (direction, currentLevel, whenFinish) => {
         });
 
         gsap.to(personnageMesh.rotation, {
-            x: rotationX -= distanceZ * 1.5708,
-            z: rotationZ += distanceX * 1.5708,
+            x: rotationX -= distanceZ * (Math.PI / 2),
+            z: rotationZ += distanceX * (Math.PI / 2),
             duration: 0.3,
+            ease: "power2.out"
         });
+        return true;
     }
+    return false;
 }
