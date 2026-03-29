@@ -203,6 +203,7 @@ const Reservation = () => {
   const hasMazeCode = normalizedMazeCode.length > 0;
   const isMazeCodeValid =
     normalizedMazeCode === MAZE_GOODIES_CODE && Boolean(formData.mazeCodeValidated);
+  const isUserLoggedIn = useMemo(() => Boolean(getStoredUser()), []);
 
   const handleValidateMazeCode = () => {
     const isValid = normalizedMazeCode === MAZE_GOODIES_CODE;
@@ -503,9 +504,11 @@ const Reservation = () => {
 
             <div className="booking-panel">
               <h2 className="step-title">Coordonnées</h2>
-              <p className="booking-login-hint">
-                Vous avez deja un compte ? <Link to="/login">Se connecter</Link>
-              </p>
+              {!isUserLoggedIn && (
+                <p className="booking-login-hint">
+                  Vous avez deja un compte ? <Link to="/login">Se connecter</Link>
+                </p>
+              )}
 
               <div className="booking-grid-two">
                 <div className="form-group">

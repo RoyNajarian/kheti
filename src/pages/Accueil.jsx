@@ -63,6 +63,7 @@ const Accueil = () => {
     const [prevIndex, setPrevIndex] = useState(null);
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [contentVisible, setContentVisible] = useState(true);
+    const [showTrailer, setShowTrailer] = useState(false);
     const transitionTimer = useRef(null);
 
     const navigate = (nextIndex) => {
@@ -105,17 +106,13 @@ const Accueil = () => {
     ];
 
     return (
-        <main className="main">
+        <>
+            <main className="main">
 
             {/* =============================================
                 SECTION HERO
             ============================================= */}
             <section className="accueil" aria-label="Page d'accueil Kheti">
-
-                {/* ── Bandeau de dates (mobile uniquement) ── */}
-                <div className="accueil-dates-banner" aria-label="Dates de l'exposition">
-                    DU 20 JUIN AU 20 JUILLET - PARIS -
-                </div>
 
                 {/* ── Contenu héro ── */}
                 <div className="accueil-content">
@@ -130,6 +127,7 @@ const Accueil = () => {
                             className="accueil-trailer-btn"
                             type="button"
                             aria-label="Voir le trailer de Kheti"
+                            onClick={() => setShowTrailer(true)}
                         >
                             Voir le trailer
                         </button>
@@ -168,7 +166,7 @@ const Accueil = () => {
 
                     {/* Scroll CTA — desktop/tablette uniquement */}
                     <a
-                        href="#suite"
+                        href="#expo-desc"
                         className="accueil-scroll-action"
                         aria-label="Défiler pour voir plus de contenu"
                     >
@@ -189,12 +187,19 @@ const Accueil = () => {
 
                 </div>
             </section>
-            <img src="/public/images/separator.svg" alt="" className="section-separator__img" />
+
+            {/* ── Bandeau de dates ── */}
+            <div className="accueil-dates-banner" aria-label="Dates de l'exposition">
+                DU 20 JUIN AU 20 JUILLET - PARIS -
+            </div>
+
+            {/* ── Separator ── */}
+            <img src="/public/images/separator.svg" alt="" className="section-separator__img section-separator__img--first" />
 
             {/* =============================================
                 SECTION EXPO-DESC
             ============================================= */}
-            <section className="expo-desc">
+            <section className="expo-desc" id="expo-desc">
                 <div className="expo-desc__content">
                     <h2 className="expo-desc__title">
                         L'Égypte sous les traits du 9e Art
@@ -353,24 +358,10 @@ const Accueil = () => {
                     ))}
                 </div>
 
-                {/* Colonnes de hiéroglyphes latérales */}
-                <div className="labyrinthe__col labyrinthe__col--left" aria-hidden="true" />
-                <div className="labyrinthe__col labyrinthe__col--right" aria-hidden="true" />
-
                 <div className="labyrinthe__inner">
 
                     {/* Colonne gauche : visuel du labyrinthe */}
                     <div className="labyrinthe__visual" aria-hidden="true">
-
-                        {/* Torches */}
-                        <div className="labyrinthe__torch labyrinthe__torch--tl">
-                            <span className="torch__flame" />
-                            <span className="torch__glow" />
-                        </div>
-                        <div className="labyrinthe__torch labyrinthe__torch--tr">
-                            <span className="torch__flame" />
-                            <span className="torch__glow" />
-                        </div>
 
                         {/* Grille labyrinthe SVG */}
                         <div className="labyrinthe__maze-wrap">
@@ -448,6 +439,33 @@ const Accueil = () => {
             <img src="/public/images/separator.svg" alt="" className="section-separator__img" />
 
         </main>
+
+        {/* Popup Trailer */}
+        {showTrailer && (
+            <div className="trailer-popup-overlay" onClick={() => setShowTrailer(false)}>
+                <div className="trailer-popup-content" onClick={(e) => e.stopPropagation()}>
+                    <button
+                        className="trailer-popup-close"
+                        onClick={() => setShowTrailer(false)}
+                        aria-label="Fermer le trailer"
+                        type="button"
+                    >
+                        ✕
+                    </button>
+                    <video
+                        className="trailer-video"
+                        controls
+                        autoPlay
+                        width="100%"
+                        height="auto"
+                    >
+                        <source src="/public/video/FINAL-TEASER_SFX.mp4" type="video/mp4" />
+                        Votre navigateur ne supporte pas la balise vidéo.
+                    </video>
+                </div>
+            </div>
+        )}
+    </>
     );
 };
 
