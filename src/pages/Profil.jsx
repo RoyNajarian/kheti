@@ -108,7 +108,9 @@ const Profil = () => {
 
         const userEmail = String(user.email).trim().toLowerCase();
         const userReservations = allReservations.filter((reservation) => {
-          const reservationEmail = String(reservation?.email || reservation?.user?.email || "")
+          const reservationEmail = String(
+            reservation?.email || reservation?.user?.email || "",
+          )
             .trim()
             .toLowerCase();
           return reservationEmail && reservationEmail === userEmail;
@@ -128,8 +130,10 @@ const Profil = () => {
         });
 
         upcoming.sort((a, b) => {
-          const dateA = parseReservationDateTime(a)?.getTime() || Number.MAX_SAFE_INTEGER;
-          const dateB = parseReservationDateTime(b)?.getTime() || Number.MAX_SAFE_INTEGER;
+          const dateA =
+            parseReservationDateTime(a)?.getTime() || Number.MAX_SAFE_INTEGER;
+          const dateB =
+            parseReservationDateTime(b)?.getTime() || Number.MAX_SAFE_INTEGER;
           return dateA - dateB;
         });
 
@@ -252,7 +256,11 @@ const Profil = () => {
                       aria-expanded={isPasswordFormOpen}
                       aria-label={t('profil.aria.edit_password')}
                     >
-                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
                         <path d="M3 17.25V21h3.75l11-11-3.75-3.75-11 11zm14.71-9.04c.39-.39.39-1.02 0-1.41l-2.5-2.5a.996.996 0 10-1.41 1.41l2.5 2.5c.39.39 1.02.39 1.41 0z" />
                       </svg>
                     </button>
@@ -269,7 +277,9 @@ const Profil = () => {
               {isLoadingReservations ? (
                 <p className="profileHint">{t('profil.reservations.loading')}</p>
               ) : reservationError ? (
-                <p className="profileInlineFeedback profileInlineFeedback--error">{reservationError}</p>
+                <p className="profileInlineFeedback profileInlineFeedback--error">
+                  {reservationError}
+                </p>
               ) : (
                 <div className="profileReservationsGrid">
                   <div className="profileReservationsColumn">
@@ -372,7 +382,11 @@ const Profil = () => {
                         ? t('profil.aria.hide_old_password')
                         : t('profil.aria.show_old_password')}
                     >
-                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
                         {showOldPassword ? (
                           <path d="M2.1 3.51L1 4.62l4.03 4.03C3.77 9.67 2.8 10.99 2 12c1.73 2.39 4.56 5 10 5 2.02 0 3.74-.36 5.2-.96l3.18 3.18 1.11-1.11L2.1 3.51zM12 7c3.72 0 6.22 1.85 7.99 4.06-.57.72-1.23 1.43-2.04 2.07l-1.46-1.46c.32-.53.51-1.15.51-1.82a3.5 3.5 0 0 0-3.5-3.5c-.67 0-1.29.19-1.82.51l-1.44-1.44c.56-.23 1.16-.42 1.76-.42zM8.27 11.89l3.84 3.84A3.5 3.5 0 0 1 8.27 11.9z" />
                         ) : (
@@ -401,7 +415,11 @@ const Profil = () => {
                         ? t('profil.aria.hide_new_password')
                         : t('profil.aria.show_new_password')}
                     >
-                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
                         {showNewPassword ? (
                           <path d="M2.1 3.51L1 4.62l4.03 4.03C3.77 9.67 2.8 10.99 2 12c1.73 2.39 4.56 5 10 5 2.02 0 3.74-.36 5.2-.96l3.18 3.18 1.11-1.11L2.1 3.51zM12 7c3.72 0 6.22 1.85 7.99 4.06-.57.72-1.23 1.43-2.04 2.07l-1.46-1.46c.32-.53.51-1.15.51-1.82a3.5 3.5 0 0 0-3.5-3.5c-.67 0-1.29.19-1.82.51l-1.44-1.44c.56-.23 1.16-.42 1.76-.42zM8.27 11.89l3.84 3.84A3.5 3.5 0 0 1 8.27 11.9z" />
                         ) : (
@@ -425,7 +443,9 @@ const Profil = () => {
               </form>
 
               {resetFeedback.message && (
-                <p className={`profileInlineFeedback profileInlineFeedback--${resetFeedback.type}`}>
+                <p
+                  className={`profileInlineFeedback profileInlineFeedback--${resetFeedback.type}`}
+                >
                   {resetFeedback.message}
                 </p>
               )}

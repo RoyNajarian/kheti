@@ -65,38 +65,36 @@ const Footer = () => {
                     </p>
                 </div>
 
-                <div className="footer-divider" role="separator" aria-hidden="true">
-                    <span className="footer-divider__line" />
-                    <span className="footer-divider__ornament" aria-hidden="true">𓂀</span>
-                    <span className="footer-divider__line" />
-                </div>
-
-                <div className="footer-location" aria-label={t('footer.aria.location')}>
-                    <p className="footer-location-text">
-                        <span aria-hidden="true" className="footer-location-icon">𓇳</span>
-                        {t('footer.location.text')}
-                    </p>
-                    <a
-                        href="https://maps.google.com/?q=Kheti+Paris"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={t('footer.aria.map_link')}
-                        className="footer-location__map-link"
-                    >
-                        <img
-                            src="/public/images/footer-location-map.png"
-                            alt={t('footer.aria.map_alt')}
-                            className="footer-location__map"
-                            width="300"
-                            height="300"
-                        />
-                        <span className="footer-location__cta" aria-hidden="true">{t('footer.location.map_cta')}</span>
-                    </a>
-                </div>
-            </div>
-
-        </footer>
-    );
+        <div className="footer-location" aria-label={t("footer.aria.location")}>
+          <p className="footer-location-text">
+            <span aria-hidden="true" className="footer-location-icon">
+              𓇳
+            </span>
+            {t("footer.location.text")}
+          </p>
+          <a
+            href="https://maps.google.com/?q=Kheti+Paris"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t("footer.aria.map_link")}
+            className="footer-location__map-link"
+          >
+            <img
+              src="/public/images/footer-location-map.png"
+              alt={t("footer.aria.map_alt")}
+              className="footer-location__map"
+              width="300"
+              height="300"
+            />
+            <span className="footer-location__cta" aria-hidden="true">
+              {t("footer.location.map_cta")}
+            </span>
+          </a>
+        </div>
+      </div>
+    </footer>
+  );
 };
 
 export default Footer;
+
