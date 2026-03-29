@@ -1,0 +1,504 @@
+{
+  "accueil": {
+    "dates_banner": "20TH JUNE TO 20TH JULY - PARIS -",
+    "hero": {
+      "trailer_btn": "Watch the trailer",
+      "scroll_label": "Scroll down"
+    },
+    "expo_desc": {
+      "title": "Egypt Through the Lens of the 9th Art",
+      "p1": "In the language of the pyramid builders, “Kheti” is the closest word to what we now call comics.",
+      "p2": "For nearly a century, the mysteries of the sand and the tombs have fuelled the imagination of the greatest comic artists. From Edgar P. Jacobs’ The Mystery of the Great Pyramid to the cult parodies of Asterix, join us on a visual journey through time.",
+      "p3": "Let yourself drift along and watch a paper myth evolve."
+    },
+    "carrousel": {
+      "items": [
+        {
+          "title": "Cigars of the pharaoh",
+          "année": "1934",
+          "catchphrase": "Egypt as a mysterious backdrop (stereotypical settings)",
+          "content_1": "In The Cigars of the Pharaoh, Hergé portrays Egypt as a mysterious and exotic place. Inspired by the discovery of Tutankhamun’s tomb in 1922, the album depicts an Egypt filled with pyramids, tombs, and mummies.",
+          "content_2": "The architecture and tombs serve primarily as an adventure backdrop, complete with secret passages and hidden locations tied to secret societies — as when Tintin explores the tomb of Kih-Oskh, surrounded by rows of mummies."
+        },
+        {
+          "title": "The Mystery of the Great Pyramid",
+          "année": "1954",
+          "catchphrase": "Fantastical Egypt and the myth of the curse",
+          "content_1": "In The Mystery of the Great Pyramid by Edgar P. Jacobs, Egypt is depicted with remarkable realism, featuring detailed views of Cairo, the Giza plateau, the Sphinx, and the pyramids.",
+          "content_2": "The architecture feels sacred and monumental, setting the modern city against the silence of the pyramids, which are presented as ancient places steeped in mystery and spirituality — most notably through the “Chamber of Horus”."
+        },
+        {
+          "title": "Asterix and Cleopatra",
+          "année": "1965",
+          "catchphrase": "Egypt as parody and celebration",
+          "content_1": "In Asterix and Cleopatra by René Goscinny and Albert Uderzo, set in 48 BC, Egypt is brought to life through its iconic landmarks — palaces, pyramids, and the Sphinx.",
+          "content_2": "The buildings are drawn in a spectacular and vibrant style, presenting a grand and monumental Egypt, while construction sites and building projects are used to comedic effect throughout."
+        },
+        {
+          "title": "Papyrus",
+          "année": "1974",
+          "catchphrase": "Egypt as a grand political stage",
+          "content_1": "In Papyrus by Lucien De Gieter, set in the Egypt of the ancient pharaohs, the country is portrayed as a mythological world rooted in the beliefs of ancient Egyptian civilisation.",
+          "content_2": "Animal-headed gods, fantastical creatures, and magic are ever-present, painting Egypt as a land of legend where the gods intervene directly in human affairs."
+        },
+        {
+          "title": "The Prince of the Nile",
+          "année": "1974",
+          "catchphrase": "Egypt as a centre of power and intrigue",
+          "content_1": "In The Prince of the Nile by Jacques Martin, set in the Ptolemaic period around 51 BC, Egypt is depicted as a wealthy and powerful kingdom defined by the opulence of its palaces, jewellery, and costumes.",
+          "content_2": "The country also emerges as a hotbed of power struggles and conspiracies surrounding the pharaoh’s throne."
+        },
+        {
+          "title": "Indiana Jones",
+          "année": "2001",
+          "catchphrase": "Egypt as a cinematic adventure setting",
+          "content_1": "In The Cigars of the Pharaoh, Hergé portrays Egypt as a mysterious and exotic place. Inspired by the discovery of Tutankhamun’s tomb in 1922, the album depicts an Egypt filled with pyramids, tombs, and mummies.",
+          "content_2": "The architecture and tombs serve primarily as an adventure backdrop, complete with secret passages and hidden locations tied to secret societies — as when Tintin explores the tomb of Kih-Oskh, surrounded by rows of mummies."
+        }
+      ],
+      "prev_btn": "Previous comic",
+      "next_btn": "Next comic",
+      "dot_label": "Go to comic {{number}}"
+    },
+    "labyrinthe": {
+      "eyebrow": "Exclusive mini-game",
+      "title": "The maze",
+      "desc_1": "Do you dare take on the challenge? Test your sense of direction and your logic by guiding a ball to the exit. But be warned… some paths lead to dead ends! Choose the right turn, think fast, and find your way out as quickly as you can.",
+      "desc_2": "And that’s not all! Players who complete the challenge will be able to take home a free gift. All the more reason to give it a go! Ready to play? Step into the maze and find out if you’re a true explorer at heart!",
+      "cta": "Enter the maze"
+    },
+    "aria": {
+      "page": "Kheti home page",
+      "dates_banner": "Exhibition dates",
+      "trailer_btn": "Watch the Kheti trailer",
+      "scroll_cta": "Scroll down to see more content",
+      "bd_section": "Egypt-themed comics",
+      "carrousel_nav": "Comics navigation",
+      "covers_list": "Comic covers",
+      "carrousel_progress": "Carousel progress",
+      "minigame_section": "Maze mini-game",
+      "labyrinthe_cta": "Play the maze",
+      "maze_illustration": "Maze illustration",
+      "year_label": "Year: {{year}}"
+    }
+  },
+  "navbar": {
+    "nav": {
+      "home": "Home",
+      "reserve": "Book",
+      "labyrinth": "Mini Game"
+    },
+    "profile": {
+      "my_profile": "My profil",
+      "back_office": "Back Office",
+      "logout": "Log out",
+      "login": "Log in",
+      "register": "Sign up"
+    },
+    "aria": {
+      "nav": "Main navigation",
+      "burger_open": "Open menu",
+      "burger_close": "Close menu",
+      "home": "Home",
+      "reserve": "Book your tickets",
+      "labyrinth": "Go to the Maze",
+      "lang": "Current language: {{lang}}. Click to switch.",
+      "profile_trigger": "Profile",
+      "profile_menu": "Sign-in options"
+    }
+  },
+  "footer": {
+    "nav": {
+      "legal": "Legal notice",
+      "listen": "Listen to us"
+    },
+    "social": {
+      "label": "Follow us"
+    },
+    "location": {
+      "text": "Find us here!",
+      "map_cta": "View on map →"
+    },
+    "copyright": "© {{year}} Faravision. All rights reserved.",
+    "aria": {
+      "footer": "Kheti footer",
+      "infos": "Restaurant information",
+      "logo": "Back to Kheti home",
+      "logo_alt": "Kheti logo – Egyptian restaurant in Paris",
+      "nav": "Legal links",
+      "socials": "Social media",
+      "instagram": "Faravision on Instagram (opens in a new tab)",
+      "tiktok": "Faravision on TikTok (opens in a new tab)",
+      "location": "Restaurant location",
+      "map_alt": "Map of Paris showing the location of Kheti restaurant",
+      "map_link": "View Kheti on Google Maps (opens in a new tab)"
+    }
+  },
+  "reservation": {
+    "breadcrumb": {
+      "step1": "Your booking",
+      "step2": "Summary and confirmation"
+    },
+    "title": "Temple ticket office",
+    "date_slot": {
+      "section_title": "Date and time slot",
+      "date_label": "Date",
+      "slot_label": "Time slot",
+      "required": "*",
+      "prev_month": "Previous month",
+      "next_month": "Next month",
+      "weekdays": [
+        "M",
+        "T",
+        "W",
+        "T",
+        "F",
+        "S",
+        "S"
+      ],
+      "slot_full": "Full",
+      "slot_available_one": "{{count}} spot",
+      "slot_available_other": "{{count}} spots"
+    },
+    "tickets": {
+      "section_title": "Choose your tickets",
+      "remove_aria": "Remove a {{name}} ticket",
+      "add_aria": "Add a {{name}} ticket",
+      "qty_aria": "Quantity of {{name}} tickets"
+    },
+    "maze": {
+      "section_title": "Maze reward",
+      "code_label": "Winning code (optional)",
+      "code_placeholder": "Enter your winning code",
+      "validate_btn": "Validate code",
+      "hint": "If your code is valid, you will be able to collect a free gift at the exhibition."
+    },
+    "contact": {
+      "section_title": "Your details",
+      "login_hint": "Already have an account?",
+      "login_link": "Log in",
+      "last_name_label": "Last name",
+      "last_name_placeholder": "E.g. Smith",
+      "first_name_label": "First name",
+      "first_name_placeholder": "E.g. Leila",
+      "email_label": "Email",
+      "email_placeholder": "name@domain.com"
+    },
+    "cart": {
+      "title": "Your cart",
+      "tickets_count_one": "{{count}} ticket",
+      "tickets_count_other": "{{count}} tickets",
+      "empty": "No tickets selected yet.",
+      "goodies": "Gift x1",
+      "goodies_price": "Free",
+      "total": "Total",
+      "cta": "Continue to summary"
+    },
+    "errors": {
+      "pick_date_slot": "Please choose a date and a time slot.",
+      "pick_date_slot_before_ticket": "Please choose a date and a time slot before adding tickets.",
+      "add_ticket": "Please add at least one ticket to your cart.",
+      "too_many_tickets_one": "Too many tickets for this slot: {{count}} spot available.",
+      "too_many_tickets_other": "Too many tickets for this slot: {{count}} spots available.",
+      "fill_contact": "Please fill in your last name, first name, and email.",
+      "invalid_email": "Invalid email address. Example: name@domain.com",
+      "slot_limit_reached_one": "Limit reached: {{count}} spot left for this slot.",
+      "slot_limit_reached_other": "Limit reached: {{count}} spots left for this slot.",
+      "slot_full": "This slot is fully booked.",
+      "invalid_code": "Invalid code. Please check your winning code."
+    },
+    "aria": {
+      "main_section": "Visit configuration",
+      "calendar": "Booking calendar",
+      "cart": "Sticky cart"
+    }
+  },
+  "reservation_recap": {
+    "title": "Summary and confirmation",
+    "visit": {
+      "section_title": "Your visit",
+      "date_label": "Date",
+      "slot_label": "Time slot"
+    },
+    "tickets": {
+      "section_title": "Tickets",
+      "goodies": "Gift x1",
+      "goodies_price": "Free",
+      "total": "Total"
+    },
+    "contact": {
+      "section_title": "Your details",
+      "last_name": "Last name",
+      "first_name": "First name",
+      "email": "Email"
+    },
+    "maze": {
+      "section_title": "Maze reward",
+      "code_label": "Winning code",
+      "code_empty": "Not provided",
+      "code_valid": "Valid",
+      "code_invalid": "Invalid"
+    },
+    "edit": "Edit my choices",
+    "confirm_btn": "Confirm booking",
+    "confirm_loading": "Confirming...",
+    "success": {
+      "title": "Booking confirmed",
+      "body": "Your booking has been successfully confirmed.",
+      "goodies_message": "Your winning code has been validated. You will be able to collect a free gift at the exhibition.",
+      "bubble": "See you soon in the mysteries of Egypt!",
+      "tintin_alt": "Tintin welcomes you"
+    },
+    "errors": {
+      "incomplete": "Your booking is incomplete.",
+      "invalid_email": "Invalid email address.",
+      "generic": "An error occurred while confirming your booking."
+    },
+    "aria": {
+      "recap_section": "Booking summary",
+      "success_section": "Booking confirmed"
+    }
+  },
+  "breadcrumb": {
+    "default_steps": [
+      {
+        "number": 1,
+        "label": "Selection"
+      },
+      {
+        "number": 2,
+        "label": "Cart"
+      },
+      {
+        "number": 3,
+        "label": "Details"
+      },
+      {
+        "number": 4,
+        "label": "Summary"
+      },
+      {
+        "number": 5,
+        "label": "Confirmation"
+      }
+    ]
+  },
+  "profil": {
+    "title": "My profile",
+    "account": {
+      "section_title": "Account information",
+      "last_name": "Last name",
+      "first_name": "First name",
+      "email": "Email",
+      "password": "Password"
+    },
+    "reservations": {
+      "section_title": "My bookings",
+      "loading": "Loading bookings...",
+      "upcoming_title": "Upcoming",
+      "past_title": "Past",
+      "upcoming_empty": "No upcoming bookings at the moment.",
+      "past_empty": "No past bookings.",
+      "people_count": "{{count}} person(s)",
+      "date_undefined": "Date not defined"
+    },
+    "guest": {
+      "not_connected": "You are not logged in.",
+      "hint": "Log in to view your information and bookings.",
+      "login_btn": "Go to login",
+      "register_btn": "Create an account"
+    },
+    "password_modal": {
+      "title": "Change password",
+      "old_label": "Current password",
+      "new_label": "New password",
+      "save_btn": "Save",
+      "cancel_btn": "Cancel"
+    },
+    "errors": {
+      "no_email": "No email address linked to this account.",
+      "fields_required": "Please fill in both your current password and your new password.",
+      "same_password": "Your new password must be different from your current one.",
+      "update_failed": "Password update failed. Please check your credentials.",
+      "load_reservations": "Unable to load your bookings."
+    },
+    "success": {
+      "password_updated": "Password successfully updated."
+    },
+    "aria": {
+      "page": "User profile page",
+      "edit_password": "Change password",
+      "show_old_password": "Show current password",
+      "hide_old_password": "Hide current password",
+      "show_new_password": "Show new password",
+      "hide_new_password": "Hide new password"
+    }
+  },
+  "nous_ecouter": {
+    "title": "Listen to us",
+    "intro": "Discover our two FaraCast episodes exploring the world of Kheti.",
+    "audio_unsupported": "Your browser does not support audio playback.",
+    "podcasts": [
+      {
+        "title": "Diving into the mystery of Kih-Oskh",
+        "image_alt": "Tintin illustration"
+      },
+      {
+        "title": "Rookie vs Experts",
+        "image_alt": "Blake and Mortimer illustration"
+      }
+    ]
+  },
+  "not_found": {
+    "title": "Oops, this page doesn't exist",
+    "text": "The path you entered could not be found. Head back to the home page to carry on with the Kheti experience.",
+    "back_btn": "Back to home"
+  },
+  "mentions_legales": {
+    "title": "Legal notice",
+    "intro": "This legal notice is provided as part of the Kheti educational project. It describes the publishing, hosting, and personal data processing information relating to the use of this website.",
+    "editor": {
+      "title": "Website publisher",
+      "p1": "The Kheti website is published as part of a student project from the BUT MMI programme (Multimedia and Internet Professions) at Université Gustave Eiffel.",
+      "list": [
+        "Université Gustave Eiffel",
+        "5 Boulevard Descartes, 77420 Champs-sur-Marne, France",
+        "Phone: +33 01 60 95 75 00",
+        "Email: webmaster@univ-eiffel.fr",
+        "SIREN: 130 026 123",
+        "APE code: 85.42Z"
+      ],
+      "director": "Publication director: Gilles Roussel, President of Université Gustave Eiffel."
+    },
+    "team": {
+      "title": "Production team",
+      "p1": "The Faravision agency is the creator of the Kheti exhibition. This website was designed and developed by a BUT MMI student team.",
+      "dev_title": "Development",
+      "creation_title": "Design"
+    },
+    "hosting": {
+      "title": "Hosting",
+      "p1": "This website is hosted by OVH SAS.",
+      "list": [
+        "2 rue Kellermann, 59100 Roubaix, France"
+      ],
+      "website_label": "Website:"
+    },
+    "privacy": {
+      "title": "Personal data protection (GDPR)",
+      "p1": "When using the Kheti website, personal data may be collected (last name, first name, email address, booking information). This data is used solely for the operation of the service (account management, bookings).",
+      "p2": "This data is neither sold nor passed on to third parties for commercial purposes."
+    },
+    "dpo": {
+      "title": "Data Protection Officer (DPO)",
+      "p1": "For any questions regarding the processing of your personal data:",
+      "list": [
+        "DPO: Véronique Juge",
+        "Address: 5 Boulevard Descartes, 77420 Champs-sur-Marne",
+        "Email: protectiondesdonnees-dpo@univ-eiffel.fr",
+        "University email: vjuge@univ-gustave-eiffel.fr"
+      ],
+      "p2": "In accordance with the GDPR, you have the right to access, correct, and delete your data through your profile page or by contacting us directly."
+    },
+    "cookies": {
+      "title": "Cookies",
+      "p1": "This website uses only technical cookies that are strictly necessary for it to function properly.",
+      "list": [
+        "User session and login management.",
+        "Storing certain display preferences."
+      ],
+      "p2": "No advertising or profiling cookies are used."
+    },
+    "credits": {
+      "title": "Credits and intellectual property",
+      "p1": "This website is a non-profit educational project.",
+      "list": [
+        "The original text, visuals, logos, and graphic elements of the Kheti project are protected by copyright.",
+        "Any reproduction, distribution, or reuse without prior written authorisation is prohibited, except where permitted by law.",
+        "The names, trademarks, and logos of third parties mentioned on this website remain the property of their respective owners and are used solely for informational and educational purposes."
+      ]
+    },
+    "updated": "Last updated: 29 March 2026"
+  },
+  "login": {
+    "title_login": "Log in",
+    "title_register": "Sign up",
+    "email_label": "Email",
+    "email_placeholder": "Enter your email",
+    "last_name_label": "Last name",
+    "last_name_placeholder": "Enter your last name",
+    "first_name_label": "First name",
+    "first_name_placeholder": "Enter your first name",
+    "password_label": "Password",
+    "password_placeholder": "Enter your password",
+    "confirm_password_label": "Confirm password",
+    "confirm_password_placeholder": "Confirm your password",
+    "required": "*",
+    "submit_login": "Log in",
+    "submit_register": "Sign up",
+    "submit_loading": "Loading...",
+    "switch_to_login": {
+      "question": "Already have an account?",
+      "action": "Log in"
+    },
+    "switch_to_register": {
+      "question": "Don't have an account yet?",
+      "action": "Sign up"
+    },
+    "errors": {
+      "passwords_mismatch": "Passwords do not match.",
+      "name_required": "Please fill in your last name and first name.",
+      "generic": "Something went wrong, please try again."
+    },
+    "success": {
+      "account_created": "Account created successfully. You can now log in.",
+      "logged_in": "You are now logged in."
+    },
+    "aria": {
+      "login_page": "Log in to your account",
+      "register_page": "Create an account",
+      "show_password": "Show password",
+      "hide_password": "Hide password",
+      "show_confirm_password": "Show password confirmation",
+      "hide_confirm_password": "Hide password confirmation"
+    }
+  },
+  "jeu": {
+    "quit_btn": "Quit",
+    "keyboard_alt": "WASD keys and arrow keys",
+    "logo_alt": "Website logo",
+    "intro": {
+      "title": "The Maze Roller",
+      "p1": "Your goal is to guide the ball through the corridors of this maze and find the way out. Use your sense of direction and logic to overcome the dead ends that lie ahead.",
+      "p2": "Complete all levels to unlock an exclusive reward, available to collect during your visit to the exhibition.",
+      "controls_touch": "Swipe your finger across the screen to move.",
+      "controls_keyboard": "Use the arrow keys or \"ZQSD\" to move.",
+      "play_btn": "Play"
+    },
+    "popup": {
+      "level_done": "Level {{level}} complete!",
+      "next_level_btn": "Next level",
+      "win_title": "Well done!",
+      "win_p1": "You have completed all the levels",
+      "win_p2": "You have unlocked an exclusive gift! Use this secret code when booking your tickets or show it at the exhibition exit:",
+      "reserve_btn": "Book my tickets"
+    }
+  },
+  "tickets": {
+    "explorateur": {
+      "name": "The Explorer",
+      "label": "The Explorer (Adult)",
+      "description": "Adult"
+    },
+    "scribe": {
+      "name": "The Scribe",
+      "label": "The Scribe (Student)",
+      "description": "Student (proof of enrolment required)"
+    },
+    "scarabee": {
+      "name": "Little Scarab",
+      "label": "Little Scarab (Child)",
+      "description": "Child (under 12)"
+    }
+  }
+}

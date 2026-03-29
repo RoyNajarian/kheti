@@ -2,17 +2,16 @@ import React, { useMemo, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router";
 import Breadcrumb from "../components/Breadcrumb";
 import { createReservation } from "../back-office/api";
-import { RESERVATION_TICKETS, RESERVATION_PRICE_BY_TICKET } from "../components/reservationTickets";
+import {
+  RESERVATION_TICKETS,
+  RESERVATION_PRICE_BY_TICKET,
+} from "../components/reservationTickets";
 import "../styles/Reservation.css";
 import "../styles/ReservationRecap.css";
+import { useTranslation } from "react-i18next";
 
 const RESERVATION_DRAFT_KEY = "khetiReservationDraft";
 const MAZE_GOODIES_CODE = "KHETI-MAZE-26";
-
-const TWO_STEP_BREADCRUMB = [
-  { number: 1, label: "Votre réservation" },
-  { number: 2, label: "Récap et validation" },
-];
 
 const getDraft = () => {
   try {
@@ -24,7 +23,8 @@ const getDraft = () => {
   }
 };
 
-const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
+const isValidEmail = (value) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
 
 const toSqlHour = (value) => {
   if (!value) return "";
@@ -35,20 +35,34 @@ const toSqlHour = (value) => {
 
 const ReservationRecap = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+
   const [draft] = useState(getDraft);
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [orderNumber, setOrderNumber] = useState("");
 
+  // Breadcrumb steps built from translations
+  const TWO_STEP_BREADCRUMB = useMemo(
+    () => [
+      { number: 1, label: t("reservation.breadcrumb.step1") },
+      { number: 2, label: t("reservation.breadcrumb.step2") },
+    ],
+    [t],
+  );
+
   const hasGoodiesAccess =
-    String(draft?.mazeCode || "").trim().toUpperCase() === MAZE_GOODIES_CODE &&
-    Boolean(draft?.mazeCodeValidated);
+    String(draft?.mazeCode || "")
+      .trim()
+      .toUpperCase() === MAZE_GOODIES_CODE && Boolean(draft?.mazeCodeValidated);
 
   const cartItems = useMemo(() => {
     if (!draft?.quantities) return [];
 
-    return RESERVATION_TICKETS.filter((ticket) => Number(draft.quantities[ticket.id] || 0) > 0).map((ticket) => ({
+    return RESERVATION_TICKETS.filter(
+      (ticket) => Number(draft.quantities[ticket.id] || 0) > 0,
+    ).map((ticket) => ({
       ...ticket,
       quantity: Number(draft.quantities[ticket.id] || 0),
       subtotal: Number(draft.quantities[ticket.id] || 0) * ticket.price,
@@ -57,7 +71,7 @@ const ReservationRecap = () => {
 
   const totalPrice = useMemo(
     () => cartItems.reduce((sum, item) => sum + item.subtotal, 0),
-    [cartItems]
+    [cartItems],
   );
 
   if (!draft) {
@@ -75,12 +89,14 @@ const ReservationRecap = () => {
       const totalTickets = adultCount + childCount + studentCount;
 
       if (!draft.date || !draft.time || totalTickets <= 0) {
-        throw new Error("Votre réservation est incomplète.");
+        throw new Error(t("reservation_recap.errors.incomplete"));
       }
 
-      const normalizedEmail = String(draft.email || "").trim().toLowerCase();
+      const normalizedEmail = String(draft.email || "")
+        .trim()
+        .toLowerCase();
       if (!isValidEmail(normalizedEmail)) {
-        throw new Error("Adresse email invalide.");
+        throw new Error(t("reservation_recap.errors.invalid_email"));
       }
 
       const payload = {
@@ -115,18 +131,21 @@ const ReservationRecap = () => {
       setIsSuccess(true);
       sessionStorage.removeItem(RESERVATION_DRAFT_KEY);
     } catch (error) {
-      setApiError(error.message || "Erreur lors de la validation de la réservation.");
+      setApiError(error.message || t("reservation_recap.errors.generic"));
     } finally {
       setIsLoading(false);
     }
   };
 
-  const readableDate = new Date(`${draft.date}T00:00:00`).toLocaleDateString("fr-FR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+  const readableDate = new Date(`${draft.date}T00:00:00`).toLocaleDateString(
+    i18n.language?.startsWith("fr") ? "fr-FR" : "en-GB",
+    {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    },
+  );
 
   return (
     <div className="reservation-container">
@@ -135,79 +154,118 @@ const ReservationRecap = () => {
 
       <div className="reservation-wrapper reservation-wrapper--narrow">
         {!isSuccess ? (
-          <section className="recap-page" aria-label="Récapitulatif de réservation">
-            <h1 className="reservation-main-title">Récapitulatif et validation</h1>
+          <section
+            className="recap-page"
+            aria-label={t("reservation_recap.aria.recap_section")}
+          >
+            <h1 className="reservation-main-title">
+              {t("reservation_recap.title")}
+            </h1>
 
             <div className="recap-container">
               <div className="recap-section">
-                <h2 className="recap-title">Votre visite</h2>
+                <h2 className="recap-title">
+                  {t("reservation_recap.visit.section_title")}
+                </h2>
                 <div className="recap-row">
-                  <span className="recap-label">Date</span>
+                  <span className="recap-label">
+                    {t("reservation_recap.visit.date_label")}
+                  </span>
                   <strong className="recap-value">{readableDate}</strong>
                 </div>
                 <div className="recap-row">
-                  <span className="recap-label">Créneau</span>
+                  <span className="recap-label">
+                    {t("reservation_recap.visit.slot_label")}
+                  </span>
                   <strong className="recap-value">{draft.time}</strong>
                 </div>
               </div>
 
               <div className="recap-section">
-                <h2 className="recap-title">Billets</h2>
+                <h2 className="recap-title">
+                  {t("reservation_recap.tickets.section_title")}
+                </h2>
                 {cartItems.map((item) => (
                   <div className="recap-row" key={item.id}>
-                    <span className="recap-label">{item.name} x{item.quantity}</span>
+                    <span className="recap-label">
+                      {item.name} x{item.quantity}
+                    </span>
                     <strong className="recap-value">{item.subtotal} €</strong>
                   </div>
                 ))}
                 {hasGoodiesAccess && (
                   <div className="recap-row">
-                    <span className="recap-label">Goodies x1</span>
-                    <strong className="recap-value recap-value--valid">Gratuit</strong>
+                    <span className="recap-label">
+                      {t("reservation_recap.tickets.goodies")}
+                    </span>
+                    <strong className="recap-value recap-value--valid">
+                      {t("reservation_recap.tickets.goodies_price")}
+                    </strong>
                   </div>
                 )}
                 <div className="recap-row total">
-                  <span className="recap-label">Total</span>
+                  <span className="recap-label">
+                    {t("reservation_recap.tickets.total")}
+                  </span>
                   <strong className="recap-value">{totalPrice} €</strong>
                 </div>
               </div>
 
               <div className="recap-section">
-                <h2 className="recap-title">Coordonnées</h2>
+                <h2 className="recap-title">
+                  {t("reservation_recap.contact.section_title")}
+                </h2>
                 <div className="recap-row">
-                  <span className="recap-label">Nom</span>
+                  <span className="recap-label">
+                    {t("reservation_recap.contact.last_name")}
+                  </span>
                   <strong className="recap-value">{draft.lastName}</strong>
                 </div>
                 <div className="recap-row">
-                  <span className="recap-label">Prénom</span>
+                  <span className="recap-label">
+                    {t("reservation_recap.contact.first_name")}
+                  </span>
                   <strong className="recap-value">{draft.firstName}</strong>
                 </div>
                 <div className="recap-row">
-                  <span className="recap-label">Email</span>
-                  <strong className="recap-value recap-email">{draft.email}</strong>
+                  <span className="recap-label">
+                    {t("reservation_recap.contact.email")}
+                  </span>
+                  <strong className="recap-value recap-email">
+                    {draft.email}
+                  </strong>
                 </div>
               </div>
 
               <div className="recap-section">
-                <h2 className="recap-title">Avantage labyrinthe</h2>
+                <h2 className="recap-title">
+                  {t("reservation_recap.maze.section_title")}
+                </h2>
                 <div className="recap-row">
-                  <span className="recap-label">Code gagnant</span>
+                  <span className="recap-label">
+                    {t("reservation_recap.maze.code_label")}
+                  </span>
                   <strong
                     className={`recap-value recap-email ${
-                      !draft.mazeCode ? "" : hasGoodiesAccess ? "recap-value--valid" : "recap-value--invalid"
+                      !draft.mazeCode
+                        ? ""
+                        : hasGoodiesAccess
+                          ? "recap-value--valid"
+                          : "recap-value--invalid"
                     }`}
                   >
                     {!draft.mazeCode
-                      ? "Non renseigné"
+                      ? t("reservation_recap.maze.code_empty")
                       : hasGoodiesAccess
-                        ? "Valide"
-                        : "Invalide"}
+                        ? t("reservation_recap.maze.code_valid")
+                        : t("reservation_recap.maze.code_invalid")}
                   </strong>
                 </div>
               </div>
 
               <div className="recap-section recap-edit-action">
                 <Link to="/reservation" className="recap-edit-link">
-                  Modifier mes choix
+                  {t("reservation_recap.edit")}
                 </Link>
               </div>
             </div>
@@ -219,32 +277,38 @@ const ReservationRecap = () => {
                 onClick={handleConfirm}
                 disabled={isLoading}
               >
-                {isLoading ? "Validation en cours..." : "Valider l'offrande"}
+                {isLoading
+                  ? t("reservation_recap.confirm_loading")
+                  : t("reservation_recap.confirm_btn")}
               </button>
             </div>
 
             {apiError && <p className="info-message error">{apiError}</p>}
           </section>
         ) : (
-          <section className="confirmation-success" aria-label="Commande confirmée">
-            <h2>Réservation confirmée</h2>
-            <p style={{ fontSize: "1.1rem", color: "#d4c4a0", margin: "1rem 0" }}>
-              Votre réservation a été confirmée avec succès.
+          <section
+            className="confirmation-success"
+            aria-label={t("reservation_recap.aria.success_section")}
+          >
+            <h2>{t("reservation_recap.success.title")}</h2>
+            <p
+              style={{ fontSize: "1.1rem", color: "#d4c4a0", margin: "1rem 0" }}
+            >
+              {t("reservation_recap.success.body")}
             </p>
             {hasGoodiesAccess && (
               <p className="goodies-message">
-                Votre code gagnant a été validé. Vous pourrez récupérer un goodies gratuit à
-                l'exposition.
+                {t("reservation_recap.success.goodies_message")}
               </p>
             )}
-           
+
             <div className="confirmation-tintin-scene">
               <div className="tintin-thought-bubble">
-                <p>À bientôt dans les mystères de l'Égypte !</p>
+                <p>{t("reservation_recap.success.bubble")}</p>
               </div>
               <img
                 src="/images/tintin_perso.png"
-                alt="Tintin vous accueille"
+                alt={t("reservation_recap.success.tintin_alt")}
                 className="confirmation-tintin"
               />
             </div>
