@@ -1,0 +1,111 @@
+.notfound {
+    --header-offset-mobile: 84px;
+    --header-offset-desktop: 136px;
+
+    position: relative;
+    min-height: 100vh;
+    padding: calc(var(--header-offset-mobile) + 20px) 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-image: url("/images/lobby_hero_bg.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.notfound__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        170deg,
+        rgba(11, 8, 5, 0.78) 0%,
+        rgba(22, 16, 8, 0.7) 55%,
+        rgba(8, 6, 3, 0.84) 100%
+    );
+    z-index: 0;
+}
+
+.notfound__card {
+    position: relative;
+    z-index: 1;
+    padding: 34px 24px;
+    text-align: center;
+}
+
+.notfound__code {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(3.5rem, 14vw, 7rem);
+    line-height: 1;
+    color: #efd29e;
+    text-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.notfound__title {
+    margin: 10px 0 0;
+    font-family: "Cormorant Garamond", "Palatino Linotype", serif;
+    font-size: clamp(1.4rem, 5.8vw, 2.5rem);
+    font-weight: 700;
+    color: #f8f3e8;
+}
+
+.notfound__text {
+    margin: 12px auto 0;
+    max-width: 58ch;
+    color: #f2e5c9;
+    line-height: 1.6;
+    font-size: clamp(0.95rem, 3.9vw, 1.1rem);
+}
+
+.notfound__actions {
+    margin-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.notfound__button {
+    text-decoration: none;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.98rem;
+    transition: transform 0.18s ease, filter 0.18s ease, background-color 0.18s ease;
+}
+
+.notfound__button--primary {
+    background: #d5b77b;
+    color: #1f1709;
+    border: 1px solid #dec895;
+}
+
+.notfound__button--ghost {
+    background: rgba(48, 39, 24, 0.5);
+    color: #f6e4bf;
+    border: 1px solid rgba(214, 188, 131, 0.58);
+}
+
+.notfound__button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.03);
+}
+
+.notfound__button:focus-visible {
+    outline: 2px solid #f3dcad;
+    outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+    .notfound {
+        padding-top: calc(var(--header-offset-desktop) + 8px);
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .notfound__card {
+        padding: 46px 42px;
+    }
+}
