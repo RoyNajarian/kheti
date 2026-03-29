@@ -1,6 +1,6 @@
 /* Breadcrumb - Fil d'Ariane */
 .breadcrumb {
-  padding: 1rem 0 0.5rem 0;
+  padding: 0.9rem 0 0.7rem;
   position: relative;
   z-index: 10;
   margin: 0;
@@ -8,7 +8,8 @@
 
 .breadcrumb-container {
   margin: 0 auto;
-  width: min(100%, 680px);
+  width: min(100%, 760px);
+  padding: 0.55rem 0.9rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,10 +90,12 @@
 /* Responsive */
 @media (max-width: 768px) {
   .breadcrumb {
-    padding: 0.35rem 0;
+    padding: 0.35rem 0 0.25rem;
   }
 
   .breadcrumb-container {
+    width: min(100%, 680px);
+    padding: 0.4rem 0.55rem;
     gap: 0.4rem;
   }
 
@@ -118,10 +121,12 @@
 
 @media (max-width: 480px) {
   .breadcrumb {
-    padding: 0.3rem 0;
+    padding: 0.25rem 0 0.2rem;
   }
 
   .breadcrumb-container {
+    width: min(100%, 620px);
+    padding: 0.3rem 0.4rem;
     align-items: center;
     justify-content: center;
   }

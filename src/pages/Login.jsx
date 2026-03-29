@@ -3,6 +3,34 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { authenticateUser, createUser } from "../back-office/api";
 import "../styles/Login.css";
 
+const EyeIcon = ({ isVisible }) => (
+    <svg
+        viewBox="0 0 24 24"
+        className="profil__passwordIcon"
+        aria-hidden="true"
+        focusable="false"
+    >
+        <path
+            d="M1.5 12s3.8-7 10.5-7 10.5 7 10.5 7-3.8 7-10.5 7S1.5 12 1.5 12Z"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.9"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" strokeWidth="1.9" />
+        {!isVisible && (
+            <path
+                d="M4 4l16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.9"
+                strokeLinecap="round"
+            />
+        )}
+    </svg>
+);
+
 const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
@@ -12,6 +40,8 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [feedback, setFeedback] = useState({ type: "", message: "" });
 
@@ -61,6 +91,8 @@ const Login = () => {
             localStorage.setItem("khetiUser", JSON.stringify(result.user));
             if (result.token) {
                 localStorage.setItem("khetiToken", result.token);
+            } else {
+                localStorage.removeItem("khetiToken");
             }
             setFeedback({ type: "success", message: "Connexion reussie." });
             navigate("/");
@@ -80,6 +112,8 @@ const Login = () => {
         setFirstName("");
         setPassword("");
         setConfirmPassword("");
+        setShowPassword(false);
+        setShowConfirmPassword(false);
         setFeedback({ type: "", message: "" });
         navigate(nextIsRegisterMode ? "/register" : "/login");
     };
@@ -89,13 +123,6 @@ const Login = () => {
             className="profil"
             aria-label={isRegisterMode ? "Inscription a un compte" : "Connexion a votre compte"}
         >
-            <Link to="/" className="profil__logoLink" aria-label="Retour a l'accueil">
-                <img
-                    src="/images/kheti-logo.png"
-                    alt="Kheti"
-                    className="profil__logo"
-                />
-            </Link>
 
             <form className="profil__card" onSubmit={handleSubmit}>
                 <h1 className="profil__title">{isRegisterMode ? "Inscription" : "Connexion"}</h1>
@@ -146,30 +173,56 @@ const Login = () => {
                 <label className="profil__label" htmlFor="profil-password">
                     Mot de passe <span className="profil__required">*</span>
                 </label>
-                <input
-                    id="profil-password"
-                    type="password"
-                    className="profil__input"
-                    placeholder="Entrez votre mot de passe"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                    required
-                />
+                <div className="profil__passwordField">
+                    <input
+                        id="profil-password"
+                        type={showPassword ? "text" : "password"}
+                        className="profil__input profil__input--password"
+                        placeholder="Entrez votre mot de passe"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                        autoComplete={isRegisterMode ? "new-password" : "current-password"}
+                        required
+                    />
+                    <button
+                        type="button"
+                        className="profil__passwordToggle"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                        aria-pressed={showPassword}
+                        disabled={isSubmitting}
+                    >
+                        <EyeIcon isVisible={showPassword} />
+                    </button>
+                </div>
 
                 {isRegisterMode && (
                     <>
                         <label className="profil__label" htmlFor="profil-confirm-password">
                             Confirmer le mot de passe <span className="profil__required">*</span>
                         </label>
-                        <input
-                            id="profil-confirm-password"
-                            type="password"
-                            className="profil__input"
-                            placeholder="Confirmez votre mot de passe"
-                            value={confirmPassword}
-                            onChange={(event) => setConfirmPassword(event.target.value)}
-                            required
-                        />
+                        <div className="profil__passwordField">
+                            <input
+                                id="profil-confirm-password"
+                                type={showConfirmPassword ? "text" : "password"}
+                                className="profil__input profil__input--password"
+                                placeholder="Confirmez votre mot de passe"
+                                value={confirmPassword}
+                                onChange={(event) => setConfirmPassword(event.target.value)}
+                                autoComplete="new-password"
+                                required
+                            />
+                            <button
+                                type="button"
+                                className="profil__passwordToggle"
+                                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                                aria-label={showConfirmPassword ? "Masquer la confirmation du mot de passe" : "Afficher la confirmation du mot de passe"}
+                                aria-pressed={showConfirmPassword}
+                                disabled={isSubmitting}
+                            >
+                                <EyeIcon isVisible={showConfirmPassword} />
+                            </button>
+                        </div>
                     </>
                 )}
 
