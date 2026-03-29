@@ -3,16 +3,10 @@ const Accueil = () => {
         <main className="main">
 
             <section className="accueil" aria-label="Page d'accueil Kheti">
-
-                {/* ── Bandeau de dates (mobile uniquement) ── */}
                 <div className="accueil-dates-banner" aria-label="Dates de l'exposition">
                     DU 20 JUIN AU 20 JUILLET - PARIS -
                 </div>
-
-                {/* ── Contenu héro ── */}
                 <div className="accueil-content">
-
-                    {/* Logo + CTA */}
                     <div className="accueil-main">
                         <img
                             src="/public/images/kheti-logo.png"
@@ -28,16 +22,12 @@ const Accueil = () => {
                             Voir le trailer
                         </button>
                     </div>
-
-                    {/* Personnage décoratif */}
                     <img
                         src="/public/images/pharaon.png"
                         alt=""
                         aria-hidden="true"
                         className="accueil-pharaon"
                     />
-
-                    {/* BD égyptiennes — desktop/tablette uniquement */}
                     <div className="accueil-bd" aria-label="Bandes dessinées à thème égyptien">
                         <figure className="accueil-bd__item accueil-bd__item--left">
                             <img
@@ -61,8 +51,6 @@ const Accueil = () => {
                             />
                         </figure>
                     </div>
-
-                    {/* Scroll CTA — desktop/tablette uniquement */}
                     <a
                         href="#suite"
                         className="accueil-scroll-action"

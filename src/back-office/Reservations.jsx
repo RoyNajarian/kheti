@@ -7,32 +7,15 @@ const Reservations = () => {
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
 
-  // Logging de l'utilisateur courant
-  useEffect(() => {
-    const user = localStorage.getItem("khetiUser");
-    const token = localStorage.getItem("khetiToken");
-    console.log("👤 Utilisateur connecté au back-office:", {
-      user: user ? JSON.parse(user) : null,
-      token: token ? "✅ Présent" : "❌ Absent",
-    });
-  }, []);
-
   useEffect(() => {
     getReservations()
       .then((data) => {
         const sortedData = [...(data || [])].sort(
           (a, b) => Number(b?.id || 0) - Number(a?.id || 0)
         );
-
-        console.log("📦 Réservations reçues du back-office:", {
-          count: sortedData?.length,
-          firstItem: sortedData?.[0],
-          allData: sortedData,
-        });
         setReservations(sortedData);
       })
       .catch((err) => {
-        console.error("❌ Erreur chargement réservations:", err);
         setError(err.message);
       })
       .finally(() => setLoading(false));

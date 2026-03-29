@@ -12,7 +12,6 @@ import Reservation from "./pages/Reservation";
 import ReservationRecap from "./pages/ReservationRecap";
 import MentionsLegales from "./pages/MentionsLegales";
 import NotFound from "./pages/NotFound";
-import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import BackOfficeLayout from "./back-office/BackOfficeLayout";
 import Dashboard from "./back-office/Dashboard";
@@ -80,7 +79,6 @@ const App = () => {
     <>
       <ScrollToTop />
       <Routes>
-        {/* Routes publiques avec la Navbar */}
         <Route element={<PublicLayout />}>
           <Route index element={<Accueil />} />
           <Route path="login" element={<Login />} />
@@ -94,7 +92,6 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Route>
 
-        {/* Routes back-office reservees aux admins */}
         <Route element={<AdminRoute />}>
           <Route path="back-office" element={<BackOfficeLayout />}>
             <Route index element={<Dashboard />} />
