@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router";
 import Breadcrumb from "../components/Breadcrumb";
-import { createReservation, sendConfirmationEmail } from "../back-office/api";
+import { createReservation } from "../back-office/api";
 import { RESERVATION_TICKETS, RESERVATION_PRICE_BY_TICKET } from "../components/reservationTickets";
 import "../styles/Reservation.css";
 import "../styles/ReservationRecap.css";
@@ -89,34 +89,40 @@ const ReservationRecap = () => {
         child_count: childCount,
         student_count: studentCount,
         email: normalizedEmail,
+        name: draft.lastName,
+        first_name: draft.firstName,
       };
 
+      console.log("Payload avant envoi:", {
+        draft,
+        payload,
+        toSqlHour: toSqlHour(draft.time),
+      });
+
       const response = await createReservation(payload);
+      console.log("Réponse de createReservation:", response);
       const reservationId =
         response?.data?.id_reservation ??
         response?.data?.id ??
         response?.id_reservation ??
         response?.id;
 
+      console.log("Extraction ID:", {
+        reservationId,
+        "data.id_reservation": response?.data?.id_reservation,
+        "data.id": response?.data?.id,
+        "id_reservation": response?.id_reservation,
+        "id": response?.id,
+      });
+
       const fallbackOrder = Math.floor(Math.random() * 1000000)
         .toString()
         .padStart(6, "0");
 
-      setOrderNumber(String(reservationId || fallbackOrder));
-      
-      // Envoyer l'email de confirmation (sans bloquer si ça échoue)
-      if (reservationId) {
-        sendConfirmationEmail(
-          normalizedEmail,
-          reservationId,
-          draft.date,
-          draft.time,
-          payload.price
-        ).catch(() => {
-          // Silently fail - la réservation est confirmée même si l'email échoue
-        });
-      }
-      
+      const finalOrderNumber = String(reservationId || fallbackOrder);
+      console.log("Numéro de commande final:", finalOrderNumber);
+      setOrderNumber(finalOrderNumber);
+
       setIsSuccess(true);
       sessionStorage.removeItem(RESERVATION_DRAFT_KEY);
     } catch (error) {
@@ -211,10 +217,8 @@ const ReservationRecap = () => {
             <h2>Réservation confirmée</h2>
             <p style={{ fontSize: "1.1rem", color: "#d4c4a0", margin: "1rem 0" }}>
               Votre réservation a été confirmée avec succès.
-              <br />
-              Un email de confirmation a été envoyé à <strong>{draft.email}</strong>.
             </p>
-            
+           
             <div className="confirmation-tintin-scene">
               <div className="tintin-thought-bubble">
                 <p>À bientôt dans les mystères de l'Égypte !</p>
