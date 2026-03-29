@@ -13,38 +13,6 @@
 .btn.recap-confirm-cta {
   width: 60%;
   margin: auto;
-  border: 3px solid #ead7a5;
-  border-radius: 24px;
-  background:
-    radial-gradient(circle at 24% 28%, rgba(18, 13, 8, 0.42) 0 1.3px, transparent 2.4px),
-    linear-gradient(180deg, #2b1c0f 0%, #1d130b 58%, #120d08 100%);
-  color: #f7dfad;
-  font-family: "Heroes Legend", "Cormorant Garamond", "Palatino Linotype", serif;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  box-shadow: 4px 4px 0 #ead7a5;
-  animation: none;
-  padding: 0.9rem 1rem;
-  font-size: 0.65rem;
-}
-
-.btn.recap-confirm-cta:hover {
-  filter: none;
-  transform: translate(-1px, -1px);
-  box-shadow: 6px 6px 0 #ead7a5;
-}
-
-.btn.recap-confirm-cta:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 #ead7a5;
-}
-
-.btn.recap-confirm-cta:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-  transform: none;
-  filter: none;
-  box-shadow: 3px 3px 0 #ead7a5;
 }
 
 .recap-page {
@@ -127,20 +95,75 @@
 
 .confirmation-success {
   text-align: center;
-  border-radius: 14px;
-  border: 1px solid rgba(240, 220, 181, 0.24);
-  background: rgba(20, 14, 10, 0.36);
   padding: 2.1rem 1.2rem;
+}
+
+.confirmation-tintin-scene {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  flex-wrap: wrap-reverse;
+}
+
+.tintin-thought-bubble {
+  position: relative;
+  padding: 20px 25px;
+  width: 310px;
+  border-radius: 40px;
+  border: 3px solid #B69F5E;
+  background: linear-gradient(160deg, #1a1206, #2a1e0e);
+  box-shadow: 5px 5px 0 #000, 0 0 60px rgba(182, 159, 94, 0.2);
+  align-self: flex-end;
+  margin-bottom: -35px;
+}
+
+.tintin-thought-bubble::before,
+.tintin-thought-bubble::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  background: linear-gradient(160deg, #1a1206, #2a1e0e);
+  border: 2px solid #B69F5E;
+}
+
+.tintin-thought-bubble::before {
+  right: -40px;
+  bottom: 30px;
+  width: 20px;
+  height: 20px;
+  box-shadow: 3px 3px 0 #000;
+}
+
+.tintin-thought-bubble::after {
+  right: -60px;
+  bottom: 10px;
+  width: 12px;
+  height: 12px;
+  box-shadow: 2px 2px 0 #000;
+}
+
+.tintin-thought-bubble p {
+  margin: 0;
+  color: #B69F5E;
+  font-family: "Heroes Legend", serif;
+  font-size: 0.9rem;
+  line-height: 2;
+  font-weight: 700;
+}
+
+.confirmation-tintin {
+  width: clamp(140px, 20vw, 230px);
+  align-self: flex-start;
+  margin-top: 30px;
+  height: auto;
+  flex-shrink: 0;
 }
 
 .confirmation-success h2 {
   margin-bottom: 0.9rem;
   font-family: "Heroes Legend", "Cormorant Garamond", "Palatino Linotype", serif;
-}
-
-.success-icon {
-  font-size: 4.4rem;
-  color: #8fcf7b;
 }
 
 .order-number {
@@ -162,5 +185,30 @@
   .btn.recap-confirm-cta {
     width: 100%;
     min-width: 0;
+  }
+
+  .confirmation-tintin-scene {
+    flex-direction: column;
+    gap: 1.2rem;
+    margin: 1.5rem 0;
+  }
+
+  .tintin-thought-bubble {
+    width: 85vw;
+    max-width: 320px;
+  }
+
+  .tintin-thought-bubble::before {
+    right: -35px;
+    bottom: 25px;
+  }
+
+  .tintin-thought-bubble::after {
+    right: -50px;
+    bottom: 8px;
+  }
+
+  .confirmation-tintin {
+    width: clamp(120px, 35vw, 180px);
   }
 }

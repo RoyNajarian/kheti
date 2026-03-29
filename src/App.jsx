@@ -35,17 +35,24 @@ const PublicLayout = () => {
 
 const AdminRoute = () => {
   let user = null;
+  let token = "";
 
   try {
     const rawUser = localStorage.getItem("khetiUser");
+    token = String(localStorage.getItem("khetiToken") || "").trim();
     if (rawUser) {
       user = JSON.parse(rawUser);
     }
   } catch {
     localStorage.removeItem("khetiUser");
+    localStorage.removeItem("khetiToken");
   }
 
   if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!token) {
     return <Navigate to="/login" replace />;
   }
 
