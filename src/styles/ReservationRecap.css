@@ -166,6 +166,18 @@
   font-family: "Heroes Legend", "Cormorant Garamond", "Palatino Linotype", serif;
 }
 
+.goodies-message {
+  margin: 1rem auto 0;
+  width: fit-content;
+  max-width: 640px;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(143, 207, 123, 0.45);
+  background: rgba(143, 207, 123, 0.12);
+  color: #dff4b8;
+  font-weight: 700;
+}
+
 .order-number {
   margin: 1rem auto;
   width: fit-content;

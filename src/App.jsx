@@ -11,6 +11,7 @@ import Jeu from "./pages/Jeu";
 import Reservation from "./pages/Reservation";
 import ReservationRecap from "./pages/ReservationRecap";
 import MentionsLegales from "./pages/MentionsLegales";
+import NousEcouter from "./pages/NousEcouter";
 import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
 import BackOfficeLayout from "./back-office/BackOfficeLayout";
@@ -89,6 +90,7 @@ const App = () => {
           <Route path="reservation" element={<Reservation />} />
           <Route path="reservation/recap" element={<ReservationRecap />} />
           <Route path="mentions-legales" element={<MentionsLegales />} />
+          <Route path="nous-ecouter" element={<NousEcouter />} />
           <Route path="*" element={<NotFound />} />
         </Route>
 

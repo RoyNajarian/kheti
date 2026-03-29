@@ -23,7 +23,7 @@ const Footer = () => {
                             >
                                 Mentions légales
                             </Link>
-                            <a href="/avis">Vos avis</a>
+                            <Link to="/nous-ecouter">Nous écouter</Link>
                         </nav>
                     </div>
 
@@ -52,18 +52,6 @@ const Footer = () => {
                                 >
                                     <img src="/public/images/tiktok.svg" alt="" aria-hidden="true" className="socials-logo" />
                                     <span className="footer-social-name">TikTok</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="https://twitter.com/kheti"
-                                    className="footer-social-link"
-                                    aria-label="Kheti sur Twitter / X (ouvre un nouvel onglet)"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    <img src="/public/images/twitter.svg" alt="" aria-hidden="true" className="socials-logo" />
-                                    <span className="footer-social-name">Twitter</span>
                                 </a>
                             </li>
                         </ul>

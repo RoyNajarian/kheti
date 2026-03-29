@@ -7,6 +7,7 @@ import "../styles/Reservation.css";
 import "../styles/ReservationRecap.css";
 
 const RESERVATION_DRAFT_KEY = "khetiReservationDraft";
+const MAZE_GOODIES_CODE = "KHETI-MAZE-26";
 
 const TWO_STEP_BREADCRUMB = [
   { number: 1, label: "Votre réservation" },
@@ -39,6 +40,10 @@ const ReservationRecap = () => {
   const [apiError, setApiError] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [orderNumber, setOrderNumber] = useState("");
+
+  const hasGoodiesAccess =
+    String(draft?.mazeCode || "").trim().toUpperCase() === MAZE_GOODIES_CODE &&
+    Boolean(draft?.mazeCodeValidated);
 
   const cartItems = useMemo(() => {
     if (!draft?.quantities) return [];
@@ -154,6 +159,12 @@ const ReservationRecap = () => {
                     <strong className="recap-value">{item.subtotal} €</strong>
                   </div>
                 ))}
+                {hasGoodiesAccess && (
+                  <div className="recap-row">
+                    <span className="recap-label">Goodies x1</span>
+                    <strong className="recap-value recap-value--valid">Gratuit</strong>
+                  </div>
+                )}
                 <div className="recap-row total">
                   <span className="recap-label">Total</span>
                   <strong className="recap-value">{totalPrice} €</strong>
@@ -173,6 +184,24 @@ const ReservationRecap = () => {
                 <div className="recap-row">
                   <span className="recap-label">Email</span>
                   <strong className="recap-value recap-email">{draft.email}</strong>
+                </div>
+              </div>
+
+              <div className="recap-section">
+                <h2 className="recap-title">Avantage labyrinthe</h2>
+                <div className="recap-row">
+                  <span className="recap-label">Code gagnant</span>
+                  <strong
+                    className={`recap-value recap-email ${
+                      !draft.mazeCode ? "" : hasGoodiesAccess ? "recap-value--valid" : "recap-value--invalid"
+                    }`}
+                  >
+                    {!draft.mazeCode
+                      ? "Non renseigné"
+                      : hasGoodiesAccess
+                        ? "Valide"
+                        : "Invalide"}
+                  </strong>
                 </div>
               </div>
 
@@ -202,6 +231,12 @@ const ReservationRecap = () => {
             <p style={{ fontSize: "1.1rem", color: "#d4c4a0", margin: "1rem 0" }}>
               Votre réservation a été confirmée avec succès.
             </p>
+            {hasGoodiesAccess && (
+              <p className="goodies-message">
+                Votre code gagnant a été validé. Vous pourrez récupérer un goodies gratuit à
+                l'exposition.
+              </p>
+            )}
            
             <div className="confirmation-tintin-scene">
               <div className="tintin-thought-bubble">
