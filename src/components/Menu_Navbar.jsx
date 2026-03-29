@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router';
 import '../styles/Menu_Navbar.css';
-
-const LANGS = ['FR', 'EN'];
+import { useTranslation } from "react-i18next";
 
 const MenuNavbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [user, setUser] = useState(null);
-    const [lang, setLang] = useState('FR');
     const location = useLocation();
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation();
 
     const isAuthenticated = Boolean(user);
     const isAdmin = Number(user?.admin_state) === 1;
+
+    const currentLang = i18n.language?.startsWith("fr") ? "FR" : "EN";
 
     const syncUser = () => {
         try {
@@ -25,7 +26,8 @@ const MenuNavbar = () => {
     };
 
     const cycleLang = () => {
-        setLang(prev => LANGS[(LANGS.indexOf(prev) + 1) % LANGS.length]);
+        const nextLang = currentLang === "FR" ? "en" : "fr";
+        i18n.changeLanguage(nextLang);
     };
 
     // Ferme le menu au resize si on passe en tablette/desktop
@@ -66,7 +68,7 @@ const MenuNavbar = () => {
     };
 
     return (
-        <nav className="top-nav" aria-label="Navigation principale">
+        <nav className="top-nav" aria-label={t('navbar.aria.nav')}>
 
             {/* Burger button — visible uniquement sur mobile */}
             <button
@@ -74,7 +76,7 @@ const MenuNavbar = () => {
                 onClick={() => setIsOpen(prev => !prev)}
                 aria-expanded={isOpen}
                 aria-controls="nav-menu"
-                aria-label={isOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+                aria-label={isOpen ? t('navbar.aria.burger_close') : t('navbar.aria.burger_open')}
             >
                 <span className="nav-burger__bar" />
                 <span className="nav-burger__bar" />
@@ -99,42 +101,43 @@ const MenuNavbar = () => {
                         to="/"
                         end
                         className={({ isActive }) => `nav-button${isActive ? ' nav-button--active' : ''}`}
-                        aria-label="Accueil"
+                        aria-label={t('navbar.aria.home')}
                         onClick={handleLinkClick}
                     >
-                        Accueil
+                        {t('navbar.nav.home')}
                     </NavLink>
                 </li>
                 <li>
                     <NavLink
                         to='/reservation'
                         className={({ isActive }) => `nav-button${isActive ? ' nav-button--active' : ''}`}
-                        aria-label="Réserver vos billets"
+                        aria-label={t('navbar.aria.reserve')}
                         onClick={handleLinkClick}
                     >
-                        Réserver
+                        {t('navbar.nav.reserve')}
                     </NavLink>
                 </li>
                 <li>
                     <NavLink
                         to="/jeu"
                         className={({ isActive }) => `nav-button nav-button--labyrinth${isActive ? ' nav-button--active' : ''}`}
-                        aria-label="Accéder au Labyrinthe"
+                        aria-label={t('navbar.aria.labyrinth')}
                         onClick={handleLinkClick}
                     >
-                        Labyrinth
+                        {t('navbar.nav.labyrinth')}
                     </NavLink>
                 </li>
             </ul>
+
             {/* Bouton langue — mobile : coin haut-gauche du drawer | desktop : inline flex-end */}
             <button
                 className={`nav-lang${isOpen ? ' nav-lang--open' : ''}`}
                 onClick={cycleLang}
-                aria-label={`Langue actuelle : ${lang}. Cliquer pour changer.`}
+                aria-label={t('navbar.aria.lang', { lang: currentLang })}
                 type="button"
             >
                 <span className="nav-lang__globe" aria-hidden="true">
-                    {lang === 'FR' ? (
+                    {currentLang === 'FR' ? (
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 3 2" aria-hidden="true">
                             <rect width="1" height="2" fill="#002395" />
                             <rect x="1" width="1" height="2" fill="#fff" />
@@ -150,41 +153,41 @@ const MenuNavbar = () => {
                         </svg>
                     )}
                 </span>
-                <span className="nav-lang__label">{lang}</span>
+                <span className="nav-lang__label">{currentLang}</span>
             </button>
 
-            <div className="nav-profile-link" aria-label="Menu connexion">
+            <div className="nav-profile-link" aria-label={t('navbar.aria.profile_menu')}>
                 <button
                     type="button"
                     className="nav-profile-link__trigger"
                     aria-haspopup="true"
-                    aria-label="Profil"
+                    aria-label={t('navbar.aria.profile_trigger')}
                 >
                     <img src="/icons/pharaon_icone.png" alt="" className="nav-profile-link__icon" />
                 </button>
 
-                <div className="nav-profile-dropdown" role="menu" aria-label="Options de connexion">
+                <div className="nav-profile-dropdown" role="menu" aria-label={t('navbar.aria.profile_menu')}>
                     {isAuthenticated ? (
                         <>
                             <NavLink to="/profil" className="nav-profile-dropdown__item" role="menuitem" onClick={handleLinkClick}>
-                                Mon profil
+                                {t('navbar.profile.my_profile')}
                             </NavLink>
                             {isAdmin && (
                                 <NavLink to="/back-office" className="nav-profile-dropdown__item" role="menuitem" onClick={handleLinkClick}>
-                                    Back Office
+                                    {t('navbar.profile.back_office')}
                                 </NavLink>
                             )}
                             <button type="button" className="nav-profile-dropdown__item" role="menuitem" onClick={handleLogout}>
-                                Se déconnecter
+                                {t('navbar.profile.logout')}
                             </button>
                         </>
                     ) : (
                         <>
                             <NavLink to="/login" className="nav-profile-dropdown__item" role="menuitem" onClick={handleLinkClick}>
-                                Se connecter
+                                {t('navbar.profile.login')}
                             </NavLink>
                             <NavLink to="/register" className="nav-profile-dropdown__item" role="menuitem" onClick={handleLinkClick}>
-                                S'inscrire
+                                {t('navbar.profile.register')}
                             </NavLink>
                         </>
                     )}

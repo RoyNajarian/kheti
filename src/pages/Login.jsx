@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { authenticateUser, createUser } from "../back-office/api";
 import "../styles/Login.css";
+import { useTranslation } from "react-i18next";
 
 const EyeIcon = ({ isVisible }) => (
     <svg
@@ -34,6 +35,8 @@ const EyeIcon = ({ isVisible }) => (
 const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const { t } = useTranslation();
+
     const [isRegisterMode, setIsRegisterMode] = useState(false);
     const [lastName, setLastName] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -54,12 +57,12 @@ const Login = () => {
         setFeedback({ type: "", message: "" });
 
         if (isRegisterMode && password !== confirmPassword) {
-            setFeedback({ type: "error", message: "Les mots de passe ne correspondent pas." });
+            setFeedback({ type: "error", message: t('login.errors.passwords_mismatch') });
             return;
         }
 
         if (isRegisterMode && (!lastName.trim() || !firstName.trim())) {
-            setFeedback({ type: "error", message: "Veuillez renseigner votre nom et votre prenom." });
+            setFeedback({ type: "error", message: t('login.errors.name_required') });
             return;
         }
 
@@ -76,7 +79,7 @@ const Login = () => {
                 };
                 await createUser(payload);
 
-                setFeedback({ type: "success", message: "Compte cree avec succes. Vous pouvez vous connecter." });
+                setFeedback({ type: "success", message: t('login.success.account_created') });
                 switchMode(false);
                 setEmail(email.trim());
                 return;
@@ -94,12 +97,12 @@ const Login = () => {
             } else {
                 localStorage.removeItem("khetiToken");
             }
-            setFeedback({ type: "success", message: "Connexion reussie." });
+            setFeedback({ type: "success", message: t('login.success.logged_in') });
             navigate("/");
         } catch (error) {
             setFeedback({
                 type: "error",
-                message: error.message || "Une erreur est survenue, reessayez.",
+                message: error.message || t('login.errors.generic'),
             });
         } finally {
             setIsSubmitting(false);
@@ -121,20 +124,21 @@ const Login = () => {
     return (
         <section
             className="profil"
-            aria-label={isRegisterMode ? "Inscription a un compte" : "Connexion a votre compte"}
+            aria-label={isRegisterMode ? t('login.aria.register_page') : t('login.aria.login_page')}
         >
-
             <form className="profil__card" onSubmit={handleSubmit}>
-                <h1 className="profil__title">{isRegisterMode ? "Inscription" : "Connexion"}</h1>
+                <h1 className="profil__title">
+                    {isRegisterMode ? t('login.title_register') : t('login.title_login')}
+                </h1>
 
                 <label className="profil__label" htmlFor="profil-email">
-                    E-mail <span className="profil__required">*</span>
+                    {t('login.email_label')} <span className="profil__required">{t('login.required')}</span>
                 </label>
                 <input
                     id="profil-email"
                     type="email"
                     className="profil__input"
-                    placeholder="Entrez votre e-mail"
+                    placeholder={t('login.email_placeholder')}
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     required
@@ -143,26 +147,26 @@ const Login = () => {
                 {isRegisterMode && (
                     <>
                         <label className="profil__label" htmlFor="profil-last-name">
-                            Nom <span className="profil__required">*</span>
+                            {t('login.last_name_label')} <span className="profil__required">{t('login.required')}</span>
                         </label>
                         <input
                             id="profil-last-name"
                             type="text"
                             className="profil__input"
-                            placeholder="Entrez votre nom"
+                            placeholder={t('login.last_name_placeholder')}
                             value={lastName}
                             onChange={(event) => setLastName(event.target.value)}
                             required
                         />
 
                         <label className="profil__label" htmlFor="profil-first-name">
-                            Prenom <span className="profil__required">*</span>
+                            {t('login.first_name_label')} <span className="profil__required">{t('login.required')}</span>
                         </label>
                         <input
                             id="profil-first-name"
                             type="text"
                             className="profil__input"
-                            placeholder="Entrez votre prenom"
+                            placeholder={t('login.first_name_placeholder')}
                             value={firstName}
                             onChange={(event) => setFirstName(event.target.value)}
                             required
@@ -171,14 +175,14 @@ const Login = () => {
                 )}
 
                 <label className="profil__label" htmlFor="profil-password">
-                    Mot de passe <span className="profil__required">*</span>
+                    {t('login.password_label')} <span className="profil__required">{t('login.required')}</span>
                 </label>
                 <div className="profil__passwordField">
                     <input
                         id="profil-password"
                         type={showPassword ? "text" : "password"}
                         className="profil__input profil__input--password"
-                        placeholder="Entrez votre mot de passe"
+                        placeholder={t('login.password_placeholder')}
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
                         autoComplete={isRegisterMode ? "new-password" : "current-password"}
@@ -188,7 +192,7 @@ const Login = () => {
                         type="button"
                         className="profil__passwordToggle"
                         onClick={() => setShowPassword((prev) => !prev)}
-                        aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                        aria-label={showPassword ? t('login.aria.hide_password') : t('login.aria.show_password')}
                         aria-pressed={showPassword}
                         disabled={isSubmitting}
                     >
@@ -199,14 +203,14 @@ const Login = () => {
                 {isRegisterMode && (
                     <>
                         <label className="profil__label" htmlFor="profil-confirm-password">
-                            Confirmer le mot de passe <span className="profil__required">*</span>
+                            {t('login.confirm_password_label')} <span className="profil__required">{t('login.required')}</span>
                         </label>
                         <div className="profil__passwordField">
                             <input
                                 id="profil-confirm-password"
                                 type={showConfirmPassword ? "text" : "password"}
                                 className="profil__input profil__input--password"
-                                placeholder="Confirmez votre mot de passe"
+                                placeholder={t('login.confirm_password_placeholder')}
                                 value={confirmPassword}
                                 onChange={(event) => setConfirmPassword(event.target.value)}
                                 autoComplete="new-password"
@@ -216,7 +220,7 @@ const Login = () => {
                                 type="button"
                                 className="profil__passwordToggle"
                                 onClick={() => setShowConfirmPassword((prev) => !prev)}
-                                aria-label={showConfirmPassword ? "Masquer la confirmation du mot de passe" : "Afficher la confirmation du mot de passe"}
+                                aria-label={showConfirmPassword ? t('login.aria.hide_confirm_password') : t('login.aria.show_confirm_password')}
                                 aria-pressed={showConfirmPassword}
                                 disabled={isSubmitting}
                             >
@@ -227,7 +231,11 @@ const Login = () => {
                 )}
 
                 <button type="submit" className="profil__submit" disabled={isSubmitting}>
-                    {isSubmitting ? "Chargement..." : isRegisterMode ? "S'inscrire" : "Connexion"}
+                    {isSubmitting
+                        ? t('login.submit_loading')
+                        : isRegisterMode
+                            ? t('login.submit_register')
+                            : t('login.submit_login')}
                 </button>
 
                 {feedback.message && (
@@ -238,26 +246,26 @@ const Login = () => {
 
                 {isRegisterMode ? (
                     <p className="profil__switchText">
-                        <span className="profil__question">Vous avez deja un compte ? </span>
+                        <span className="profil__question">{t('login.switch_to_login.question')} </span>
                         <button
                             type="button"
                             className="profil__switchAction"
                             onClick={() => switchMode(false)}
                             disabled={isSubmitting}
                         >
-                            Connectez-vous
+                            {t('login.switch_to_login.action')}
                         </button>
                     </p>
                 ) : (
                     <p className="profil__switchText">
-                        <span className="profil__question">Pas encore de compte ? </span>
+                        <span className="profil__question">{t('login.switch_to_register.question')} </span>
                         <button
                             type="button"
                             className="profil__switchAction"
                             onClick={() => switchMode(true)}
                             disabled={isSubmitting}
                         >
-                            Inscrivez-vous
+                            {t('login.switch_to_register.action')}
                         </button>
                     </p>
                 )}

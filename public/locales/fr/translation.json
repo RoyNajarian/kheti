@@ -1,0 +1,504 @@
+{
+  "accueil": {
+    "dates_banner": "DU 20 JUIN AU 20 JUILLET - PARIS -",
+    "hero": {
+      "trailer_btn": "Voir le trailer",
+      "scroll_label": "Voir plus"
+    },
+    "expo_desc": {
+      "title": "L'Égypte sous les traits du 9e Art",
+      "p1": "Dans la langue des bâtisseurs de pyramides, « Kheti » est le mot qui s'approche le plus de ce que nous appelons aujourd'hui la bande dessinée.",
+      "p2": "Depuis près d'un siècle, les mystères du sable et des tombeaux nourrissent l'imaginaire des plus grands dessinateurs. Du Mystère de la Grande Pyramide d'Edgar P. Jacobs aux parodies cultes d'Astérix, embarquez pour un voyage chronologique et visuel.",
+      "p3": "Laissez-vous porter par le courant et observez l'évolution d'un mythe de papier."
+    },
+    "carrousel": {
+      "items": [
+        {
+          "title": "Les cigares du pharaon",
+          "année": "1934",
+          "catchphrase": "L'Égypte comme décor mystérieux (décors clichés)",
+          "content_1": "Dans Les Cigares du Pharaon, Hergé représente l'Égypte comme un lieu mystérieux et exotique. Inspiré par la découverte du tombeau de Toutânkhamon en 1922, l'album montre une Égypte remplie de pyramides, de tombes et de momies.",
+          "content_2": "L'architecture et les tombeaux servent surtout de décor d'aventure, avec des passages secrets et des lieux cachés liés à des sociétés secrètes, comme lorsque Tintin explore le tombeau de Kih-Oskh entouré de rangées de momies."
+        },
+        {
+          "title": "Le Mystère de la Grande Pyramide",
+          "année": "1954",
+          "catchphrase": "L'Égypte fantastique et le mythe de la malédiction",
+          "content_1": "Dans Le Mystère de la Grande Pyramide d'Edgar P. Jacobs, l'Égypte est représentée de manière très réaliste, avec des vues détaillées du Caire, du plateau de Gizeh, du Sphinx et des pyramides.",
+          "content_2": "L'architecture y apparaît comme sacrée et monumentale, opposant la ville moderne au silence des pyramides, qui sont présentées comme des lieux anciens chargés de mystère et de spiritualité, notamment avec la « Chambre d'Horus »."
+        },
+        {
+          "title": "Astérix et Cléopâtre",
+          "année": "1965",
+          "catchphrase": "L'Égypte parodique et festive",
+          "content_1": "Dans Astérix et Cléopâtre de René Goscinny et Albert Uderzo, qui se déroule en 48 av. J.-C., l'Égypte est représentée à travers ses monuments emblématiques, comme les palais, les pyramides et le Sphinx.",
+          "content_2": "Les bâtiments sont dessinés de manière spectaculaire et colorée, montrant une Égypte grandiose et monumentale, tout en mettant en scène les constructions et les chantiers pour créer des situations comiques."
+        },
+        {
+          "title": "Papyrus",
+          "année": "1974",
+          "catchphrase": "L'Égypte comme théâtre politique grandiose",
+          "content_1": "Dans Papyrus de Lucien De Gieter, qui se déroule dans l'Égypte antique des pharaons, l'Égypte est représentée comme un univers mythologique inspiré des croyances de l'Égypte antique.",
+          "content_2": "Les dieux à têtes d'animaux, les créatures fantastiques et la magie y sont omniprésents, ce qui présente l'Égypte comme un monde de légendes où les divinités interviennent directement auprès des humains."
+        },
+        {
+          "title": "Le Prince du Nil",
+          "année": "1974",
+          "catchphrase": "L'Égypte comme centre de pouvoir et de complots",
+          "content_1": "Dans Le Prince du Nil de Jacques Martin, qui se déroule à l'époque ptolémaïque vers 51 av. J.-C., l'Égypte est représentée comme un royaume riche et puissant, marqué par le luxe des palais, des bijoux et des costumes.",
+          "content_2": "Le pays apparaît aussi comme un centre de pouvoir et de complots autour du trône des pharaons."
+        },
+        {
+          "title": "Indiana Jones",
+          "année": "2001",
+          "catchphrase": "L'Égypte comme décor d'aventure cinématographique",
+          "content_1": "Dans Papyrus de Lucien De Gieter, qui se déroule dans l’Égypte antique des pharaons, l’Égypte est représentée comme un univers mythologique inspiré des croyances de l’Égypte antique.",
+          "content_2": "Les dieux à têtes d’animaux, les créatures fantastiques et la magie y sont omniprésents, ce qui présente l’Égypte comme un monde de légendes où les divinités interviennent directement auprès des humains."
+        }
+      ],
+      "prev_btn": "Bande dessinée précédente",
+      "next_btn": "Bande dessinée suivante",
+      "dot_label": "Aller à la bande dessinée {{number}}"
+    },
+    "labyrinthe": {
+      "eyebrow": "Mini-jeu exclusif",
+      "title": "Le Labyrinthe",
+      "desc_1": "Oserez-vous relever le défi ? Testez votre sens de l'orientation et votre logique en guidant une balle jusqu'à la sortie. Mais attention… certains chemins mènent à des impasses ! Prenez le bon tournant, réfléchissez vite et trouvez la sortie le plus rapidement possible.",
+      "desc_2": "Et ce n'est pas tout ! Les joueurs qui réussiront le défi pourront repartir avec un goodies gratuit. Une bonne raison de tenter votre chance ! Prêt à jouer ? Entrez dans le labyrinthe et voyez si vous avez l'âme d'un véritable explorateur !",
+      "cta": "Entrer dans le labyrinthe"
+    },
+    "aria": {
+      "page": "Page d'accueil Kheti",
+      "dates_banner": "Dates de l'exposition",
+      "trailer_btn": "Voir le trailer de Kheti",
+      "scroll_cta": "Défiler pour voir plus de contenu",
+      "bd_section": "Bandes dessinées à thème égyptien",
+      "carrousel_nav": "Navigation des bandes dessinées",
+      "covers_list": "Couvertures de bandes dessinées",
+      "carrousel_progress": "Progression du carrousel",
+      "minigame_section": "Mini-jeu du Labyrinthe",
+      "labyrinthe_cta": "Jouer au labyrinthe",
+      "maze_illustration": "Illustration du labyrinthe",
+      "year_label": "Année : {{year}}"
+    }
+  },
+  "navbar": {
+    "nav": {
+      "home": "Accueil",
+      "reserve": "Réserver",
+      "labyrinth": "Mini Jeu"
+    },
+    "profile": {
+      "my_profile": "Mon profil",
+      "back_office": "Back Office",
+      "logout": "Se déconnecter",
+      "login": "Se connecter",
+      "register": "S'inscrire"
+    },
+    "aria": {
+      "nav": "Navigation principale",
+      "burger_open": "Ouvrir le menu",
+      "burger_close": "Fermer le menu",
+      "home": "Accueil",
+      "reserve": "Réserver vos billets",
+      "labyrinth": "Accéder au Labyrinthe",
+      "lang": "Langue actuelle : {{lang}}. Cliquer pour changer.",
+      "profile_trigger": "Profil",
+      "profile_menu": "Options de connexion"
+    }
+  },
+  "footer": {
+    "nav": {
+      "legal": "Mentions légales",
+      "listen": "Nous écouter"
+    },
+    "social": {
+      "label": "Suivez-nous"
+    },
+    "location": {
+      "text": "Retrouvez-nous ici !",
+      "map_cta": "Voir sur la carte →"
+    },
+    "copyright": "© {{year}} Faravision. Tous droits réservés.",
+    "aria": {
+      "footer": "Pied de page Kheti",
+      "infos": "Informations du restaurant",
+      "logo": "Retour à l'accueil Kheti",
+      "logo_alt": "Logo Kheti – Restaurant égyptien à Paris",
+      "nav": "Liens légaux",
+      "socials": "Réseaux sociaux",
+      "instagram": "Faravision sur Instagram (ouvre un nouvel onglet)",
+      "tiktok": "Faravision sur TikTok (ouvre un nouvel onglet)",
+      "location": "Localisation du restaurant",
+      "map_alt": "Carte de Paris indiquant l'emplacement du restaurant Kheti",
+      "map_link": "Voir Kheti sur Google Maps (ouvre un nouvel onglet)"
+    }
+  },
+  "reservation": {
+    "breadcrumb": {
+      "step1": "Votre réservation",
+      "step2": "Récap et validation"
+    },
+    "title": "Billetterie du temple",
+    "date_slot": {
+      "section_title": "Date et créneau",
+      "date_label": "Date",
+      "slot_label": "Créneau",
+      "required": "*",
+      "prev_month": "Mois précédent",
+      "next_month": "Mois suivant",
+      "weekdays": [
+        "L",
+        "M",
+        "M",
+        "J",
+        "V",
+        "S",
+        "D"
+      ],
+      "slot_full": "Complet",
+      "slot_available_one": "{{count}} place",
+      "slot_available_other": "{{count}} places"
+    },
+    "tickets": {
+      "section_title": "Choix des billets",
+      "remove_aria": "Retirer un billet {{name}}",
+      "add_aria": "Ajouter un billet {{name}}",
+      "qty_aria": "Quantité de billets {{name}}"
+    },
+    "maze": {
+      "section_title": "Avantage labyrinthe",
+      "code_label": "Code gagnant (optionnel)",
+      "code_placeholder": "Entrez votre code gagnant",
+      "validate_btn": "Valider le code",
+      "hint": "Si votre code est valide, vous pourrez récupérer un goodies gratuit à l'exposition."
+    },
+    "contact": {
+      "section_title": "Coordonnées",
+      "login_hint": "Vous avez déjà un compte ?",
+      "login_link": "Se connecter",
+      "last_name_label": "Nom",
+      "last_name_placeholder": "Ex: Dupont",
+      "first_name_label": "Prénom",
+      "first_name_placeholder": "Ex: Leila",
+      "email_label": "Email",
+      "email_placeholder": "nom@domaine.com"
+    },
+    "cart": {
+      "title": "Votre panier",
+      "tickets_count_one": "{{count}} billet",
+      "tickets_count_other": "{{count}} billet(s)",
+      "empty": "Aucun billet sélectionné pour le moment.",
+      "goodies": "Goodies x1",
+      "goodies_price": "Gratuit",
+      "total": "Total",
+      "cta": "Continuer vers le récapitulatif"
+    },
+    "errors": {
+      "pick_date_slot": "Choisissez une date et un créneau.",
+      "pick_date_slot_before_ticket": "Choisissez une date et un créneau avant d'ajouter des billets.",
+      "add_ticket": "Ajoutez au moins un billet à votre panier.",
+      "too_many_tickets_one": "Trop de billets pour ce créneau : {{count}} place disponible.",
+      "too_many_tickets_other": "Trop de billets pour ce créneau : {{count}} places disponibles.",
+      "fill_contact": "Renseignez nom, prénom et email.",
+      "invalid_email": "Adresse email invalide. Exemple: nom@domaine.com",
+      "slot_limit_reached_one": "Limite atteinte : il reste {{count}} place pour ce créneau.",
+      "slot_limit_reached_other": "Limite atteinte : il reste {{count}} places pour ce créneau.",
+      "slot_full": "Ce créneau est complet.",
+      "invalid_code": "Code invalide. Veuillez vérifier votre code gagnant."
+    },
+    "aria": {
+      "main_section": "Configuration de la visite",
+      "calendar": "Calendrier de réservation",
+      "cart": "Panier sticky"
+    }
+  },
+  "reservation_recap": {
+    "title": "Récapitulatif et validation",
+    "visit": {
+      "section_title": "Votre visite",
+      "date_label": "Date",
+      "slot_label": "Créneau"
+    },
+    "tickets": {
+      "section_title": "Billets",
+      "goodies": "Goodies x1",
+      "goodies_price": "Gratuit",
+      "total": "Total"
+    },
+    "contact": {
+      "section_title": "Coordonnées",
+      "last_name": "Nom",
+      "first_name": "Prénom",
+      "email": "Email"
+    },
+    "maze": {
+      "section_title": "Avantage labyrinthe",
+      "code_label": "Code gagnant",
+      "code_empty": "Non renseigné",
+      "code_valid": "Valide",
+      "code_invalid": "Invalide"
+    },
+    "edit": "Modifier mes choix",
+    "confirm_btn": "Valider l'offrande",
+    "confirm_loading": "Validation en cours...",
+    "success": {
+      "title": "Réservation confirmée",
+      "body": "Votre réservation a été confirmée avec succès.",
+      "goodies_message": "Votre code gagnant a été validé. Vous pourrez récupérer un goodies gratuit à l'exposition.",
+      "bubble": "À bientôt dans les mystères de l'Égypte !",
+      "tintin_alt": "Tintin vous accueille"
+    },
+    "errors": {
+      "incomplete": "Votre réservation est incomplète.",
+      "invalid_email": "Adresse email invalide.",
+      "generic": "Erreur lors de la validation de la réservation."
+    },
+    "aria": {
+      "recap_section": "Récapitulatif de réservation",
+      "success_section": "Commande confirmée"
+    }
+  },
+  "breadcrumb": {
+    "default_steps": [
+      {
+        "number": 1,
+        "label": "Sélection"
+      },
+      {
+        "number": 2,
+        "label": "Panier"
+      },
+      {
+        "number": 3,
+        "label": "Identité"
+      },
+      {
+        "number": 4,
+        "label": "Récapitulatif"
+      },
+      {
+        "number": 5,
+        "label": "Validation"
+      }
+    ]
+  },
+  "profil": {
+    "title": "Mon profil",
+    "account": {
+      "section_title": "Informations du compte",
+      "last_name": "Nom",
+      "first_name": "Prénom",
+      "email": "E-mail",
+      "password": "Mot de passe"
+    },
+    "reservations": {
+      "section_title": "Mes réservations",
+      "loading": "Chargement des réservations...",
+      "upcoming_title": "En cours",
+      "past_title": "Passées",
+      "upcoming_empty": "Aucune réservation à venir pour le moment.",
+      "past_empty": "Aucune réservation passée.",
+      "people_count": "{{count}} personne(s)",
+      "date_undefined": "Date non définie"
+    },
+    "guest": {
+      "not_connected": "Vous n'êtes pas connecté.",
+      "hint": "Connectez-vous pour voir vos informations et vos réservations.",
+      "login_btn": "Aller à la connexion",
+      "register_btn": "Créer un compte"
+    },
+    "password_modal": {
+      "title": "Modifier le mot de passe",
+      "old_label": "Ancien mot de passe",
+      "new_label": "Nouveau mot de passe",
+      "save_btn": "Enregistrer",
+      "cancel_btn": "Annuler"
+    },
+    "errors": {
+      "no_email": "Aucun e-mail associé au compte.",
+      "fields_required": "Veuillez renseigner l'ancien mot de passe et le nouveau.",
+      "same_password": "Le nouveau mot de passe doit être différent de l'ancien.",
+      "update_failed": "La mise à jour du mot de passe a échoué. Vérifiez vos identifiants.",
+      "load_reservations": "Impossible de charger vos réservations."
+    },
+    "success": {
+      "password_updated": "Mot de passe mis à jour avec succès."
+    },
+    "aria": {
+      "page": "Page profil utilisateur",
+      "edit_password": "Modifier le mot de passe",
+      "show_old_password": "Afficher l'ancien mot de passe",
+      "hide_old_password": "Masquer l'ancien mot de passe",
+      "show_new_password": "Afficher le nouveau mot de passe",
+      "hide_new_password": "Masquer le nouveau mot de passe"
+    }
+  },
+  "nous_ecouter": {
+    "title": "Nous écouter",
+    "intro": "Découvrez nos deux épisodes FaraCast autour de l'univers Kheti.",
+    "audio_unsupported": "Votre navigateur ne supporte pas la lecture audio.",
+    "podcasts": [
+      {
+        "title": "Plongée dans le mystère de Kih-Oskh",
+        "image_alt": "Illustration Tintin"
+      },
+      {
+        "title": "Rookie vs Experts",
+        "image_alt": "Illustration Blake et Mortimer"
+      }
+    ]
+  },
+  "not_found": {
+    "title": "Oups, cette page n'existe pas",
+    "text": "Le chemin que vous avez saisi est introuvable. Revenez à l'accueil pour continuer l'expérience Kheti.",
+    "back_btn": "Retour à l'accueil"
+  },
+  "mentions_legales": {
+    "title": "Mentions légales",
+    "intro": "Les présentes mentions légales sont fournies dans le cadre du projet pédagogique Kheti. Elles décrivent les informations d'édition, d'hébergement et de traitement des données personnelles liées à l'utilisation du site.",
+    "editor": {
+      "title": "Éditeur du site",
+      "p1": "Le site Kheti est édité dans le cadre d'un projet étudiant du BUT MMI (Métiers du Multimédia et de l'Internet) de l'Université Gustave Eiffel.",
+      "list": [
+        "Université Gustave Eiffel",
+        "5 Boulevard Descartes, 77420 Champs-sur-Marne, France",
+        "Téléphone : +33 01 60 95 75 00",
+        "Email : webmaster@univ-eiffel.fr",
+        "SIREN : 130 026 123",
+        "Code APE : 85.42Z"
+      ],
+      "director": "Directeur de la publication : Gilles Roussel, président de l'Université Gustave Eiffel."
+    },
+    "team": {
+      "title": "Équipe de réalisation",
+      "p1": "L'agence Faravision est la créatrice de l'exposition Kheti. Le présent site a été conçu et développé par une équipe étudiante BUT MMI.",
+      "dev_title": "Développement",
+      "creation_title": "Création"
+    },
+    "hosting": {
+      "title": "Hébergement",
+      "p1": "Le site est hébergé par OVH SAS.",
+      "list": [
+        "2 rue Kellermann, 59100 Roubaix, France"
+      ],
+      "website_label": "Site web :"
+    },
+    "privacy": {
+      "title": "Protection des données personnelles (RGPD)",
+      "p1": "Dans le cadre de l'utilisation du site Kheti, des données personnelles peuvent être collectées (nom, prénom, email, informations de réservation). Ces données sont utilisées exclusivement pour le fonctionnement du service (gestion du compte, réservation).",
+      "p2": "Ces données ne sont ni vendues ni transmises à des tiers à des fins commerciales."
+    },
+    "dpo": {
+      "title": "Responsable de la protection des données (DPO)",
+      "p1": "Pour toute question relative au traitement de vos données :",
+      "list": [
+        "DPO : Véronique Juge",
+        "Adresse : 5 Boulevard Descartes, 77420 Champs-sur-Marne",
+        "Email : protectiondesdonnees-dpo@univ-eiffel.fr",
+        "Email Université : vjuge@univ-gustave-eiffel.fr"
+      ],
+      "p2": "Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données via votre espace profil ou en nous contactant."
+    },
+    "cookies": {
+      "title": "Cookies",
+      "p1": "Le site utilise uniquement des cookies techniques nécessaires à son bon fonctionnement.",
+      "list": [
+        "Gestion de la session utilisateur et de la connexion.",
+        "Conservation de certaines préférences d'affichage."
+      ],
+      "p2": "Aucun cookie publicitaire ou de profilage n'est déposé."
+    },
+    "credits": {
+      "title": "Crédits et propriété intellectuelle",
+      "p1": "Ce site est un projet pédagogique à but non lucratif.",
+      "list": [
+        "Les contenus textuels, visuels, logos et éléments graphiques originaux du projet Kheti sont protégés par le droit d'auteur.",
+        "Toute reproduction, distribution ou réutilisation sans autorisation écrite préalable est interdite, sauf exceptions légales.",
+        "Les noms, marques et logos de tiers mentionnés sur le site restent la propriété de leurs titulaires respectifs et sont utilisés uniquement à titre informatif et pédagogique."
+      ]
+    },
+    "updated": "Dernière mise à jour : 29 mars 2026"
+  },
+  "login": {
+    "title_login": "Connexion",
+    "title_register": "Inscription",
+    "email_label": "E-mail",
+    "email_placeholder": "Entrez votre e-mail",
+    "last_name_label": "Nom",
+    "last_name_placeholder": "Entrez votre nom",
+    "first_name_label": "Prénom",
+    "first_name_placeholder": "Entrez votre prénom",
+    "password_label": "Mot de passe",
+    "password_placeholder": "Entrez votre mot de passe",
+    "confirm_password_label": "Confirmer le mot de passe",
+    "confirm_password_placeholder": "Confirmez votre mot de passe",
+    "required": "*",
+    "submit_login": "Connexion",
+    "submit_register": "S'inscrire",
+    "submit_loading": "Chargement...",
+    "switch_to_login": {
+      "question": "Vous avez déjà un compte ?",
+      "action": "Connectez-vous"
+    },
+    "switch_to_register": {
+      "question": "Pas encore de compte ?",
+      "action": "Inscrivez-vous"
+    },
+    "errors": {
+      "passwords_mismatch": "Les mots de passe ne correspondent pas.",
+      "name_required": "Veuillez renseigner votre nom et votre prénom.",
+      "generic": "Une erreur est survenue, réessayez."
+    },
+    "success": {
+      "account_created": "Compte créé avec succès. Vous pouvez vous connecter.",
+      "logged_in": "Connexion réussie."
+    },
+    "aria": {
+      "login_page": "Connexion à votre compte",
+      "register_page": "Inscription à un compte",
+      "show_password": "Afficher le mot de passe",
+      "hide_password": "Masquer le mot de passe",
+      "show_confirm_password": "Afficher la confirmation du mot de passe",
+      "hide_confirm_password": "Masquer la confirmation du mot de passe"
+    }
+  },
+  "jeu": {
+    "quit_btn": "Quitter",
+    "keyboard_alt": "Touches ZQSD et flèches directionnelles",
+    "logo_alt": "Logo du site",
+    "intro": {
+      "title": "The Maze Roller",
+      "p1": "Votre objectif est de guider la sphère à travers les couloirs de ce temple labyrinthique jusqu'à en trouver l'issue. Faites appel à votre sens de l'orientation et à votre logique pour déjouer les impasses qui se dresseront sur votre chemin.",
+      "p2": "Résolvez tous les niveaux pour débloquer une récompense exclusive à récupérer lors de votre visite à l'exposition.",
+      "controls_touch": "Glissez votre doigt sur l'écran pour vous déplacer.",
+      "controls_keyboard": "Utilisez les flèches directionnelles ou \"ZQSD\" pour vous déplacer.",
+      "play_btn": "Jouer"
+    },
+    "popup": {
+      "level_done": "Niveau {{level}} terminé !",
+      "next_level_btn": "Niveau suivant",
+      "win_title": "Bravo !",
+      "win_p1": "Tu as terminé tous les niveaux",
+      "win_p2": "Tu as débloqué un goodies exclusif ! Utilise ce code secret lors de ta réservation ou présente-le à la sortie de l'exposition :",
+      "reserve_btn": "Réserver mes billets"
+    }
+  },
+  "tickets": {
+    "explorateur": {
+      "name": "L'Explorateur",
+      "label": "L'Explorateur (Adulte)",
+      "description": "Adulte"
+    },
+    "scribe": {
+      "name": "Le Scribe",
+      "label": "Le Scribe (Étudiant)",
+      "description": "Étudiant (justificatif requis)"
+    },
+    "scarabee": {
+      "name": "Petit Scarabée",
+      "label": "Petit Scarabée (Enfant)",
+      "description": "Enfant (moins de 12 ans)"
+    }
+  }
+}
