@@ -215,6 +215,92 @@
   color: var(--bo-title);
 }
 
+.bo-stat-subvalue {
+  display: inline-block;
+  margin-top: 6px;
+  color: var(--bo-muted);
+  font-size: 0.82rem;
+}
+
+.bo-insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.bo-chart-card {
+  padding: 18px;
+}
+
+.bo-chart-card h3 {
+  margin: 0;
+  color: var(--bo-title);
+  font-size: 1rem;
+}
+
+.bo-chart-meta {
+  margin: 6px 0 14px;
+  color: var(--bo-muted);
+  font-size: 0.83rem;
+}
+
+.bo-bars {
+  display: grid;
+  gap: 12px;
+}
+
+.bo-bar-row {
+  display: grid;
+  gap: 6px;
+}
+
+.bo-bar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--bo-text);
+  font-size: 0.85rem;
+}
+
+.bo-bar-head strong {
+  color: #fff0ca;
+}
+
+.bo-bar-track {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(213, 183, 123, 0.14);
+  overflow: hidden;
+  border: 1px solid rgba(213, 183, 123, 0.25);
+}
+
+.bo-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.bo-bar-fill--adult {
+  background: linear-gradient(90deg, #d5b77b, #f1d7a0);
+}
+
+.bo-bar-fill--student {
+  background: linear-gradient(90deg, #95c7ff, #b8dbff);
+}
+
+.bo-bar-fill--child {
+  background: linear-gradient(90deg, #9de8b5, #c2f0d2);
+}
+
+.bo-bar-fill--account {
+  background: linear-gradient(90deg, #8fcf7b, #b7e3a8);
+}
+
+.bo-bar-fill--guest {
+  background: linear-gradient(90deg, #f0a09a, #f6bdb8);
+}
+
 .bo-section-title {
   font-size: 1.07rem;
   font-weight: 600;
@@ -370,5 +456,9 @@
 
   .bo-table {
     min-width: 720px;
+  }
+
+  .bo-chart-card {
+    padding: 14px;
   }
 }

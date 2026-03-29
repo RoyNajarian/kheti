@@ -24,7 +24,7 @@ const Navbar = () => {
         menuDeroulant = (
             <div className="dropdown-menu">
                 <Link to="/login" onClick={() => setmenuOpen(false)}>Se connecter</Link>
-                <Link to="/register" onClick={() => setmenuOpen(false)}>Créer un compte</Link>
+                <Link to="/login" onClick={() => setmenuOpen(false)}>Créer un compte</Link>
             </div>
         );
     }
@@ -39,7 +39,7 @@ const Navbar = () => {
                 <li><Link to="/jeu">Labyrinthe</Link></li>
 
                 <li className="profil-menu" ref={menuRef}>
-                    <button className="profil-btn" onClick={() => setmenuOpen(!menuOpen)}><img src="/icons/default.png" alt="Menu Profil" /></button>
+                    <button className="profil-btn" onClick={() => setmenuOpen(!menuOpen)} aria-label="Profil"><img src="/icons/pharaon_icone.png" alt="" /></button>
                     {menuDeroulant}
                 </li>
             </ul>
