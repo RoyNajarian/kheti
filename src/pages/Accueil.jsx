@@ -5,33 +5,33 @@ import { useTranslation } from 'react-i18next';
 const accueilBdCarrousel = [
     {
         id: 1,
-        image: "/public/images/carrousel-cover-tintin.png",
-        bgImage: "/public/images/carrousel-bg-tintin.jpg",
+        image: "/images/carrousel-cover-tintin.png",
+        bgImage: "/images/carrousel-bg-tintin.jpg",
     },
     {
         id: 2,
-        image: "/public/images/carrousel-cover-BeM.png",
-        bgImage: "/public/images/carrousel-bg-BeM.webp",
+        image: "/images/carrousel-cover-BeM.png",
+        bgImage: "/images/carrousel-bg-BeM.webp",
     },
     {
         id: 3,
-        image: "/public/images/carrousel-cover-asterix.png",
-        bgImage: "/public/images/carrousel-bg-asterix.jpeg",
+        image: "/images/carrousel-cover-asterix.png",
+        bgImage: "/images/carrousel-bg-asterix.jpeg",
     },
     {
         id: 4,
-        image: "/public/images/carrousel-cover-horus.png",
-        bgImage: "/public/images/carrousel-bg-horus.webp",
+        image: "/images/carrousel-cover-horus.png",
+        bgImage: "/images/carrousel-bg-horus.webp",
     },
     {
         id: 5,
-        image: "/public/images/carrousel-cover-prince_du_nil.png",
-        bgImage: "/public/images/carrousel-bg-prince_du_nil.jpg",
+        image: "/images/carrousel-cover-prince_du_nil.png",
+        bgImage: "/images/carrousel-bg-prince_du_nil.jpg",
     },
     {
         id: 6,
-        image: "/public/images/carrousel-cover-papyrus.png",
-        bgImage: "/public/images/carrousel-bg-indiana_jones.jpg",
+        image: "/images/carrousel-cover-papyrus.png",
+        bgImage: "/images/carrousel-bg-indiana_jones.jpg",
     },
 ];
 
@@ -92,7 +92,7 @@ const Accueil = () => {
                 <div className="accueil-content">
                     <div className="accueil-main">
                         <img
-                            src="/public/images/kheti-logo.png"
+                            src="/images/kheti-logo.png"
                             alt="Kheti - Restaurant égyptien à Paris"
                             className="accueil-logo"
                             width="600"
@@ -107,7 +107,7 @@ const Accueil = () => {
                         </button>
                     </div>
                     <img
-                        src="/public/images/pharaon.png"
+                        src="/images/pharaon.png"
                         alt=""
                         aria-hidden="true"
                         className="accueil-pharaon"
@@ -116,21 +116,21 @@ const Accueil = () => {
                     <div className="accueil-bd" aria-label={t('accueil.aria.bd_section')}>
                         <figure className="accueil-bd__item accueil-bd__item--left">
                             <img
-                                src="/public/images/b&m_le-mystere-de-le-grande-pyramide.png"
+                                src="/images/b&m_le-mystere-de-le-grande-pyramide.png"
                                 alt={t('accueil.carrousel.items.1.title')}
                                 className="accueil-bd__cover"
                             />
                         </figure>
                         <figure className="accueil-bd__item accueil-bd__item--center">
                             <img
-                                src="/public/images/tintin_les-cigares-du-pharaon.png"
+                                src="/images/tintin_les-cigares-du-pharaon.png"
                                 alt={t('accueil.carrousel.items.0.title')}
                                 className="accueil-bd__cover"
                             />
                         </figure>
                         <figure className="accueil-bd__item accueil-bd__item--right">
                             <img
-                                src="/public/images/asterix-et-cleopatre.png"
+                                src="/images/asterix-et-cleopatre.png"
                                 alt={t('accueil.carrousel.items.2.title')}
                                 className="accueil-bd__cover"
                             />
@@ -164,7 +164,7 @@ const Accueil = () => {
                 {t('accueil.dates_banner')}
             </div>
 
-            <img src="/public/images/separator.svg" alt="" className="section-separator__img section-separator__img--first" />
+            <img src="/images/separator.svg" alt="" className="section-separator__img section-separator__img--first" />
 
             <section className="expo-desc" id="expo-desc">
                 <div className="expo-desc__content">
@@ -178,14 +178,14 @@ const Accueil = () => {
                     </p>
                 </div>
                 <img
-                    src="/public/images/egypte-bird-expo-desc.png"
+                    src="/images/egypte-bird-expo-desc.png"
                     alt=""
                     aria-hidden="true"
                     className="expo-desc__bird"
                 />
             </section>
 
-            <img src="/public/images/separator.svg" alt="" className="section-separator__img" />
+            <img src="/images/separator.svg" alt="" className="section-separator__img" />
 
             <section className="pres-bd" aria-label={t('accueil.aria.bd_section')}>
 
@@ -285,12 +285,12 @@ const Accueil = () => {
                     <div className="pres-bd__nil-boat">
                         <Boat3D carouselPosition={activeIndex} />
                     </div>
-                    <img src="/public/images/pres-bd_nil.png" alt="" className="pres-bd__nil-img" />
+                    <img src="/images/pres-bd_nil.png" alt="" className="pres-bd__nil-img" />
                 </div>
 
             </section>
 
-            <img src="/public/images/separator.svg" alt="" className="section-separator__img" />
+            <img src="/images/separator.svg" alt="" className="section-separator__img" />
 
             <section className="labyrinthe" aria-label={t('accueil.aria.minigame_section')}>
 
@@ -365,7 +365,7 @@ const Accueil = () => {
 
             </section>
 
-            <img src="/public/images/separator.svg" alt="" className="section-separator__img" />
+            <img src="/images/separator.svg" alt="" className="section-separator__img" />
 
         </main>
 
@@ -387,7 +387,7 @@ const Accueil = () => {
                         width="100%"
                         height="auto"
                     >
-                        <source src="/public/video/FINAL-TEASER_SFX.mp4" type="video/mp4" />
+                        <source src="/video/FINAL-TEASER_SFX.mp4" type="video/mp4" />
                         Votre navigateur ne supporte pas la balise vidéo.
                     </video>
                 </div>

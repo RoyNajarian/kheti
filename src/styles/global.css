@@ -13,5 +13,5 @@ body {
 
 @font-face {
     font-family: Heroes Legend;
-    src: url('/public/fonts/Heroes Legend.woff2') format('woff2');
+    src: url('/fonts/Heroes Legend.woff2') format('woff2');
 }

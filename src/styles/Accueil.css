@@ -287,7 +287,7 @@
     width: 100%;
     min-height: 100svh;
     overflow: hidden;
-    background-image: url('/public/images/lobby_hero_bg.png');
+    background-image: url('/images/lobby_hero_bg.png');
     background-size: cover;
     background-position: center;
 }
@@ -1293,7 +1293,7 @@
     width: clamp(28px, 4vw, 56px);
     opacity: 0.18;
     pointer-events: none;
-    background-image: url('/public/images/hieroglyphs-column.png');
+    background-image: url('/images/hieroglyphs-column.png');
     background-size: cover;
     background-repeat: repeat-y;
 }

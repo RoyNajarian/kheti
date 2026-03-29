@@ -13,7 +13,7 @@ const Footer = () => {
                     <div className="footer-infos__top">
                         <a href="/" aria-label={t('footer.aria.logo')}>
                             <img
-                                src="/public/images/kheti-logo.png"
+                                src="/images/kheti-logo.png"
                                 alt={t('footer.aria.logo_alt')}
                                 className="footer-logo"
                             />
@@ -41,7 +41,7 @@ const Footer = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    <img src="/public/images/instagram.svg" alt="" aria-hidden="true" className="socials-logo" />
+                                    <img src="/images/instagram.svg" alt="" aria-hidden="true" className="socials-logo" />
                                     <span className="footer-social-name">Instagram</span>
                                 </a>
                             </li>
@@ -53,7 +53,7 @@ const Footer = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    <img src="/public/images/tiktok.svg" alt="" aria-hidden="true" className="socials-logo" />
+                                    <img src="/images/tiktok.svg" alt="" aria-hidden="true" className="socials-logo" />
                                     <span className="footer-social-name">TikTok</span>
                                 </a>
                             </li>
@@ -80,7 +80,7 @@ const Footer = () => {
             className="footer-location__map-link"
           >
             <img
-              src="/public/images/footer-location-map.png"
+              src="/images/footer-location-map.png"
               alt={t("footer.aria.map_alt")}
               className="footer-location__map"
               width="300"
