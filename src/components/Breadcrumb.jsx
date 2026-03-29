@@ -1,21 +1,18 @@
 import React from "react";
 import "../styles/Breadcrumb.css";
+import { useTranslation } from "react-i18next";
 
-const DEFAULT_STEPS = [
-    { number: 1, label: "Sélection" },
-    { number: 2, label: "Panier" },
-    { number: 3, label: "Identité" },
-    { number: 4, label: "Récapitulatif" },
-    { number: 5, label: "Validation" },
-];
+const Breadcrumb = ({ currentStep, steps }) => {
+  const { t } = useTranslation();
 
-const Breadcrumb = ({ currentStep, steps = DEFAULT_STEPS }) => {
+  const resolvedSteps =
+    steps ?? t("breadcrumb.default_steps", { returnObjects: true });
 
   return (
     <div className="breadcrumb">
       <div className="breadcrumb-container">
         <div className="breadcrumb-steps">
-          {steps.map((step, index) => (
+          {resolvedSteps.map((step, index) => (
             <React.Fragment key={step.number}>
               <div
                 className={`breadcrumb-step ${
@@ -25,7 +22,7 @@ const Breadcrumb = ({ currentStep, steps = DEFAULT_STEPS }) => {
                 <div className="breadcrumb-number">{step.number}</div>
                 <div className="breadcrumb-label">{step.label}</div>
               </div>
-              {index < steps.length - 1 && (
+              {index < resolvedSteps.length - 1 && (
                 <div
                   className={`breadcrumb-line ${
                     step.number < currentStep ? "completed" : ""

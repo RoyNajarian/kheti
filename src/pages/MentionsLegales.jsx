@@ -1,162 +1,186 @@
 import { useEffect } from "react";
 import "../styles/MentionsLegales.css";
+import { useTranslation } from "react-i18next";
+
+const TEAM_MEMBERS = {
+  dev: [
+    {
+      name: "Aurélie Sirot",
+      url: "https://www.linkedin.com/in/aurelie-sirot/",
+    },
+    {
+      name: "Victor Le Claire",
+      url: "https://www.linkedin.com/in/victor-le-claire-95a5872ba/",
+    },
+    { name: "Roy Najarian", url: "https://www.linkedin.com/in/roynajarian/" },
+  ],
+  creation: [
+    { name: "Marie Pitre", url: "https://www.linkedin.com/in/marie-pitre/" },
+    {
+      name: "Ian Robinson",
+      url: "https://www.linkedin.com/in/ian-robinson-b03842350/",
+    },
+    {
+      name: "Eddy Rajemison",
+      url: "https://www.linkedin.com/in/eddy-rajemison/",
+    },
+    {
+      name: "Enzo Geri-Tanguy",
+      url: "https://www.linkedin.com/in/enzo-geri-tanguy-4aa69b330/",
+    },
+  ],
+};
 
 const MentionsLegales = () => {
+  const { t } = useTranslation();
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
 
+  const editorList = t("mentions_legales.editor.list", { returnObjects: true });
+  const hostingList = t("mentions_legales.hosting.list", {
+    returnObjects: true,
+  });
+  const dpoList = t("mentions_legales.dpo.list", { returnObjects: true });
+  const cookiesList = t("mentions_legales.cookies.list", {
+    returnObjects: true,
+  });
+  const creditsList = t("mentions_legales.credits.list", {
+    returnObjects: true,
+  });
+
   return (
     <main className="legal-page" aria-labelledby="legal-title">
       <section className="legal-shell">
-        <h1 id="legal-title" className="legal-title">Mentions légales</h1>
-        <p className="legal-intro">
-          Les présentes mentions légales sont fournies dans le cadre du projet pédagogique Kheti.
-          Elles décrivent les informations d'édition, d'hébergement et de traitement des données
-          personnelles liées à l'utilisation du site.
-        </p>
+        <h1 id="legal-title" className="legal-title">
+          {t("mentions_legales.title")}
+        </h1>
+        <p className="legal-intro">{t("mentions_legales.intro")}</p>
 
+        {/* Éditeur du site */}
         <section className="legal-block" aria-labelledby="editor-title">
-          <h2 id="editor-title">Éditeur du site</h2>
-          <p>
-            Le site Kheti est édité dans le cadre d'un projet étudiant du BUT MMI
-            (Métiers du Multimédia et de l'Internet) de l'Université Gustave Eiffel.
-          </p>
+          <h2 id="editor-title">{t("mentions_legales.editor.title")}</h2>
+          <p>{t("mentions_legales.editor.p1")}</p>
           <ul>
-            <li>Université Gustave Eiffel</li>
-            <li>5 Boulevard Descartes, 77420 Champs-sur-Marne, France</li>
-            <li>Téléphone : +33 01 60 95 75 00</li>
-            <li>Email : webmaster@univ-eiffel.fr</li>
-            <li>SIREN : 130 026 123</li>
-            <li>Code APE : 85.42Z</li>
+            {editorList.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
           </ul>
-          <p>
-            Directeur de la publication : Gilles Roussel, président de l'Université Gustave Eiffel.
-          </p>
+          <p>{t("mentions_legales.editor.director")}</p>
         </section>
 
+        {/* Équipe de réalisation */}
         <section className="legal-block" aria-labelledby="team-title">
-          <h2 id="team-title">Équipe de réalisation</h2>
-          <p>
-            L'agence Faravision est la créatrice de l'exposition Kheti. Le présent site a été
-            conçu et développé par une équipe étudiante BUT MMI.
-          </p>
+          <h2 id="team-title">{t("mentions_legales.team.title")}</h2>
+          <p>{t("mentions_legales.team.p1")}</p>
 
-          <h3 style={{ marginTop: "1rem", color: "#f5ddaa", fontSize: "1.1rem" }}>Développement</h3>
+          <h3
+            style={{ marginTop: "1rem", color: "#f5ddaa", fontSize: "1.1rem" }}
+          >
+            {t("mentions_legales.team.dev_title")}
+          </h3>
           <ul>
-            <li>
-              <a href="https://www.linkedin.com/in/aurelie-sirot/" target="_blank" rel="noopener noreferrer" style={{ color: "#f5ddaa", textDecoration: "none" }}>
-                Aurélie Sirot
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/victor-le-claire-95a5872ba/" target="_blank" rel="noopener noreferrer" style={{ color: "#f5ddaa", textDecoration: "none" }}>
-                Victor Le Claire
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/roynajarian/" target="_blank" rel="noopener noreferrer" style={{ color: "#f5ddaa", textDecoration: "none" }}>
-                Roy Najarian
-              </a>
-            </li>
+            {TEAM_MEMBERS.dev.map((member) => (
+              <li key={member.name}>
+                <a
+                  href={member.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#f5ddaa", textDecoration: "none" }}
+                >
+                  {member.name}
+                </a>
+              </li>
+            ))}
           </ul>
 
-          <h3 style={{ marginTop: "1rem", color: "#f5ddaa", fontSize: "1.1rem" }}>Création</h3>
+          <h3
+            style={{ marginTop: "1rem", color: "#f5ddaa", fontSize: "1.1rem" }}
+          >
+            {t("mentions_legales.team.creation_title")}
+          </h3>
           <ul>
-            <li>
-              <a href="https://www.linkedin.com/in/marie-pitre/" target="_blank" rel="noopener noreferrer" style={{ color: "#f5ddaa", textDecoration: "none" }}>
-                Marie Pitre
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/ian-robinson-b03842350/" target="_blank" rel="noopener noreferrer" style={{ color: "#f5ddaa", textDecoration: "none" }}>
-                Ian Robinson
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/eddy-rajemison/" target="_blank" rel="noopener noreferrer" style={{ color: "#f5ddaa", textDecoration: "none" }}>
-                Eddy Rajemison
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/enzo-geri-tanguy-4aa69b330/" target="_blank" rel="noopener noreferrer" style={{ color: "#f5ddaa", textDecoration: "none" }}>
-                Enzo Geri-Tanguy
-              </a>
-            </li>
+            {TEAM_MEMBERS.creation.map((member) => (
+              <li key={member.name}>
+                <a
+                  href={member.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#f5ddaa", textDecoration: "none" }}
+                >
+                  {member.name}
+                </a>
+              </li>
+            ))}
           </ul>
         </section>
 
+        {/* Hébergement */}
         <section className="legal-block" aria-labelledby="hosting-title">
-          <h2 id="hosting-title">Hébergement</h2>
-          <p>Le site est hébergé par OVH SAS.</p>
+          <h2 id="hosting-title">{t("mentions_legales.hosting.title")}</h2>
+          <p>{t("mentions_legales.hosting.p1")}</p>
           <ul>
-            <li>2 rue Kellermann, 59100 Roubaix, France</li>
-            <li>Site web : <a href="https://www.ovhcloud.com" target="_blank" rel="noopener noreferrer" style={{ color: "#f5ddaa", textDecoration: "none" }}>www.ovhcloud.com</a></li>
+            {hostingList.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+            <li>
+              {t("mentions_legales.hosting.website_label", "Site web")}{" "}
+              <a
+                href="https://www.ovhcloud.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#f5ddaa", textDecoration: "none" }}
+              >
+                www.ovhcloud.com
+              </a>
+            </li>
           </ul>
         </section>
 
+        {/* Protection des données */}
         <section className="legal-block" aria-labelledby="privacy-title">
-          <h2 id="privacy-title">Protection des données personnelles (RGPD)</h2>
-          <p>
-            Dans le cadre de l'utilisation du site Kheti, des données personnelles peuvent être
-            collectées (nom, prénom, email, informations de réservation). Ces données sont
-            utilisées exclusivement pour le fonctionnement du service (gestion du compte,
-            réservation).
-          </p>
-          <p>
-            Ces données ne sont ni vendues ni transmises à des tiers à des fins commerciales.
-          </p>
+          <h2 id="privacy-title">{t("mentions_legales.privacy.title")}</h2>
+          <p>{t("mentions_legales.privacy.p1")}</p>
+          <p>{t("mentions_legales.privacy.p2")}</p>
         </section>
 
+        {/* DPO */}
         <section className="legal-block" aria-labelledby="dpo-title">
-          <h2 id="dpo-title">Responsable de la protection des données (DPO)</h2>
-          <p>
-            Pour toute question relative au traitement de vos données :
-          </p>
+          <h2 id="dpo-title">{t("mentions_legales.dpo.title")}</h2>
+          <p>{t("mentions_legales.dpo.p1")}</p>
           <ul>
-            <li>DPO : Véronique Juge</li>
-            <li>Adresse : 5 Boulevard Descartes, 77420 Champs-sur-Marne</li>
-            <li>Email : protectiondesdonnees-dpo@univ-eiffel.fr</li>
-            <li>Email Université : vjuge@univ-gustave-eiffel.fr</li>
+            {dpoList.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
           </ul>
-          <p>
-            Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de
-            suppression de vos données via votre espace profil ou en nous contactant.
-          </p>
+          <p>{t("mentions_legales.dpo.p2")}</p>
         </section>
 
+        {/* Cookies */}
         <section className="legal-block" aria-labelledby="cookies-title">
-          <h2 id="cookies-title">Cookies</h2>
-          <p>
-            Le site utilise uniquement des cookies techniques nécessaires à son bon fonctionnement.
-          </p>
+          <h2 id="cookies-title">{t("mentions_legales.cookies.title")}</h2>
+          <p>{t("mentions_legales.cookies.p1")}</p>
           <ul>
-            <li>Gestion de la session utilisateur et de la connexion.</li>
-            <li>Conservation de certaines préférences d'affichage.</li>
+            {cookiesList.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
           </ul>
-          <p>Aucun cookie publicitaire ou de profilage n'est déposé.</p>
+          <p>{t("mentions_legales.cookies.p2")}</p>
         </section>
 
+        {/* Crédits */}
         <section className="legal-block" aria-labelledby="credits-title">
-          <h2 id="credits-title">Crédits et propriété intellectuelle</h2>
-          <p>Ce site est un projet pédagogique à but non lucratif.</p>
+          <h2 id="credits-title">{t("mentions_legales.credits.title")}</h2>
+          <p>{t("mentions_legales.credits.p1")}</p>
           <ul>
-            <li>
-              Les contenus textuels, visuels, logos et éléments graphiques originaux du projet Kheti
-              sont protégés par le droit d'auteur.
-            </li>
-            <li>
-              Toute reproduction, distribution ou réutilisation sans autorisation écrite préalable est
-              interdite, sauf exceptions légales.
-            </li>
-            <li>
-              Les noms, marques et logos de tiers mentionnés sur le site restent la propriété de leurs
-              titulaires respectifs et sont utilisés uniquement à titre informatif et pédagogique.
-            </li>
+            {creditsList.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
           </ul>
         </section>
 
-        <p className="legal-updated">Dernière mise à jour : 29 mars 2026</p>
+        <p className="legal-updated">{t("mentions_legales.updated")}</p>
       </section>
     </main>
   );
