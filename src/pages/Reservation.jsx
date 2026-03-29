@@ -4,10 +4,14 @@ import Breadcrumb from "../components/Breadcrumb";
 import { RESERVATION_TICKETS } from "../components/reservationTickets";
 import { getAvailableSlots } from "../back-office/api";
 import "../styles/Reservation.css";
-import { useTranslation } from "react-i18next";
 
 const RESERVATION_DRAFT_KEY = "khetiReservationDraft";
 const MAZE_GOODIES_CODE = "KHETI-MAZE-26";
+
+const TWO_STEP_BREADCRUMB = [
+  { number: 1, label: "Votre réservation" },
+  { number: 2, label: "Récap et validation" },
+];
 
 const toISODate = (value) => {
   const y = value.getFullYear();
@@ -66,26 +70,13 @@ const getInitialDraft = () => {
 
 const Reservation = () => {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
-
   const [formData, setFormData] = useState(getInitialDraft);
   const [inlineError, setInlineError] = useState("");
   const [slotAvailability, setSlotAvailability] = useState({});
   const [currentMonth, setCurrentMonth] = useState(() => {
-    const source = formData.date
-      ? new Date(`${formData.date}T00:00:00`)
-      : new Date();
+    const source = formData.date ? new Date(`${formData.date}T00:00:00`) : new Date();
     return new Date(source.getFullYear(), source.getMonth(), 1);
   });
-
-  // Breadcrumb steps built from translations
-  const TWO_STEP_BREADCRUMB = useMemo(
-    () => [
-      { number: 1, label: t("reservation.breadcrumb.step1") },
-      { number: 2, label: t("reservation.breadcrumb.step2") },
-    ],
-    [t],
-  );
 
   useEffect(() => {
     getAvailableSlots()
@@ -107,26 +98,20 @@ const Reservation = () => {
 
   const minSelectable = useMemo(() => {
     const today = new Date();
-    const normalizedToday = new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate(),
-    );
-    return normalizedToday > exhibitionStart
-      ? normalizedToday
-      : exhibitionStart;
+    const normalizedToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    return normalizedToday > exhibitionStart ? normalizedToday : exhibitionStart;
   }, [exhibitionStart]);
 
   const maxSelectable = useMemo(() => exhibitionEnd, [exhibitionEnd]);
 
   const minMonthStart = useMemo(
     () => new Date(minSelectable.getFullYear(), minSelectable.getMonth(), 1),
-    [minSelectable],
+    [minSelectable]
   );
 
   const maxMonthStart = useMemo(
     () => new Date(maxSelectable.getFullYear(), maxSelectable.getMonth(), 1),
-    [maxSelectable],
+    [maxSelectable]
   );
 
   useEffect(() => {
@@ -156,24 +141,22 @@ const Reservation = () => {
 
   const cartItems = useMemo(
     () =>
-      RESERVATION_TICKETS.filter(
-        (ticket) => formData.quantities[ticket.id] > 0,
-      ).map((ticket) => ({
+      RESERVATION_TICKETS.filter((ticket) => formData.quantities[ticket.id] > 0).map((ticket) => ({
         ...ticket,
         quantity: formData.quantities[ticket.id],
         subtotal: formData.quantities[ticket.id] * ticket.price,
       })),
-    [formData.quantities],
+    [formData.quantities]
   );
 
   const totalTickets = useMemo(
     () => cartItems.reduce((sum, item) => sum + item.quantity, 0),
-    [cartItems],
+    [cartItems]
   );
 
   const totalPrice = useMemo(
     () => cartItems.reduce((sum, item) => sum + item.subtotal, 0),
-    [cartItems],
+    [cartItems]
   );
 
   const remainingSeatsForSelectedSlot = useMemo(() => {
@@ -182,19 +165,15 @@ const Reservation = () => {
   }, [formData.date, formData.time, slotAvailability]);
 
   const isAtSelectedSlotLimit =
-    remainingSeatsForSelectedSlot !== null &&
-    totalTickets >= remainingSeatsForSelectedSlot;
+    remainingSeatsForSelectedSlot !== null && totalTickets >= remainingSeatsForSelectedSlot;
 
   const monthLabel = useMemo(
     () =>
-      currentMonth.toLocaleDateString(
-        i18n.language?.startsWith("fr") ? "fr-FR" : "en-GB",
-        {
-          month: "long",
-          year: "numeric",
-        },
-      ),
-    [currentMonth, i18n.language],
+      currentMonth.toLocaleDateString("fr-FR", {
+        month: "long",
+        year: "numeric",
+      }),
+    [currentMonth]
   );
 
   const calendarCells = useMemo(() => {
@@ -217,24 +196,19 @@ const Reservation = () => {
     return cells;
   }, [currentMonth]);
 
-  const selectedDate = formData.date
-    ? new Date(`${formData.date}T00:00:00`)
-    : null;
+  const selectedDate = formData.date ? new Date(`${formData.date}T00:00:00`) : null;
 
-  const isEmailValid = (value) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
-  const normalizedMazeCode = String(formData.mazeCode || "")
-    .trim()
-    .toUpperCase();
+  const isEmailValid = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
+  const normalizedMazeCode = String(formData.mazeCode || "").trim().toUpperCase();
   const hasMazeCode = normalizedMazeCode.length > 0;
   const isMazeCodeValid =
-    normalizedMazeCode === MAZE_GOODIES_CODE &&
-    Boolean(formData.mazeCodeValidated);
+    normalizedMazeCode === MAZE_GOODIES_CODE && Boolean(formData.mazeCodeValidated);
+  const isUserLoggedIn = useMemo(() => Boolean(getStoredUser()), []);
 
   const handleValidateMazeCode = () => {
     const isValid = normalizedMazeCode === MAZE_GOODIES_CODE;
     if (!isValid) {
-      setInlineError(t("reservation.errors.invalid_code"));
+      setInlineError("Code invalide. Veuillez vérifier votre code gagnant.");
     } else {
       setInlineError("");
     }
@@ -243,14 +217,11 @@ const Reservation = () => {
 
   const handleQuantity = (type, delta) => {
     setFormData((prev) => {
-      const currentTotal = Object.values(prev.quantities).reduce(
-        (sum, qty) => sum + qty,
-        0,
-      );
+      const currentTotal = Object.values(prev.quantities).reduce((sum, qty) => sum + qty, 0);
 
       if (delta > 0) {
         if (!prev.date || !prev.time) {
-          setInlineError(t("reservation.errors.pick_date_slot_before_ticket"));
+          setInlineError("Choisissez une date et un créneau avant d'ajouter des billets.");
           return prev;
         }
 
@@ -260,10 +231,8 @@ const Reservation = () => {
         if (currentTotal >= remainingSeats) {
           setInlineError(
             remainingSeats > 0
-              ? t("reservation.errors.slot_limit_reached", {
-                  count: remainingSeats,
-                })
-              : t("reservation.errors.slot_full"),
+              ? `Limite atteinte: il reste ${remainingSeats} place${remainingSeats > 1 ? "s" : ""} pour ce créneau.`
+              : "Ce créneau est complet."
           );
           return prev;
         }
@@ -285,42 +254,37 @@ const Reservation = () => {
       ...formData,
       firstName: String(formData.firstName || "").trim(),
       lastName: String(formData.lastName || "").trim(),
-      email: String(formData.email || "")
-        .trim()
-        .toLowerCase(),
+      email: String(formData.email || "").trim().toLowerCase(),
       mazeCode: String(formData.mazeCode || "").trim(),
       mazeCodeValidated: Boolean(formData.mazeCodeValidated),
     };
 
     if (!payload.date || !payload.time) {
-      setInlineError(t("reservation.errors.pick_date_slot"));
+      setInlineError("Choisissez une date et un créneau.");
       return;
     }
 
     if (totalTickets <= 0) {
-      setInlineError(t("reservation.errors.add_ticket"));
+      setInlineError("Ajoutez au moins un billet à votre panier.");
       return;
     }
 
-    if (
-      remainingSeatsForSelectedSlot !== null &&
-      totalTickets > remainingSeatsForSelectedSlot
-    ) {
+    if (remainingSeatsForSelectedSlot !== null && totalTickets > remainingSeatsForSelectedSlot) {
       setInlineError(
-        t("reservation.errors.too_many_tickets", {
-          count: remainingSeatsForSelectedSlot,
-        }),
+        `Trop de billets pour ce créneau: ${remainingSeatsForSelectedSlot} place${
+          remainingSeatsForSelectedSlot > 1 ? "s" : ""
+        } disponible${remainingSeatsForSelectedSlot > 1 ? "s" : ""}.`
       );
       return;
     }
 
     if (!payload.firstName || !payload.lastName || !payload.email) {
-      setInlineError(t("reservation.errors.fill_contact"));
+      setInlineError("Renseignez nom, prénom et email.");
       return;
     }
 
     if (!isEmailValid(payload.email)) {
-      setInlineError(t("reservation.errors.invalid_email"));
+      setInlineError("Adresse email invalide. Exemple: nom@domaine.com");
       return;
     }
 
@@ -349,43 +313,30 @@ const Reservation = () => {
 
   const timeSlots = ["10:00", "12:00", "14:00", "16:00", "18:00"];
 
-  const weekdays = t("reservation.date_slot.weekdays", { returnObjects: true });
-
   return (
     <div className="reservation-container">
       <div className="reservation-backdrop" aria-hidden="true" />
       <Breadcrumb currentStep={1} steps={TWO_STEP_BREADCRUMB} />
 
       <div className="reservation-wrapper">
-        <h1 className="reservation-main-title">{t("reservation.title")}</h1>
+        <h1 className="reservation-main-title">Billetterie du temple</h1>
 
         <div className="booking-layout">
-          <section
-            className="booking-main"
-            aria-label={t("reservation.aria.main_section")}
-          >
+          <section className="booking-main" aria-label="Configuration de la visite">
             <div className="booking-panel">
-              <h2 className="step-title">
-                {t("reservation.date_slot.section_title")}
-              </h2>
+              <h2 className="step-title">Date et créneau</h2>
               <div className="booking-grid-two">
                 <div className="form-group">
                   <label>
-                    {t("reservation.date_slot.date_label")}{" "}
-                    <span className="required">
-                      {t("reservation.date_slot.required")}
-                    </span>
+                    Date <span className="required">*</span>
                   </label>
-                  <div
-                    className="calendar-widget"
-                    aria-label={t("reservation.aria.calendar")}
-                  >
+                  <div className="calendar-widget" aria-label="Calendrier de réservation">
                     <div className="calendar-header">
                       <button
                         type="button"
                         className="calendar-nav-btn"
                         onClick={() => changeMonth(-1)}
-                        aria-label={t("reservation.date_slot.prev_month")}
+                        aria-label="Mois précédent"
                         disabled={!canGoPrevMonth}
                       >
                         ←
@@ -395,7 +346,7 @@ const Reservation = () => {
                         type="button"
                         className="calendar-nav-btn"
                         onClick={() => changeMonth(1)}
-                        aria-label={t("reservation.date_slot.next_month")}
+                        aria-label="Mois suivant"
                         disabled={!canGoNextMonth}
                       >
                         →
@@ -403,7 +354,7 @@ const Reservation = () => {
                     </div>
 
                     <div className="calendar-weekdays" aria-hidden="true">
-                      {weekdays.map((day, index) => (
+                      {["L", "M", "M", "J", "V", "S", "D"].map((day, index) => (
                         <span key={`${day}-${index}`}>{day}</span>
                       ))}
                     </div>
@@ -411,16 +362,10 @@ const Reservation = () => {
                     <div className="calendar-grid">
                       {calendarCells.map((day, index) => {
                         if (!day) {
-                          return (
-                            <span
-                              key={`empty-${index}`}
-                              className="calendar-empty"
-                            />
-                          );
+                          return <span key={`empty-${index}`} className="calendar-empty" />;
                         }
 
-                        const isOutOfRange =
-                          day < minSelectable || day > maxSelectable;
+                        const isOutOfRange = day < minSelectable || day > maxSelectable;
                         const isActive = isSameDay(day, selectedDate);
 
                         return (
@@ -430,10 +375,7 @@ const Reservation = () => {
                             className={`calendar-day ${isActive ? "active" : ""}`}
                             disabled={isOutOfRange}
                             onClick={() =>
-                              setFormData((prev) => ({
-                                ...prev,
-                                date: toISODate(day),
-                              }))
+                              setFormData((prev) => ({ ...prev, date: toISODate(day) }))
                             }
                           >
                             {day.getDate()}
@@ -446,10 +388,7 @@ const Reservation = () => {
 
                 <div className="form-group">
                   <label>
-                    {t("reservation.date_slot.slot_label")}{" "}
-                    <span className="required">
-                      {t("reservation.date_slot.required")}
-                    </span>
+                    Créneau <span className="required">*</span>
                   </label>
                   <div className="time-slots">
                     {timeSlots.map((slot) => {
@@ -463,22 +402,12 @@ const Reservation = () => {
                           className={`time-slot ${formData.time === slot ? "selected" : ""} ${
                             isFull ? "full" : ""
                           }`}
-                          onClick={() =>
-                            setFormData((prev) => ({ ...prev, time: slot }))
-                          }
+                          onClick={() => setFormData((prev) => ({ ...prev, time: slot }))}
                           disabled={isFull}
                         >
                           <div>{slot}</div>
-                          <div
-                            className={
-                              isFull ? "full-indicator" : "available-indicator"
-                            }
-                          >
-                            {isFull
-                              ? t("reservation.date_slot.slot_full")
-                              : t("reservation.date_slot.slot_available", {
-                                  count: available,
-                                })}
+                          <div className={isFull ? "full-indicator" : "available-indicator"}>
+                            {isFull ? "Complet" : `${available} place${available > 1 ? "s" : ""}`}
                           </div>
                         </button>
                       );
@@ -489,40 +418,27 @@ const Reservation = () => {
             </div>
 
             <div className="booking-panel">
-              <h2 className="step-title">
-                {t("reservation.tickets.section_title")}
-              </h2>
+              <h2 className="step-title">Choix des billets</h2>
               <div className="ticket-lines">
                 {RESERVATION_TICKETS.map((ticket) => (
                   <article className="ticket-line" key={ticket.id}>
                     <div className="ticket-line-main">
-                      <img
-                        src={ticket.icon}
-                        alt=""
-                        aria-hidden="true"
-                        className="ticket-line-icon"
-                      />
+                      <img src={ticket.icon} alt="" aria-hidden="true" className="ticket-line-icon" />
                       <div>
                         <h3 className="ticket-line-name">{ticket.name}</h3>
-                        <p className="ticket-line-description">
-                          {ticket.description}
-                        </p>
+                        <p className="ticket-line-description">{ticket.description}</p>
                       </div>
                     </div>
 
                     <div className="ticket-line-end">
-                      <strong className="ticket-line-price">
-                        {ticket.price} €
-                      </strong>
+                      <strong className="ticket-line-price">{ticket.price} €</strong>
                       <div className="ticket-quantity-control">
                         <button
                           type="button"
                           className="qty-btn"
                           onClick={() => handleQuantity(ticket.id, -1)}
                           disabled={formData.quantities[ticket.id] === 0}
-                          aria-label={t("reservation.tickets.remove_aria", {
-                            name: ticket.name,
-                          })}
+                          aria-label={`Retirer un billet ${ticket.name}`}
                         >
                           -
                         </button>
@@ -532,21 +448,15 @@ const Reservation = () => {
                           min="0"
                           readOnly
                           value={formData.quantities[ticket.id]}
-                          aria-label={t("reservation.tickets.qty_aria", {
-                            name: ticket.name,
-                          })}
-                          title={t("reservation.tickets.qty_aria", {
-                            name: ticket.name,
-                          })}
+                          aria-label={`Quantité de billets ${ticket.name}`}
+                          title={`Quantité de billets ${ticket.name}`}
                         />
                         <button
                           type="button"
                           className="qty-btn"
                           onClick={() => handleQuantity(ticket.id, 1)}
                           disabled={isAtSelectedSlotLimit}
-                          aria-label={t("reservation.tickets.add_aria", {
-                            name: ticket.name,
-                          })}
+                          aria-label={`Ajouter un billet ${ticket.name}`}
                         >
                           +
                         </button>
@@ -558,13 +468,9 @@ const Reservation = () => {
             </div>
 
             <div className="booking-panel">
-              <h2 className="step-title">
-                {t("reservation.maze.section_title")}
-              </h2>
+              <h2 className="step-title">Avantage labyrinthe</h2>
               <div className="form-group">
-                <label htmlFor="mazeCode">
-                  {t("reservation.maze.code_label")}
-                </label>
+                <label htmlFor="mazeCode">Code gagnant (optionnel)</label>
                 <input
                   id="mazeCode"
                   className="input-text winner-code-input"
@@ -577,7 +483,7 @@ const Reservation = () => {
                       mazeCodeValidated: false,
                     }))
                   }
-                  placeholder={t("reservation.maze.code_placeholder")}
+                  placeholder="Entrez votre code gagnant"
                 />
                 <div className="winner-code-actions">
                   <button
@@ -586,29 +492,28 @@ const Reservation = () => {
                     onClick={handleValidateMazeCode}
                     disabled={!hasMazeCode}
                   >
-                    {t("reservation.maze.validate_btn")}
+                    Valider le code
                   </button>
                 </div>
-                <p className="winner-code-hint">{t("reservation.maze.hint")}</p>
+                <p className="winner-code-hint">
+                  Si votre code est valide, vous pourrez récupérer un goodies gratuit à
+                  l'exposition.
+                </p>
               </div>
             </div>
 
             <div className="booking-panel">
-              <h2 className="step-title">
-                {t("reservation.contact.section_title")}
-              </h2>
-              <p className="booking-login-hint">
-                {t("reservation.contact.login_hint")}{" "}
-                <Link to="/login">{t("reservation.contact.login_link")}</Link>
-              </p>
+              <h2 className="step-title">Coordonnées</h2>
+              {!isUserLoggedIn && (
+                <p className="booking-login-hint">
+                  Vous avez deja un compte ? <Link to="/login">Se connecter</Link>
+                </p>
+              )}
 
               <div className="booking-grid-two">
                 <div className="form-group">
                   <label htmlFor="lastName">
-                    {t("reservation.contact.last_name_label")}{" "}
-                    <span className="required">
-                      {t("reservation.date_slot.required")}
-                    </span>
+                    Nom <span className="required">*</span>
                   </label>
                   <input
                     id="lastName"
@@ -616,21 +521,15 @@ const Reservation = () => {
                     type="text"
                     value={formData.lastName}
                     onChange={(event) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        lastName: event.target.value,
-                      }))
+                      setFormData((prev) => ({ ...prev, lastName: event.target.value }))
                     }
-                    placeholder={t("reservation.contact.last_name_placeholder")}
+                    placeholder="Ex: Dupont"
                   />
                 </div>
 
                 <div className="form-group">
                   <label htmlFor="firstName">
-                    {t("reservation.contact.first_name_label")}{" "}
-                    <span className="required">
-                      {t("reservation.date_slot.required")}
-                    </span>
+                    Prénom <span className="required">*</span>
                   </label>
                   <input
                     id="firstName"
@@ -638,24 +537,16 @@ const Reservation = () => {
                     type="text"
                     value={formData.firstName}
                     onChange={(event) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        firstName: event.target.value,
-                      }))
+                      setFormData((prev) => ({ ...prev, firstName: event.target.value }))
                     }
-                    placeholder={t(
-                      "reservation.contact.first_name_placeholder",
-                    )}
+                    placeholder="Ex: Leila"
                   />
                 </div>
               </div>
 
               <div className="form-group">
                 <label htmlFor="email">
-                  {t("reservation.contact.email_label")}{" "}
-                  <span className="required">
-                    {t("reservation.date_slot.required")}
-                  </span>
+                  Email <span className="required">*</span>
                 </label>
                 <input
                   id="email"
@@ -663,47 +554,33 @@ const Reservation = () => {
                   type="email"
                   value={formData.email}
                   onChange={(event) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      email: event.target.value,
-                    }))
+                    setFormData((prev) => ({ ...prev, email: event.target.value }))
                   }
-                  placeholder={t("reservation.contact.email_placeholder")}
+                  placeholder="nom@domaine.com"
                 />
               </div>
             </div>
           </section>
 
-          <aside
-            className="booking-cart"
-            aria-label={t("reservation.aria.cart")}
-          >
-            <h2 className="booking-cart-title">
-              {t("reservation.cart.title")}
-            </h2>
-            <p className="booking-cart-meta">
-              {t("reservation.cart.tickets_count", { count: totalTickets })}
-            </p>
+          <aside className="booking-cart" aria-label="Panier sticky">
+            <h2 className="booking-cart-title">Votre panier</h2>
+            <p className="booking-cart-meta">{totalTickets} billet(s)</p>
 
             <div className="booking-cart-lines">
               {cartItems.length === 0 ? (
-                <p className="booking-cart-empty">
-                  {t("reservation.cart.empty")}
-                </p>
+                <p className="booking-cart-empty">Aucun billet sélectionné pour le moment.</p>
               ) : (
                 <>
                   {cartItems.map((item) => (
                     <div className="booking-cart-line" key={item.id}>
-                      <span>
-                        {item.name} x{item.quantity}
-                      </span>
+                      <span>{item.name} x{item.quantity}</span>
                       <strong>{item.subtotal} €</strong>
                     </div>
                   ))}
                   {isMazeCodeValid && (
                     <div className="booking-cart-line booking-cart-line--goodies">
-                      <span>{t("reservation.cart.goodies")}</span>
-                      <strong>{t("reservation.cart.goodies_price")}</strong>
+                      <span>Goodies x1</span>
+                      <strong>Gratuit</strong>
                     </div>
                   )}
                 </>
@@ -711,16 +588,12 @@ const Reservation = () => {
             </div>
 
             <div className="booking-cart-total">
-              <span>{t("reservation.cart.total")}</span>
+              <span>Total</span>
               <strong>{totalPrice} €</strong>
             </div>
 
-            <button
-              className="btn btn-primary booking-cart-cta"
-              type="button"
-              onClick={handleContinue}
-            >
-              {t("reservation.cart.cta")}
+            <button className="btn btn-primary booking-cart-cta" type="button" onClick={handleContinue}>
+              Continuer vers le récapitulatif
             </button>
 
             {inlineError && <p className="info-message error">{inlineError}</p>}
@@ -732,3 +605,4 @@ const Reservation = () => {
 };
 
 export default Reservation;
+

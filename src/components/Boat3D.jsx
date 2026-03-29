@@ -230,6 +230,7 @@ const Boat3D = ({ carouselPosition = 0 }) => {
 
     window.addEventListener("resize", handleResize);
 
+<<<<<<< HEAD
     // Cleanup
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -248,6 +249,23 @@ const Boat3D = ({ carouselPosition = 0 }) => {
       renderer.dispose();
     };
   }, [carouselPosition]);
+=======
+        // Cleanup
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+            }
+            if (boatRef.current) {
+                gsap.killTweensOf(boatRef.current.position);
+            }
+            if (containerRef.current && renderer.domElement.parentNode === containerRef.current) {
+                containerRef.current.removeChild(renderer.domElement);
+            }
+            renderer.dispose();
+        };
+    }, []);
+>>>>>>> main
 
   return <div ref={containerRef} style={{ width: "100%", height: "100%" }} />;
 };
