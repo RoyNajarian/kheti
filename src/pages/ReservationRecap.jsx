@@ -89,20 +89,40 @@ const ReservationRecap = () => {
         child_count: childCount,
         student_count: studentCount,
         email: normalizedEmail,
+        name: draft.lastName,
+        first_name: draft.firstName,
       };
 
+      console.log("Payload avant envoi:", {
+        draft,
+        payload,
+        toSqlHour: toSqlHour(draft.time),
+      });
+
       const response = await createReservation(payload);
+      console.log("Réponse de createReservation:", response);
       const reservationId =
         response?.data?.id_reservation ??
         response?.data?.id ??
         response?.id_reservation ??
         response?.id;
 
+      console.log("Extraction ID:", {
+        reservationId,
+        "data.id_reservation": response?.data?.id_reservation,
+        "data.id": response?.data?.id,
+        "id_reservation": response?.id_reservation,
+        "id": response?.id,
+      });
+
       const fallbackOrder = Math.floor(Math.random() * 1000000)
         .toString()
         .padStart(6, "0");
 
-      setOrderNumber(String(reservationId || fallbackOrder));
+      const finalOrderNumber = String(reservationId || fallbackOrder);
+      console.log("Numéro de commande final:", finalOrderNumber);
+      setOrderNumber(finalOrderNumber);
+
       setIsSuccess(true);
       sessionStorage.removeItem(RESERVATION_DRAFT_KEY);
     } catch (error) {
@@ -182,7 +202,7 @@ const ReservationRecap = () => {
             <div className="step-actions">
               <button
                 type="button"
-                className="btn recap-confirm-cta"
+                className="btn booking-cart-cta recap-confirm-cta"
                 onClick={handleConfirm}
                 disabled={isLoading}
               >
@@ -194,14 +214,20 @@ const ReservationRecap = () => {
           </section>
         ) : (
           <section className="confirmation-success" aria-label="Commande confirmée">
-            <div className="success-icon">✓</div>
             <h2>Réservation confirmée</h2>
-            <div className="order-number">Numéro : {orderNumber}</div>
-            <p>Un email de confirmation a été envoyé à {draft.email}.</p>
-            <div className="step-actions">
-              <button type="button" className="btn btn-primary" onClick={() => navigate("/")}>
-                Retour à l&apos;accueil
-              </button>
+            <p style={{ fontSize: "1.1rem", color: "#d4c4a0", margin: "1rem 0" }}>
+              Votre réservation a été confirmée avec succès.
+            </p>
+           
+            <div className="confirmation-tintin-scene">
+              <div className="tintin-thought-bubble">
+                <p>À bientôt dans les mystères de l'Égypte !</p>
+              </div>
+              <img
+                src="/images/tintin_perso.png"
+                alt="Tintin vous accueille"
+                className="confirmation-tintin"
+              />
             </div>
           </section>
         )}
