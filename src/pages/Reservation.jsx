@@ -6,6 +6,7 @@ import { getAvailableSlots } from "../back-office/api";
 import "../styles/Reservation.css";
 
 const RESERVATION_DRAFT_KEY = "khetiReservationDraft";
+const MAZE_GOODIES_CODE = "KHETI-MAZE-26";
 
 const TWO_STEP_BREADCRUMB = [
   { number: 1, label: "Votre réservation" },
@@ -41,6 +42,8 @@ const getInitialDraft = () => {
       firstName: String(draft?.firstName || user?.first_name || "").trim(),
       lastName: String(draft?.lastName || user?.name || "").trim(),
       email: String(draft?.email || user?.email || "").trim(),
+      mazeCode: String(draft?.mazeCode || "").trim(),
+      mazeCodeValidated: Boolean(draft?.mazeCodeValidated),
       quantities: {
         explorateur: Number(draft?.quantities?.explorateur || 0),
         scribe: Number(draft?.quantities?.scribe || 0),
@@ -54,6 +57,8 @@ const getInitialDraft = () => {
       firstName: String(user?.first_name || "").trim(),
       lastName: String(user?.name || "").trim(),
       email: String(user?.email || "").trim(),
+      mazeCode: "",
+      mazeCodeValidated: false,
       quantities: {
         explorateur: 0,
         scribe: 0,
@@ -194,6 +199,20 @@ const Reservation = () => {
   const selectedDate = formData.date ? new Date(`${formData.date}T00:00:00`) : null;
 
   const isEmailValid = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
+  const normalizedMazeCode = String(formData.mazeCode || "").trim().toUpperCase();
+  const hasMazeCode = normalizedMazeCode.length > 0;
+  const isMazeCodeValid =
+    normalizedMazeCode === MAZE_GOODIES_CODE && Boolean(formData.mazeCodeValidated);
+
+  const handleValidateMazeCode = () => {
+    const isValid = normalizedMazeCode === MAZE_GOODIES_CODE;
+    if (!isValid) {
+      setInlineError("Code invalide. Veuillez vérifier votre code gagnant.");
+    } else {
+      setInlineError("");
+    }
+    setFormData((prev) => ({ ...prev, mazeCodeValidated: isValid }));
+  };
 
   const handleQuantity = (type, delta) => {
     setFormData((prev) => {
@@ -235,6 +254,8 @@ const Reservation = () => {
       firstName: String(formData.firstName || "").trim(),
       lastName: String(formData.lastName || "").trim(),
       email: String(formData.email || "").trim().toLowerCase(),
+      mazeCode: String(formData.mazeCode || "").trim(),
+      mazeCodeValidated: Boolean(formData.mazeCodeValidated),
     };
 
     if (!payload.date || !payload.time) {
@@ -446,6 +467,41 @@ const Reservation = () => {
             </div>
 
             <div className="booking-panel">
+              <h2 className="step-title">Avantage labyrinthe</h2>
+              <div className="form-group">
+                <label htmlFor="mazeCode">Code gagnant (optionnel)</label>
+                <input
+                  id="mazeCode"
+                  className="input-text winner-code-input"
+                  type="text"
+                  value={formData.mazeCode}
+                  onChange={(event) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      mazeCode: event.target.value,
+                      mazeCodeValidated: false,
+                    }))
+                  }
+                  placeholder="Entrez votre code gagnant"
+                />
+                <div className="winner-code-actions">
+                  <button
+                    type="button"
+                    className="btn winner-code-validate-btn"
+                    onClick={handleValidateMazeCode}
+                    disabled={!hasMazeCode}
+                  >
+                    Valider le code
+                  </button>
+                </div>
+                <p className="winner-code-hint">
+                  Si votre code est valide, vous pourrez récupérer un goodies gratuit à
+                  l'exposition.
+                </p>
+              </div>
+            </div>
+
+            <div className="booking-panel">
               <h2 className="step-title">Coordonnées</h2>
               <p className="booking-login-hint">
                 Vous avez deja un compte ? <Link to="/login">Se connecter</Link>
@@ -511,12 +567,20 @@ const Reservation = () => {
               {cartItems.length === 0 ? (
                 <p className="booking-cart-empty">Aucun billet sélectionné pour le moment.</p>
               ) : (
-                cartItems.map((item) => (
-                  <div className="booking-cart-line" key={item.id}>
-                    <span>{item.name} x{item.quantity}</span>
-                    <strong>{item.subtotal} €</strong>
-                  </div>
-                ))
+                <>
+                  {cartItems.map((item) => (
+                    <div className="booking-cart-line" key={item.id}>
+                      <span>{item.name} x{item.quantity}</span>
+                      <strong>{item.subtotal} €</strong>
+                    </div>
+                  ))}
+                  {isMazeCodeValid && (
+                    <div className="booking-cart-line booking-cart-line--goodies">
+                      <span>Goodies x1</span>
+                      <strong>Gratuit</strong>
+                    </div>
+                  )}
+                </>
               )}
             </div>
 

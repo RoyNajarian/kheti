@@ -308,6 +308,65 @@
   color: #f5ddaa;
   font-weight: 700;
 }
+
+.winner-code-input {
+  border-color: rgba(240, 220, 181, 0.34);
+  background: rgba(12, 10, 8, 0.56);
+}
+
+.winner-code-input:focus {
+  border-color: #e8cf96;
+  box-shadow: 0 0 0 2px rgba(232, 207, 150, 0.22);
+}
+
+.winner-code-hint {
+  margin: 0.4rem 0 0;
+  color: #ccb992;
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+.winner-code-actions {
+  margin-top: 0.55rem;
+}
+
+.winner-code-validate-btn {
+  border: 1px solid rgba(240, 220, 181, 0.34);
+  background: rgba(12, 10, 8, 0.56);
+  color: #fff2d2;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.winner-code-validate-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.winner-code-status {
+  margin: 0.35rem 0 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.winner-code-status--valid {
+  color: #fff2d2;
+}
+
+.winner-code-status--invalid {
+  color: #fff2d2;
+}
+
+.recap-value--valid {
+  color: #fff2d2;
+}
+
+.recap-value--invalid {
+  color: #fff2d2;
+}
+
 .booking-cart {
   position: sticky;
   top: calc(var(--header-offset));
@@ -343,6 +402,11 @@
   width: 16px;
   height: 16px;
   box-shadow: 3px 3px 0 #000;
+}
+
+.booking-cart-line--goodies span,
+.booking-cart-line--goodies strong {
+  color: #fff2d2;
 }
 .calendar-widget {
   border: 1px solid rgba(240, 220, 181, 0.24);
