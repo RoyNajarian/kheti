@@ -38,7 +38,8 @@ const MentionsLegales = () => {
         <section className="legal-block" aria-labelledby="team-title">
           <h2 id="team-title">Équipe de réalisation</h2>
           <p>
-            Le projet Kheti a été conçu et développé par une équipe étudiante BUT MMI.
+            L'agence Faravision est la créatrice de l'exposition Kheti. Le présent site a été
+            conçu et développé par une équipe étudiante BUT MMI.
           </p>
 
           <h3 style={{ marginTop: "1rem", color: "#f5ddaa", fontSize: "1.1rem" }}>Développement</h3>

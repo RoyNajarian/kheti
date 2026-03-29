@@ -93,34 +93,18 @@ const ReservationRecap = () => {
         first_name: draft.firstName,
       };
 
-      console.log("Payload avant envoi:", {
-        draft,
-        payload,
-        toSqlHour: toSqlHour(draft.time),
-      });
-
       const response = await createReservation(payload);
-      console.log("Réponse de createReservation:", response);
       const reservationId =
         response?.data?.id_reservation ??
         response?.data?.id ??
         response?.id_reservation ??
         response?.id;
 
-      console.log("Extraction ID:", {
-        reservationId,
-        "data.id_reservation": response?.data?.id_reservation,
-        "data.id": response?.data?.id,
-        "id_reservation": response?.id_reservation,
-        "id": response?.id,
-      });
-
       const fallbackOrder = Math.floor(Math.random() * 1000000)
         .toString()
         .padStart(6, "0");
 
       const finalOrderNumber = String(reservationId || fallbackOrder);
-      console.log("Numéro de commande final:", finalOrderNumber);
       setOrderNumber(finalOrderNumber);
 
       setIsSuccess(true);

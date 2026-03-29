@@ -5,7 +5,6 @@ const Footer = () => {
         <footer className="page-footer" role="contentinfo" aria-label="Pied de page Kheti">
 
             <div className="footer-inner">
-                {/* Colonne gauche : infos */}
                 <div className="footer-infos" aria-label="Informations du restaurant">
 
                     <div className="footer-infos__top">
@@ -33,9 +32,9 @@ const Footer = () => {
                         <ul className="footer-socials" role="list" aria-label="Réseaux sociaux">
                             <li>
                                 <a
-                                    href="https://instagram.com/kheti"
+                                    href="https://www.instagram.com/faravision.agency/"
                                     className="footer-social-link"
-                                    aria-label="Kheti sur Instagram (ouvre un nouvel onglet)"
+                                    aria-label="Faravision sur Instagram (ouvre un nouvel onglet)"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
@@ -45,9 +44,9 @@ const Footer = () => {
                             </li>
                             <li>
                                 <a
-                                    href="https://tiktok.com/@kheti"
+                                    href="https://www.tiktok.com/@faravision"
                                     className="footer-social-link"
-                                    aria-label="Kheti sur TikTok (ouvre un nouvel onglet)"
+                                    aria-label="Faravision sur TikTok (ouvre un nouvel onglet)"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
@@ -71,18 +70,16 @@ const Footer = () => {
                     </div>
 
                     <p className="footer-copyright">
-                        <small>© {new Date().getFullYear()} Kheti. Tous droits réservés.</small>
+                        <small>© {new Date().getFullYear()} Faravision. Tous droits réservés.</small>
                     </p>
                 </div>
 
-                {/* Séparateur décoratif vertical */}
                 <div className="footer-divider" role="separator" aria-hidden="true">
                     <span className="footer-divider__line" />
                     <span className="footer-divider__ornament" aria-hidden="true">𓂀</span>
                     <span className="footer-divider__line" />
                 </div>
 
-                {/* Colonne droite : carte */}
                 <div className="footer-location" aria-label="Localisation du restaurant">
                     <p className="footer-location-text">
                         <span aria-hidden="true" className="footer-location-icon">𓇳</span>

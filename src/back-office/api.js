@@ -25,11 +25,6 @@ export async function getReservations() {
   }
 
   const reservations = Array.isArray(json?.data) ? json.data : [];
-  console.log("✅ getReservations()", {
-    url: reservationsUrl.toString(),
-    count: reservations.length,
-  });
-
   return reservations;
 }
 
@@ -78,7 +73,6 @@ export async function updateUserPassword({
   const nextPassword = String(newPassword || "");
 
   try {
-    // 1) Vérifier l'ancien mot de passe avec l'endpoint d'auth existant.
     const authRes = await fetch(buildApiUrl("auth"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -98,7 +92,6 @@ export async function updateUserPassword({
       };
     }
 
-    // 2) Mettre à jour l'utilisateur via PUT /users/{email}.
     const updateRes = await fetch(buildApiUrl("users", normalizedEmail), {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -155,35 +148,19 @@ export async function createUser(data) {
 export async function createReservation(data) {
   const reservationUrl = buildApiUrl("reservations");
 
-  console.log("📤 Envoi réservation:", {
-    url: reservationUrl,
-    data,
-    timestamp: new Date().toISOString(),
-  });
-
   const res = await fetch(reservationUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
 
-  console.log("📊 Réponse API:", {
-    status: res.status,
-    statusText: res.statusText,
-    headers: Object.fromEntries(res.headers),
-  });
-
   const json = await res.json().catch(() => ({}));
-  
-  console.log("📥 Réponse JSON:", json);
 
   if (!res.ok) {
     const errorMsg = json.error || json.message || `Erreur HTTP ${res.status}`;
-    console.error("❌ Erreur création réservation:", errorMsg);
     throw new Error(errorMsg);
   }
-  
-  console.log("✅ Réservation créée avec succès");
+
   return json;
 }
 
@@ -209,34 +186,26 @@ export async function sendConfirmationEmail(email, reservationId, date, time, pr
 
     const json = await res.json().catch(() => ({}));
     if (!res.ok) {
-      console.warn("Erreur lors de l'envoi du mail:", json.error || res.status);
       return { success: false, error: json.error || "Erreur lors de l'envoi du mail" };
     }
 
     return { success: true };
   } catch (error) {
-    console.warn("Erreur réseau lors de l'envoi du mail:", error.message);
     return { success: false, error: error.message };
   }
 }
 
 export async function getAvailableSlots() {
   try {
-    // Utiliser getReservations() qui gère les fallbacks automatiquement
     const reservations = await getReservations();
-    
-    console.log("📍 getAvailableSlots() - Réservations reçues:", reservations.length);
-    
-    // Compter les places par créneau/jour (clé: YYYY-MM-DD_HH:MM)
+
     const availability = {};
     (reservations || []).forEach((reservation) => {
       const rawDay = String(reservation.day || "").trim();
       const rawHour = String(reservation.hour || "").trim();
 
-      // day peut arriver en "YYYY-MM-DD" ou "YYYY-MM-DDTHH:mm:ss..."
       const dateStr = rawDay.includes("T") ? rawDay.split("T")[0] : rawDay;
 
-      // hour peut arriver en "HH", "HH:MM" ou "HH:MM:SS"
       let hourStr = rawHour;
       if (/^\d{1,2}$/.test(hourStr)) {
         hourStr = `${hourStr.padStart(2, "0")}:00`;
@@ -256,11 +225,9 @@ export async function getAvailableSlots() {
 
       availability[key] = (availability[key] || 0) + count;
     });
-    
-    console.log("✅ Disponibilités calculées:", availability);
+
     return availability;
-  } catch (error) {
-    console.error("❌ Erreur getAvailableSlots:", error);
+  } catch {
     return {};
   }
 }
