@@ -82,6 +82,7 @@
         opacity: 0;
         transform: rotate(6deg) translateY(40px);
     }
+
     to {
         opacity: 1;
         transform: rotate(6deg) translateY(-30px);
@@ -93,6 +94,7 @@
         opacity: 0;
         transform: rotate(-3deg) translateY(40px) scale(0.95);
     }
+
     to {
         opacity: 1;
         transform: rotate(-3deg) translateY(-30px) scale(1);
@@ -320,7 +322,7 @@
 
 /* ---- Bandeau dates (mobile uniquement) ---- */
 .accueil-dates-banner {
-    position: relative;
+    position: absolute;
     top: 56px;
     z-index: 2;
     width: 100%;
@@ -356,7 +358,7 @@
     align-items: center;
     justify-content: flex-start;
     min-height: calc(100svh - 52px);
-    padding-top: 80px;
+    padding-top: 140px;
     padding-bottom: 0;
 }
 
@@ -552,6 +554,8 @@
     .accueil {
         background-attachment: fixed;
         min-height: 90vh;
+        position: relative;
+        padding-bottom: 60px;
     }
 
     .accueil::before {
@@ -566,7 +570,15 @@
     }
 
     .accueil-dates-banner {
-        display: none;
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        top: auto;
+        width: 100%;
+        margin: 0;
+        display: flex;
+        z-index: 2;
     }
 
     .accueil-content {
@@ -660,6 +672,7 @@
 
 /* ---- Motion réduit ---- */
 @media (prefers-reduced-motion: reduce) {
+
     .accueil-pharaon,
     .accueil-scroll-action,
     .accueil-main,
@@ -691,6 +704,10 @@
 @media (min-width: 768px) {
     .section-separator__img {
         transform: translateY(-30px);
+    }
+
+    .section-separator__img--first {
+        display: none;
     }
 }
 
@@ -883,7 +900,7 @@
 .pres-bd__nil-boat {
     position: absolute;
     top: 0;
-    right: -70px;
+    right: -50%;
     bottom: 0;
     display: flex;
     align-items: center;
@@ -941,6 +958,7 @@
 }
 
 @media (min-width: 768px) {
+
     .carrousel-btn__prev svg,
     .carrousel-btn__next svg {
         transform: rotate(0);
@@ -1225,6 +1243,7 @@
 
 /* ---- Motion réduit ---- */
 @media (prefers-reduced-motion: reduce) {
+
     .pres-bd__bg--active,
     .pres-bd__bg--prev,
     .pres-bd__content,
@@ -1277,15 +1296,6 @@
     background-image: url('/public/images/hieroglyphs-column.png');
     background-size: cover;
     background-repeat: repeat-y;
-}
-
-.labyrinthe__col--left {
-    left: 0;
-}
-
-.labyrinthe__col--right {
-    right: 0;
-    transform: scaleX(-1);
 }
 
 /* ---- Particules de sable ---- */
@@ -1468,6 +1478,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 48px;
     padding: 0 clamp(24px, 6vw, 80px);
     max-width: 1200px;
@@ -1483,51 +1494,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-/* ---- Torches ---- */
-.labyrinthe__torch {
-    position: absolute;
-    z-index: 4;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-}
-
-.labyrinthe__torch--tl {
-    top: -16px;
-    left: -8px;
-}
-
-.labyrinthe__torch--tr {
-    top: -16px;
-    right: -8px;
-}
-
-.torch__flame {
-    display: block;
-    width: 14px;
-    height: 22px;
-    background: radial-gradient(ellipse at 50% 80%, #fff7c0 0%, #FFB347 35%, #E05C00 70%, transparent 100%);
-    border-radius: 50% 50% 30% 30% / 60% 60% 40% 40%;
-    filter: blur(0.5px);
-    transform-origin: bottom center;
-    animation: torch-flicker 0.8s ease-in-out infinite alternate;
-}
-
-.torch__glow {
-    display: block;
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 160, 50, 0.55) 0%, transparent 70%);
-    pointer-events: none;
-    animation: torch-glow-pulse 1.2s ease-in-out infinite;
 }
 
 /* ---- Cadre du labyrinthe ---- */
@@ -1758,7 +1724,6 @@
     transform: translateX(4px);
 }
 
-/* ---- Fond sable bas ---- */
 .labyrinthe__sand {
     position: absolute;
     bottom: 0;
@@ -1838,6 +1803,7 @@
 
 /* ---- Motion réduit ---- */
 @media (prefers-reduced-motion: reduce) {
+
     .torch__flame,
     .torch__glow,
     .labyrinthe__particle,
@@ -1849,4 +1815,71 @@
         animation: none !important;
         transition: none !important;
     }
+}
+
+
+/* =============================================
+   TRAILER POPUP
+   ============================================= */
+
+.trailer-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: popup-fade 0.3s ease-out;
+}
+
+.trailer-popup-content {
+    position: relative;
+    width: 90vw;
+    max-width: 900px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    animation: popup-animation 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.trailer-video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.trailer-popup-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #D5B77B;
+    border-radius: 50%;
+    color: #D5B77B;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1001;
+    font-weight: bold;
+}
+
+.trailer-popup-close:hover {
+    background: rgba(213, 183, 123, 0.2);
+    transform: scale(1.1);
+}
+
+.trailer-popup-close:focus-visible {
+    outline: 3px solid #D5B77B;
+    outline-offset: 2px;
 }

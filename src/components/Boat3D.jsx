@@ -181,7 +181,7 @@ const Boat3D = ({ carouselPosition = 0 }) => {
             }
             renderer.dispose();
         };
-    }, [carouselPosition]);
+    }, []);
 
     return <div ref={containerRef} style={{ width: '100%', height: '100%' }} />;
 };
