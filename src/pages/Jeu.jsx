@@ -5,6 +5,7 @@ import { mapLevel1, mapLevel2, construction } from "../components/Labyrinthe";
 import { createPersonnage, movePersonnage } from "../components/Personnage";
 import { Popup } from "../components/Popup";
 import { useNavigate } from "react-router";
+import {useTranslation} from "react-i18next";
 
 const maps = [mapLevel1, mapLevel2];
 
@@ -18,6 +19,7 @@ export const Jeu = () => {
   const gameStartedRef = useRef(false);
   const startCameraPositionRef = useRef(9);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   // Vérification de la victoire au chargement 
   useEffect(() => {
@@ -316,11 +318,11 @@ export const Jeu = () => {
   return (
     <div className="game-jeu-container">
       <button className="game-btn-back" onClick={() => navigate(-1)}>
-        <i className="fa-solid fa-arrow-left"></i>Quitter
+        <i className="fa-solid fa-arrow-left"></i>{t('jeu.quit_btn')}
       </button>
 
-      <img src="/images/keyboard.webp" className="game-keyboard-info" alt="Touches ZQSD et flèches directionnelles"/>
-      <img src="/images/kheti-logo.png" className="game-logo-kethi" alt="Logo du site"/>
+      <img src="/images/keyboard.webp" className="game-keyboard-info" alt={t('jeu.keyboard_alt')}/>
+      <img src="/images/kheti-logo.png" className="game-logo-kethi" alt={t('jeu.logo_alt')}/>
 
       <div className="game-container-3d" ref={containerRef}></div>
 
@@ -329,27 +331,29 @@ export const Jeu = () => {
           titre={
             currentLevel < maps.length - 1 ? (
               <>
-                Niveau {currentLevel + 1} <br /> terminé !
+                {t('jeu.popup.level_done', { level: currentLevel + 1 }).split('\n').map((line, i) => (
+                  <span key={i}>{line}{i === 0 && <br />}</span>
+                ))}
               </>
             ) : (
-              "Bravo !"
+              t('jeu.popup.win_title')
             )
           }
           contenu={
             currentLevel < maps.length - 1 ? (
               <button className="game-btn-popup" onClick={nextLevel}>
-                Niveau suivant
+                {t('jeu.popup.next_level_btn')}
               </button>
             ) : (
               <div className="game-win-popup">
-                <p className="game-win-title">Tu as terminé tous les niveaux</p>
-                <p className="game-win-content">Tu as débloqué un goodies exclusif ! Utilise ce code secret lors de ta réservation ou présente-le à la sortie de l'exposition :</p>
+                <p className="game-win-title">{t('jeu.popup.win_p1')}</p>
+                <p className="game-win-content">{t('jeu.popup.win_p2')}</p>
                 <span className="game-code">KHETI-MAZE-26</span>
                 <button
                   className="game-btn-popup"
                   onClick={() => navigate("/reservation")}
                 >
-                  Réserver mes billets
+                  {t('jeu.popup.reserve_btn')}
                 </button>
               </div>
             )
@@ -360,28 +364,24 @@ export const Jeu = () => {
       {!gameStarted && (
         <div className="game-intro-container">
           <div className="game-intro-content">
-            <h1 className="game-intro-title">The Maze Roller</h1>
+            <h1 className="game-intro-title">{t('jeu.intro.title')}</h1>
 
             <p className="game-intro-text">
-              Votre objectif est de guider la sphère à travers les couloirs de
-              ce temple labyrinthique jusqu'à en trouver l'issue. Faites appel à
-              votre sens de l'orientation et à votre logique pour déjouer les
-              impasses qui se dresseront sur votre chemin.
+              {t('jeu.intro.p1')}
             </p>
 
             <p className="game-intro-text">
-              Résolvez tous les niveaux pour débloquer une récompense exclusive
-              à récupérer lors de votre visite à l'exposition.
+              {t('jeu.intro.p2')}
             </p>
 
             <p className="game-intro-commandes">
               {ifTouch 
-                ? "Glissez votre doigt sur l'écran pour vous déplacer." 
-                : 'Utilisez les flèches directionnelles ou "ZQSD" pour vous déplacer.'}
+                ? t('jeu.intro.controls_touch')
+                : t('jeu.intro.controls_keyboard')}
             </p>
 
             <button className="game-btn-jouer" onClick={startGame}>
-              Jouer
+              {t('jeu.intro.play_btn')}
             </button>
           </div>
         </div>

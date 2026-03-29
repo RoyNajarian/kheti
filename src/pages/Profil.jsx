@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { getReservations, updateUserPassword } from "../back-office/api";
 import "../styles/Profil.css";
+import { useTranslation } from "react-i18next";
 
 const getStoredUser = () => {
   try {
@@ -24,22 +25,9 @@ const parseReservationDateTime = (reservation) => {
   return Number.isNaN(parsed.getTime()) ? null : parsed;
 };
 
-const formatDateLabel = (reservation) => {
-  const dateTime = parseReservationDateTime(reservation);
-  if (!dateTime) return reservation?.day || "Date non definie";
-
-  const dateLabel = dateTime.toLocaleDateString("fr-FR", {
-    weekday: "long",
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
-
-  const hourLabel = String(reservation?.hour || "").trim();
-  return hourLabel ? `${dateLabel} a ${hourLabel}` : dateLabel;
-};
-
 const Profil = () => {
+  const { t, i18n } = useTranslation();
+
   const [user, setUser] = useState(null);
   const [isLoadingReservations, setIsLoadingReservations] = useState(false);
   const [reservationError, setReservationError] = useState("");
@@ -51,6 +39,24 @@ const Profil = () => {
   const [newPassword, setNewPassword] = useState("");
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
+
+  // Moved inside component so it has access to t()
+  const formatDateLabel = (reservation) => {
+    const dateTime = parseReservationDateTime(reservation);
+    if (!dateTime)
+      return reservation?.day || t("profil.reservations.date_undefined");
+
+    const locale = i18n.language?.startsWith("fr") ? "fr-FR" : "en-GB";
+    const dateLabel = dateTime.toLocaleDateString(locale, {
+      weekday: "long",
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+
+    const hourLabel = String(reservation?.hour || "").trim();
+    return hourLabel ? `${dateLabel} à ${hourLabel}` : dateLabel;
+  };
 
   useEffect(() => {
     setUser(getStoredUser());
@@ -103,7 +109,9 @@ const Profil = () => {
 
         const userEmail = String(user.email).trim().toLowerCase();
         const userReservations = allReservations.filter((reservation) => {
-          const reservationEmail = String(reservation?.email || reservation?.user?.email || "")
+          const reservationEmail = String(
+            reservation?.email || reservation?.user?.email || "",
+          )
             .trim()
             .toLowerCase();
           return reservationEmail && reservationEmail === userEmail;
@@ -123,8 +131,10 @@ const Profil = () => {
         });
 
         upcoming.sort((a, b) => {
-          const dateA = parseReservationDateTime(a)?.getTime() || Number.MAX_SAFE_INTEGER;
-          const dateB = parseReservationDateTime(b)?.getTime() || Number.MAX_SAFE_INTEGER;
+          const dateA =
+            parseReservationDateTime(a)?.getTime() || Number.MAX_SAFE_INTEGER;
+          const dateB =
+            parseReservationDateTime(b)?.getTime() || Number.MAX_SAFE_INTEGER;
           return dateA - dateB;
         });
 
@@ -138,7 +148,9 @@ const Profil = () => {
         setPastReservations(past);
       } catch (error) {
         if (!isMounted) return;
-        setReservationError(error.message || "Impossible de charger vos reservations.");
+        setReservationError(
+          error.message || t("profil.errors.load_reservations"),
+        );
       } finally {
         if (isMounted) {
           setIsLoadingReservations(false);
@@ -155,17 +167,14 @@ const Profil = () => {
 
   const handlePasswordReset = async () => {
     if (!user?.email) {
-      setResetFeedback({
-        type: "error",
-        message: "Aucun e-mail associé au compte.",
-      });
+      setResetFeedback({ type: "error", message: t("profil.errors.no_email") });
       return;
     }
 
     if (!oldPassword || !newPassword) {
       setResetFeedback({
         type: "error",
-        message: "Veuillez renseigner l'ancien mot de passe et le nouveau.",
+        message: t("profil.errors.fields_required"),
       });
       return;
     }
@@ -173,7 +182,7 @@ const Profil = () => {
     if (oldPassword === newPassword) {
       setResetFeedback({
         type: "error",
-        message: "Le nouveau mot de passe doit être différent de l'ancien.",
+        message: t("profil.errors.same_password"),
       });
       return;
     }
@@ -190,15 +199,14 @@ const Profil = () => {
       setResetFeedback({
         type: "error",
         message:
-          String(result.error || "").trim() ||
-          "La mise à jour du mot de passe a échoué. Vérifiez vos identifiants.",
+          String(result.error || "").trim() || t("profil.errors.update_failed"),
       });
       return;
     }
 
     setResetFeedback({
       type: "success",
-      message: "Mot de passe mis à jour avec succès.",
+      message: t("profil.success.password_updated"),
     });
     setOldPassword("");
     setNewPassword("");
@@ -207,35 +215,49 @@ const Profil = () => {
     setIsPasswordFormOpen(false);
   };
 
+  const closePasswordModal = () => {
+    setIsPasswordFormOpen(false);
+    setOldPassword("");
+    setNewPassword("");
+    setShowOldPassword(false);
+    setShowNewPassword(false);
+    setResetFeedback({ type: "", message: "" });
+  };
+
   return (
-    <section className="profilePage" aria-label="Page profil utilisateur">
+    <section className="profilePage" aria-label={t("profil.aria.page")}>
       <div className="profileBackdrop" aria-hidden="true" />
       <div className="profileContent">
         <header className="profileHeader">
           <div className="profileTitleRow">
-            <h1 className="profileTitle">Mon profil</h1>
+            <h1 className="profileTitle">{t("profil.title")}</h1>
           </div>
         </header>
 
         {user ? (
           <>
-            <section className="profileSection" aria-labelledby="profile-infos-title">
-              <h2 id="profile-infos-title" className="profileSectionTitle">Informations du compte</h2>
+            <section
+              className="profileSection"
+              aria-labelledby="profile-infos-title"
+            >
+              <h2 id="profile-infos-title" className="profileSectionTitle">
+                {t("profil.account.section_title")}
+              </h2>
               <dl className="profileInfoList">
                 <div className="profileInfoRow">
-                  <dt>Nom</dt>
+                  <dt>{t("profil.account.last_name")}</dt>
                   <dd>{user.name || "-"}</dd>
                 </div>
                 <div className="profileInfoRow">
-                  <dt>Prénom</dt>
+                  <dt>{t("profil.account.first_name")}</dt>
                   <dd>{user.first_name || "-"}</dd>
                 </div>
                 <div className="profileInfoRow">
-                  <dt>E-mail</dt>
+                  <dt>{t("profil.account.email")}</dt>
                   <dd>{user.email || "-"}</dd>
                 </div>
                 <div className="profileInfoRow profileInfoRow--password">
-                  <dt>Mot de passe</dt>
+                  <dt>{t("profil.account.password")}</dt>
                   <dd className="profilePasswordCell">
                     <span className="profilePasswordMask">••••••••</span>
                     <button
@@ -248,77 +270,131 @@ const Profil = () => {
                         setResetFeedback({ type: "", message: "" });
                       }}
                       aria-expanded={isPasswordFormOpen}
-                      aria-label="Modifier le mot de passe"
+                      aria-label={t("profil.aria.edit_password")}
                     >
-                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
                         <path d="M3 17.25V21h3.75l11-11-3.75-3.75-11 11zm14.71-9.04c.39-.39.39-1.02 0-1.41l-2.5-2.5a.996.996 0 10-1.41 1.41l2.5 2.5c.39.39 1.02.39 1.41 0z" />
                       </svg>
                     </button>
                   </dd>
                 </div>
               </dl>
-
             </section>
 
-            <section className="profileSection" aria-labelledby="profile-reservations-title">
-              <h2 id="profile-reservations-title" className="profileSectionTitle">Mes réservations</h2>
+            <section
+              className="profileSection"
+              aria-labelledby="profile-reservations-title"
+            >
+              <h2
+                id="profile-reservations-title"
+                className="profileSectionTitle"
+              >
+                {t("profil.reservations.section_title")}
+              </h2>
 
               {isLoadingReservations ? (
-                <p className="profileHint">Chargement des réservations...</p>
+                <p className="profileHint">
+                  {t("profil.reservations.loading")}
+                </p>
               ) : reservationError ? (
-                <p className="profileInlineFeedback profileInlineFeedback--error">{reservationError}</p>
+                <p className="profileInlineFeedback profileInlineFeedback--error">
+                  {reservationError}
+                </p>
               ) : (
                 <div className="profileReservationsGrid">
                   <div className="profileReservationsColumn">
-                    <h3 className="profileColumnTitle">En cours</h3>
+                    <h3 className="profileColumnTitle">
+                      {t("profil.reservations.upcoming_title")}
+                    </h3>
                     {upcomingReservations.length === 0 ? (
-                      <p className="profileHint">Aucune réservation à venir pour le moment.</p>
+                      <p className="profileHint">
+                        {t("profil.reservations.upcoming_empty")}
+                      </p>
                     ) : (
                       <ul className="profileReservationList">
-                        {upcomingReservations.map((reservation) => (
-                          <li key={reservation.id} className="profileReservationItem">
-                            <p className="profileReservationDate">{formatDateLabel(reservation)}</p>
-                            <p className="profileReservationMeta">
-                              {reservation.number_of_people ?? ((reservation.adult_count || 0) + (reservation.child_count || 0) + (reservation.student_count || 0))} personne(s) • {reservation.price} €
-                            </p>
-                          </li>
-                        ))}
+                        {upcomingReservations.map((reservation) => {
+                          const count =
+                            reservation.number_of_people ??
+                            (reservation.adult_count || 0) +
+                              (reservation.child_count || 0) +
+                              (reservation.student_count || 0);
+                          return (
+                            <li
+                              key={reservation.id}
+                              className="profileReservationItem"
+                            >
+                              <p className="profileReservationDate">
+                                {formatDateLabel(reservation)}
+                              </p>
+                              <p className="profileReservationMeta">
+                                {t("profil.reservations.people_count", {
+                                  count,
+                                })}{" "}
+                                • {reservation.price} €
+                              </p>
+                            </li>
+                          );
+                        })}
                       </ul>
                     )}
                   </div>
 
                   <div className="profileReservationsColumn">
-                    <h3 className="profileColumnTitle">Passées</h3>
+                    <h3 className="profileColumnTitle">
+                      {t("profil.reservations.past_title")}
+                    </h3>
                     {pastReservations.length === 0 ? (
-                      <p className="profileHint">Aucune réservation passée.</p>
+                      <p className="profileHint">
+                        {t("profil.reservations.past_empty")}
+                      </p>
                     ) : (
                       <ul className="profileReservationList">
-                        {pastReservations.map((reservation) => (
-                          <li key={reservation.id} className="profileReservationItem profileReservationItem--past">
-                            <p className="profileReservationDate">{formatDateLabel(reservation)}</p>
-                            <p className="profileReservationMeta">
-                              {reservation.number_of_people ?? ((reservation.adult_count || 0) + (reservation.child_count || 0) + (reservation.student_count || 0))} personne(s) • {reservation.price} €
-                            </p>
-                          </li>
-                        ))}
+                        {pastReservations.map((reservation) => {
+                          const count =
+                            reservation.number_of_people ??
+                            (reservation.adult_count || 0) +
+                              (reservation.child_count || 0) +
+                              (reservation.student_count || 0);
+                          return (
+                            <li
+                              key={reservation.id}
+                              className="profileReservationItem profileReservationItem--past"
+                            >
+                              <p className="profileReservationDate">
+                                {formatDateLabel(reservation)}
+                              </p>
+                              <p className="profileReservationMeta">
+                                {t("profil.reservations.people_count", {
+                                  count,
+                                })}{" "}
+                                • {reservation.price} €
+                              </p>
+                            </li>
+                          );
+                        })}
                       </ul>
                     )}
                   </div>
                 </div>
               )}
             </section>
-
           </>
         ) : (
           <>
-            <p className="profileStatus profileStatus--disconnected">Vous n'êtes pas connecté.</p>
-            <p className="profileHint">Connectez-vous pour voir vos informations et vos réservations.</p>
+            <p className="profileStatus profileStatus--disconnected">
+              {t("profil.guest.not_connected")}
+            </p>
+            <p className="profileHint">{t("profil.guest.hint")}</p>
             <div className="profileActions">
               <Link to="/login" className="profileBtn">
-                Aller à la connexion
+                {t("profil.guest.login_btn")}
               </Link>
               <Link to="/register" className="profileBtn profileBtn--ghost">
-                Créer un compte
+                {t("profil.guest.register_btn")}
               </Link>
             </div>
           </>
@@ -329,16 +405,18 @@ const Profil = () => {
             className="profilePasswordModalBackdrop"
             onClick={(event) => {
               if (event.target !== event.currentTarget) return;
-              setIsPasswordFormOpen(false);
-              setOldPassword("");
-              setNewPassword("");
-              setShowOldPassword(false);
-              setShowNewPassword(false);
-              setResetFeedback({ type: "", message: "" });
+              closePasswordModal();
             }}
           >
-            <div className="profilePasswordModal" role="dialog" aria-modal="true" aria-labelledby="password-modal-title">
-              <h2 id="password-modal-title" className="profileSectionTitle">Modifier le mot de passe</h2>
+            <div
+              className="profilePasswordModal"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="password-modal-title"
+            >
+              <h2 id="password-modal-title" className="profileSectionTitle">
+                {t("profil.password_modal.title")}
+              </h2>
 
               <form
                 className="profilePasswordForm"
@@ -348,7 +426,9 @@ const Profil = () => {
                 }}
               >
                 <div className="profilePasswordField">
-                  <label htmlFor="old-password">Ancien mot de passe</label>
+                  <label htmlFor="old-password">
+                    {t("profil.password_modal.old_label")}
+                  </label>
                   <div className="profilePasswordInputWrap">
                     <input
                       id="old-password"
@@ -361,9 +441,17 @@ const Profil = () => {
                       type="button"
                       className="profilePasswordToggle"
                       onClick={() => setShowOldPassword((prev) => !prev)}
-                      aria-label={showOldPassword ? "Masquer l'ancien mot de passe" : "Afficher l'ancien mot de passe"}
+                      aria-label={
+                        showOldPassword
+                          ? t("profil.aria.hide_old_password")
+                          : t("profil.aria.show_old_password")
+                      }
                     >
-                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
                         {showOldPassword ? (
                           <path d="M2.1 3.51L1 4.62l4.03 4.03C3.77 9.67 2.8 10.99 2 12c1.73 2.39 4.56 5 10 5 2.02 0 3.74-.36 5.2-.96l3.18 3.18 1.11-1.11L2.1 3.51zM12 7c3.72 0 6.22 1.85 7.99 4.06-.57.72-1.23 1.43-2.04 2.07l-1.46-1.46c.32-.53.51-1.15.51-1.82a3.5 3.5 0 0 0-3.5-3.5c-.67 0-1.29.19-1.82.51l-1.44-1.44c.56-.23 1.16-.42 1.76-.42zM8.27 11.89l3.84 3.84A3.5 3.5 0 0 1 8.27 11.9z" />
                         ) : (
@@ -375,7 +463,9 @@ const Profil = () => {
                 </div>
 
                 <div className="profilePasswordField">
-                  <label htmlFor="new-password">Nouveau mot de passe</label>
+                  <label htmlFor="new-password">
+                    {t("profil.password_modal.new_label")}
+                  </label>
                   <div className="profilePasswordInputWrap">
                     <input
                       id="new-password"
@@ -388,9 +478,17 @@ const Profil = () => {
                       type="button"
                       className="profilePasswordToggle"
                       onClick={() => setShowNewPassword((prev) => !prev)}
-                      aria-label={showNewPassword ? "Masquer le nouveau mot de passe" : "Afficher le nouveau mot de passe"}
+                      aria-label={
+                        showNewPassword
+                          ? t("profil.aria.hide_new_password")
+                          : t("profil.aria.show_new_password")
+                      }
                     >
-                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
                         {showNewPassword ? (
                           <path d="M2.1 3.51L1 4.62l4.03 4.03C3.77 9.67 2.8 10.99 2 12c1.73 2.39 4.56 5 10 5 2.02 0 3.74-.36 5.2-.96l3.18 3.18 1.11-1.11L2.1 3.51zM12 7c3.72 0 6.22 1.85 7.99 4.06-.57.72-1.23 1.43-2.04 2.07l-1.46-1.46c.32-.53.51-1.15.51-1.82a3.5 3.5 0 0 0-3.5-3.5c-.67 0-1.29.19-1.82.51l-1.44-1.44c.56-.23 1.16-.42 1.76-.42zM8.27 11.89l3.84 3.84A3.5 3.5 0 0 1 8.27 11.9z" />
                         ) : (
@@ -402,26 +500,23 @@ const Profil = () => {
                 </div>
 
                 <div className="profilePasswordActions">
-                  <button type="submit" className="profileBtn">Enregistrer</button>
+                  <button type="submit" className="profileBtn">
+                    {t("profil.password_modal.save_btn")}
+                  </button>
                   <button
                     type="button"
                     className="profileBtn profileBtn--ghost"
-                    onClick={() => {
-                      setIsPasswordFormOpen(false);
-                      setOldPassword("");
-                      setNewPassword("");
-                      setShowOldPassword(false);
-                      setShowNewPassword(false);
-                      setResetFeedback({ type: "", message: "" });
-                    }}
+                    onClick={closePasswordModal}
                   >
-                    Annuler
+                    {t("profil.password_modal.cancel_btn")}
                   </button>
                 </div>
               </form>
 
               {resetFeedback.message && (
-                <p className={`profileInlineFeedback profileInlineFeedback--${resetFeedback.type}`}>
+                <p
+                  className={`profileInlineFeedback profileInlineFeedback--${resetFeedback.type}`}
+                >
                   {resetFeedback.message}
                 </p>
               )}
