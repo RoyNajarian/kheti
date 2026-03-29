@@ -344,7 +344,7 @@ export const Jeu = () => {
               <div className="game-win-popup">
                 <p className="game-win-title">Tu as terminé tous les niveaux</p>
                 <p className="game-win-content">Tu as débloqué un goodies exclusif ! Utilise ce code secret lors de ta réservation ou présente-le à la sortie de l'exposition :</p>
-                <span className="game-promo-code">KETHI-MAZE-26</span>
+                <span className="game-code">KHETI-MAZE-26</span>
                 <button
                   className="game-btn-popup"
                   onClick={() => navigate("/reservation")}
