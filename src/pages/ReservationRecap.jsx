@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router";
 import Breadcrumb from "../components/Breadcrumb";
-import { createReservation } from "../back-office/api";
+import { createReservation, sendConfirmationEmail } from "../back-office/api";
 import { RESERVATION_TICKETS, RESERVATION_PRICE_BY_TICKET } from "../components/reservationTickets";
 import "../styles/Reservation.css";
 import "../styles/ReservationRecap.css";
@@ -103,6 +103,20 @@ const ReservationRecap = () => {
         .padStart(6, "0");
 
       setOrderNumber(String(reservationId || fallbackOrder));
+      
+      // Envoyer l'email de confirmation (sans bloquer si ça échoue)
+      if (reservationId) {
+        sendConfirmationEmail(
+          normalizedEmail,
+          reservationId,
+          draft.date,
+          draft.time,
+          payload.price
+        ).catch(() => {
+          // Silently fail - la réservation est confirmée même si l'email échoue
+        });
+      }
+      
       setIsSuccess(true);
       sessionStorage.removeItem(RESERVATION_DRAFT_KEY);
     } catch (error) {
@@ -182,7 +196,7 @@ const ReservationRecap = () => {
             <div className="step-actions">
               <button
                 type="button"
-                className="btn recap-confirm-cta"
+                className="btn booking-cart-cta recap-confirm-cta"
                 onClick={handleConfirm}
                 disabled={isLoading}
               >
@@ -194,14 +208,22 @@ const ReservationRecap = () => {
           </section>
         ) : (
           <section className="confirmation-success" aria-label="Commande confirmée">
-            <div className="success-icon">✓</div>
             <h2>Réservation confirmée</h2>
-            <div className="order-number">Numéro : {orderNumber}</div>
-            <p>Un email de confirmation a été envoyé à {draft.email}.</p>
-            <div className="step-actions">
-              <button type="button" className="btn btn-primary" onClick={() => navigate("/")}>
-                Retour à l&apos;accueil
-              </button>
+            <p style={{ fontSize: "1.1rem", color: "#d4c4a0", margin: "1rem 0" }}>
+              Votre réservation a été confirmée avec succès.
+              <br />
+              Un email de confirmation a été envoyé à <strong>{draft.email}</strong>.
+            </p>
+            
+            <div className="confirmation-tintin-scene">
+              <div className="tintin-thought-bubble">
+                <p>À bientôt dans les mystères de l'Égypte !</p>
+              </div>
+              <img
+                src="/images/tintin_perso.png"
+                alt="Tintin vous accueille"
+                className="confirmation-tintin"
+              />
             </div>
           </section>
         )}

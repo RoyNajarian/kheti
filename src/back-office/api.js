@@ -137,6 +137,40 @@ export async function createReservation(data) {
   return json;
 }
 
+export async function sendConfirmationEmail(email, reservationId, date, time, price) {
+  try {
+    const normalizedDate = String(date || "").trim();
+    const normalizedTime = String(time || "").trim();
+
+    const res = await fetch(`${BASE_URL}/send-email`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        type: "reservation_confirmation",
+        reservation_id: reservationId,
+        date: normalizedDate,
+        time: normalizedTime,
+        // Compatibilite avec une API qui attend day/hour.
+        day: normalizedDate,
+        hour: normalizedTime,
+        price,
+      }),
+    });
+
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      console.warn("Erreur lors de l'envoi du mail:", json.error || res.status);
+      return { success: false, error: json.error || "Erreur lors de l'envoi du mail" };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.warn("Erreur réseau lors de l'envoi du mail:", error.message);
+    return { success: false, error: error.message };
+  }
+}
+
 export async function getAvailableSlots() {
   const res = await fetch(`${BASE_URL}/reservations`);
   if (!res.ok) throw new Error("Erreur lors du chargement des disponibilités");
