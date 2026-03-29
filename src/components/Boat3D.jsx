@@ -16,10 +16,10 @@ const Boat3D = ({ carouselPosition = 0 }) => {
         // Scene setup
         const scene = new THREE.Scene();
         sceneRef.current = scene;
-        
+
         const width = containerRef.current.clientWidth;
         const height = containerRef.current.clientHeight;
-        
+
         const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         rendererRef.current = renderer;
@@ -61,19 +61,98 @@ const Boat3D = ({ carouselPosition = 0 }) => {
             renderer.render(scene, camera);
 
             // GSAP animation for boat moving downward along the Nile
-            gsap.from(boat.position, {
+            const tl = gsap.timeline({ repeat: -1, defaults: { ease: 'sine.inOut' } });
+            tl.fromTo(boat.position, {
                 z: -5,
-                duration: 30,
-                // ease: none,
-                repeat: -1
-            });
-
-            // GSAP animation for boat moving to the right
-            gsap.to(boat.position, {
+                x: 0
+            }, {
                 z: 5,
                 duration: 30,
-                repeat: -1
+                ease: 'none',
             });
+
+            tl.fromTo(boat.rotation, {
+                z: 0,
+                y: 0
+            }, {
+                z: 0,
+                y: 0,
+            } , 0);
+
+            tl.fromTo(boat.position, {  // 
+                x: 0
+            }, {
+                x: 0.25,
+                duration: 4
+            } , 4);
+
+            tl.fromTo(boat.rotation, {  // 
+                z: 0,
+                y: 0
+            }, {
+                z: -0.25,
+                y: 0.13,
+                duration: 2,
+            } , 4);
+
+            tl.fromTo(boat.rotation, {  
+                z: -0.25,
+                y: 0.13
+            }, {
+                z: 0,
+                y: 0,
+                duration: 2,
+            } , 6);
+
+            tl.fromTo(boat.position, {  // 
+                x: 0.25
+            }, {
+                x: -0.4,
+                duration: 5
+            } , 12);
+
+            tl.fromTo(boat.rotation, {  // 
+                z: 0,
+                y: 0
+            }, {
+                z: 0.25,
+                y: -0.13,
+                duration: 5,
+            } , 12);
+
+            tl.fromTo(boat.rotation, {  
+                z: 0.25,
+                y: -0.13
+            }, {
+                z: 0,
+                y: 0,
+                duration: 2,
+            } , 16);
+
+            tl.fromTo(boat.position, {  // 
+                x: -0.4
+            }, {
+                x: -0.05,
+                duration: 5
+            } , 20);
+
+            tl.fromTo(boat.rotation, {  // 
+                z: 0,
+                y: 0
+            }, {
+                z: -0.25,
+                y: 0.13,
+                duration: 2,
+            } , 20);
+
+            tl.fromTo(boat.rotation, {  
+                z: -0.25,
+                y: 0.13
+            }, {
+                z: 0,
+                y: 0,
+                duration: 2,
+            } , 25);
         });
 
         // Handle window resize
